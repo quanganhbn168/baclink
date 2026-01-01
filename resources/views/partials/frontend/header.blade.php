@@ -1,39 +1,20 @@
 <div class="header-top" role="region" aria-label="Announcement bar">
-  <div class="header-top__shape" aria-hidden="true"></div>
   <div class="header-top__inner">
-    <p class="header-top__slogan">
-      MIỄN PHÍ GIAO HÀNG TRÊN TOÀN QUỐC KHI MUA ĐƠN HÀNG TỪ 500K HOẶC COMBO 2 SẢN PHẨM BẤT KỲ HOẶC CAN 5L TRỞ LÊN!
-    </p>
-    <ul class="header-top__social" aria-label="Social links">
-      @if(!empty($setting->facebook))
-      <li>
-        <a href="{{ $setting->facebook }}" target="_blank" rel="noopener" aria-label="Facebook">
-          <i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span class="sr-only">Facebook</span>
-        </a>
-      </li>
-      @endif
-      @if(!empty($setting->instagram))
-      <li>
-        <a href="{{ $setting->instagram }}" target="_blank" rel="noopener" aria-label="Instagram">
-          <i class="fa-brands fa-instagram" aria-hidden="true"></i><span class="sr-only">Instagram</span>
-        </a>
-      </li>
-      @endif
-      @if(!empty($setting->tiktok))
-      <li>
-        <a href="{{ $setting->tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">
-          <i class="fa-brands fa-tiktok" aria-hidden="true"></i><span class="sr-only">TikTok</span>
-        </a>
-      </li>
-      @endif
-      @if(!empty($setting->youtube))
-      <li>
-        <a href="{{ $setting->youtube }}" target="_blank" rel="noopener" aria-label="YouTube">
-          <i class="fa-brands fa-youtube" aria-hidden="true"></i><span class="sr-only">YouTube</span>
-        </a>
-      </li>
-      @endif
-    </ul>
+    <div class="header-top__contacts">
+        <a href="tel:{{ $setting->phone }}"><i class="fa fa-phone"></i> {{ $setting->phone }}</a>
+        <a href="mailto:{{ $setting->email }}"><i class="fa fa-envelope"></i> {{ $setting->email }}</a>
+    </div>
+    <div class="header-top__right">
+        <div class="language-switcher">
+            <a href="#" class="active">VN</a> | <a href="#">EN</a>
+        </div>
+        <div class="header-top__search d-none d-lg-block">
+            <form action="{{ route('frontend.search') }}" method="GET">
+                <input type="text" name="q" placeholder="Tìm kiếm...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+    </div>
   </div>
 </div>
 <header class="header">
@@ -57,7 +38,6 @@
                             <img src="{{asset($setting->logo)}}" alt="Logo">
                         </a>
                     </div>
-                    {{-- Trong file header.blade.php --}}
                     <ul class="main-menu-desktop d-none d-lg-flex" id="main-menu-desktop-source">
                         @foreach($headerMenu as $menuItem)
                         <li class="{{ !empty($menuItem['children']) ? 'menu-item-has-children' : '' }}">
@@ -83,38 +63,11 @@
                         </li>
                         @endforeach
                     </ul>
-                    <ul class="box-header d-none d-lg-flex justify-content-center align-items-center mb-0">
-                        <li class="d-none d-lg-inline-block position-relative">
-                            <a href="#" id="desktop-search-toggle"><i class="fa-solid fa-magnifying-glass"></i></a>
-                            <div id="desktop-search-dropdown" class="search-dropdown d-none shadow-sm p-3 bg-white rounded" style="position: absolute; right: 0; top: 100%; width: 300px; z-index: 9999; margin-top: 10px;">
-                                <form action="{{ route('frontend.search') }}" method="GET" class="d-flex">
-                                    <input type="text" name="q" class="form-control border-secondary" placeholder="Tìm kiếm sản phẩm..." required autocomplet="off">
-                                    <button type="submit" class="btn btn-primary ml-2"><i class="fa fa-search"></i></button>
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-    @auth
-        {{-- Nội dung chỉ hiện khi ĐÃ đăng nhập --}}
-        <a href="{{ route('user.dashboard') }}">
-            <i class="fa-regular fa-user"></i>
-        </a>
-    @endauth
-
-    @guest
-        {{-- Nội dung chỉ hiện khi CHƯA đăng nhập (Khách) --}}
-        <a href="{{ route('login') }}">
-            <i class="fa-regular fa-user"></i>
-        </a>
-    @endguest
-</li>
-                        <li class="cart-icon-wrapper position-relative">
-                            <a href="{{ route('cart.page') }}">
-                                <i class="fa-solid fa-bag-shopping"></i>
-                                <span class="cart-count" data-role="cart-count" data-place="desktop" aria-hidden="true">0</span>
-                            </a>
-                        </li>
                     </ul>
+                </div>
+                <div class="header-col-right d-none d-lg-flex">
+                    <a href="{{ route('register') }}" class="btn btn-red-cta">ĐĂNG KÝ HỘI VIÊN</a>
+                </div>
                 </div>
                 <div class="header-col-right">
                     <ul class="box-header d-flex d-md-none justify-content-center align-items-center mb-0">

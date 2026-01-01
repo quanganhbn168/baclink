@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->unsignedInteger('position')->default(0)->index();
             $table->string('image');
-            $table->morphs('item');
+            $table->string('role')->nullable()->index();
+            $table->string('item_type');
+            $table->unsignedBigInteger('item_id');
+            $table->index(['item_type', 'item_id']);
             $table->timestamps();
         });
     }

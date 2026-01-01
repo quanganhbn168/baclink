@@ -59,17 +59,17 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-12 col-md-6">
-                <a href="{{route('frontend.slug.handle',$introMain->slug)}}">
-                    <img src="{{ optional($introMain->mainImage())->url() }}" alt="{{$introMain->title}}">
+                <a href="{{route('frontend.slug.handle',$intro->slug)}}">
+                    <img src="{{ optional($intro->mainImage())->url() }}" alt="{{$intro->title}}">
                 </a>
             </div>
             <div class="col-12 col-md-6">
-                <h2 class="">{{$introMain->title}}</h2>
+                <h2 class="">{{$intro->title}}</h2>
                 <div>
-                    {!! $introMain->description !!}
+                    {!! $intro->description !!}
                 </div>
                 <div class="intro-action">
-                    <a href="{{route('frontend.slug.handle',$introMain->slug)}}" class="btn btn-outline-primary rounded-pill btn-crossover">
+                    <a href="{{route('frontend.slug.handle',$intro->slug)}}" class="btn btn-outline-primary rounded-pill btn-crossover">
                         <span class="btn-crossover-text">Xem chi tiết</span>
                         <span class="btn-crossover-icon">
                             <i class="fa-solid fa-arrow-right-long"></i>
@@ -79,10 +79,12 @@
             </div>
         </div>
     </div>
-</section>              
-<section class="section product-section">
-  <h2 class="section-title">Sản phẩm</h2>
-  <div class="swiper product-slider">
+</section>
+<h1 class="visually-hidden">{{ $setting->name }} - Giải pháp kết nối doanh nghiệp hàng đầu</h1>
+<section class="section product-section py-5" style="background-color: var(--bg-alt);">
+    <div class="container container-custom">
+        <h2 class="section-title-theme">SẢN PHẨM CHỦ LỰC</h2>
+        <div class="swiper product-slider">
     <div class="swiper-wrapper">
       @foreach($homeProducts as $product)
         <div class="swiper-slide">
@@ -95,24 +97,41 @@
     <div class="swiper-button-next"></div>
   </div>
 </section>
-<section class="section daily-section">
-    <div class="container">
-        <div class="daily-box">
-            <div class="row">
-                <div class="col-12 col-md-6">
+<section class="section intro-section py-5">
+    <div class="container container-custom">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+                <div class="intro-image" style="border-radius: var(--asymmetric-radius); overflow: hidden; box-shadow: var(--box-shadow);">
+                    <img src="{{ asset('images/setting/intro.jpg') }}" alt="Giới thiệu" class="w-100">
+                </div>
+            </div>
+            <div class="col-12 col-lg-6 pl-lg-5">
+                <h2 class="section-title-theme justify-content-start" style="text-align: left;">VỀ CHÚNG TÔI</h2>
+                <div class="intro-content fs-5" style="line-height: 1.8;">
+                    {!! $intro->description !!}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section daily-section py-5" style="background-color: #fff;">
+    <div class="container container-custom">
+        <div class="daily-box" style="background: var(--bg-alt); border-radius: var(--asymmetric-radius); box-shadow: var(--box-shadow); overflow: hidden;">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 p-0">
                     <div class="daily-image">
-                        <img src="{{ asset('images/setting/Anh-keu-goi-dang-ky-dai-ly.jpg') }}" alt="Ảnh kêu gọi đăng ký đại lý">
+                        <img src="{{ asset('images/setting/Anh-keu-goi-dang-ky-dai-ly.jpg') }}" alt="Ảnh kêu gọi đăng ký đại lý" class="w-100">
                     </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    <div class="daily-text">
-                        <h2 class="text-bold">
+                <div class="col-12 col-md-6 p-lg-5">
+                    <div class="daily-text p-4">
+                        <h2 class="text-bold mb-4" style="font-family: var(--font-secondary); color: var(--blue); font-size: 2.5rem;">
                             Phát Triển Công Việc Kinh Doanh Của Bạn
                         </h2>
-                        <div class="daily-text_sumary">
-                            Bạn mong muốn nâng tầm vị thế và tối đa hóa lợi nhuận cho trung tâm chăm sóc xe hoặc đơn vị kinh doanh của mình? Hãy cùng Ekokemika Việt Nam kiến tạo thành công bền vững. Chúng tôi không chỉ tìm kiếm nhà phân phối, chúng tôi tìm kiếm những đối tác chiến lược để cùng nhau thống lĩnh thị trường!
+                        <div class="daily-text_sumary fs-5 mb-4" style="color: #555; line-height: 1.8;">
+                            Bạn mong muốn nâng tầm vị thế và tối đa hóa lợi nhuận cho trung tâm hoặc đơn vị kinh doanh của mình? Hãy cùng Baclink kiến tạo thành công bền vững. Chúng tôi không chỉ tìm kiếm đối tác, chúng tôi tìm kiếm những cộng sự chiến lược để cùng nhau thống lĩnh thị trường!
                         </div>
-                        <a href="/dang-ky-dai-ly">Đăng ký ngay</a>
+                        <a href="/dang-ky-dai-ly" class="btn btn-red-cta p-3 px-5">ĐĂNG KÝ NGAY <i class="fa fa-arrow-right ml-2"></i></a>
                     </div>
                 </div>              
             </div>
@@ -135,9 +154,9 @@
         </div>
     </div>
 </section>
-<section class="section section-news">
-    <h2 class="section-title"><a href="#">Tin tức</a></h2>
-    <div class="container-fluid">
+<section class="section section-news bg-light-gray">
+    <div class="container container-custom">
+        <h2 class="section-title-theme"><a href="#">TIN TỨC & SỰ KIỆN</a></h2>
         <div class="row">
             @foreach($homePosts as $post)
                 <div class="col-12 col-md-3 mb-5"> {{-- 2 bài / hàng trên desktop --}}
@@ -220,6 +239,20 @@ document.addEventListener('DOMContentLoaded', function () {
       nextEl: '.product-slider .swiper-button-next',
       prevEl: '.product-slider .swiper-button-prev',
     },
+  });
+
+  const partnerSlider = new Swiper('.partner-slider', {
+    loop: true,
+    autoplay: {
+      delay: 2000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      320: { slidesPerView: 2, spaceBetween: 10 },
+      480: { slidesPerView: 3, spaceBetween: 20 },
+      640: { slidesPerView: 4, spaceBetween: 30 },
+      992: { slidesPerView: 6, spaceBetween: 40 }
+    }
   });
 });
 </script>

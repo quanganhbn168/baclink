@@ -1,75 +1,44 @@
-<div class="footer-top">
-    <div class="footer-top_right">
-        <div class="top_right-image">
-            <img src="{{ asset('images/setting/logo-t.png') }}" alt="Ekokemika Việt Nam">
-        </div>
-        <p class="top_right-text">
-            Dung dịch rửa xe không chạm hàng đầu thế giới
-        </p>
-    </div>
-    <ul class="footer-top-contact">
-        <li><a href="{{$setting->facebook}}"><i class="fa-brands fa-facebook-f"></i></a></li>
-        <li><a href="{{$setting->tiktok}}"><i class="fa-brands fa-tiktok"></i></a></li>
-        <li><a href="{{$setting->instagram}}"><i class="fa-brands fa-instagram"></i></a></li>
-        <li><a href="{{$setting->youtube}}"><i class="fa-brands fa-youtube"></i></a></li>
-    </ul>
-</div>
-<footer class="footer-new">
-    <div class="main-footer">
-        <div class="container">
+<footer class="footer-new mt-0" style="background-color: #EFEFEF; color: #333; border-top: 1px solid #ddd;">
+    <div class="main-footer pt-5 pb-4">
+        <div class="container container-custom">
             <div class="row">
-                <div class="col-12 col-lg-3">
-                    <h2 class="footer-title">Thông tin liên hệ</h2>
-                    <p class="footer-info">{{$setting->address}}</p>
-                    <p class="footer-info"><i class="fa-solid fa-envelope"></i> {{$setting->email}} </p>
-                    <p class="footer-info"><i class="fa-solid fa-phone"></i> {{$setting->phone}}</p>
+                <div class="col-12 col-lg-4 mb-4">
+                    <img src="{{ asset($setting->logo) }}" alt="{{ $setting->name }}" class="mb-4" style="max-height: 60px;">
+                    <h2 class="footer-title" style="color: var(--red); font-family: var(--font-secondary); font-size: 20px;">THÔNG TIN LIÊN HỆ</h2>
+                    <p class="footer-info mb-1"><b>{{$setting->name}}</b></p>
+                    <p class="footer-info mb-1"><i class="fa-solid fa-location-dot mr-2"></i> {{$setting->address}}</p>
+                    <p class="footer-info mb-1"><i class="fa-solid fa-envelope mr-2"></i> {{$setting->email}} </p>
+                    <p class="footer-info mb-1"><i class="fa-solid fa-phone mr-2"></i> {{$setting->phone}}</p>
                 </div>
-                <div class="col-12 col-lg-3">
-                    <h2 class="footer-title">Chính sách bảo mật</h2>
-                    <ul>
-        {{-- Kiểm tra có menu và có items không để tránh lỗi --}}
-        @if(isset($footerMenu) && $footerMenu->items->isNotEmpty())
-            
-            @foreach($footerMenu->items as $item)
-                <li>
-                    {{-- 
-                        $item->link   : Tự động lấy URL chuẩn (Logic Accessor trong Model)
-                        $item->title  : Tên hiển thị
-                        $item->target : _self hoặc _blank 
-                    --}}
-                    <a href="{{ $item->link }}" target="{{ $item->target }}">
-                        {{ $item->title }}
-                    </a>
-                </li>
-            @endforeach
-
-        @endif
-    </ul>
+                <div class="col-12 col-lg-4 mb-4">
+                    <h2 class="footer-title" style="color: var(--red); font-family: var(--font-secondary); font-size: 20px;">VỀ CHÚNG TÔI</h2>
+                    <ul class="footer-links-theme" style="padding: 0; list-style: none;">
+                        @if(isset($footerMenu) && $footerMenu->items->isNotEmpty())
+                            @foreach($footerMenu->items as $item)
+                                <li class="mb-2"><a href="{{ $item->link }}" target="{{ $item->target }}" style="color: #444; transition: var(--transition);">{{ $item->title }}</a></li>
+                            @endforeach
+                        @else
+                           <li class="mb-2"><a href="#" style="color: #444;">Giới thiệu</a></li>
+                           <li class="mb-2"><a href="#" style="color: #444;">Hội viên tiêu biểu</a></li>
+                           <li class="mb-2"><a href="#" style="color: #444;">Tin tức & Sự kiện</a></li>
+                           <li class="mb-2"><a href="#" style="color: #444;">Liên hệ</a></li>
+                        @endif
+                    </ul>
                 </div>
-                <div class="col-12 col-lg-3">
-                    <h2 class="footer-title">Bộ công thương</h2>
-                </div>
-                <div class="col-12 col-lg-3">
-                    <h2 class="footer-title">Đăng ký nhận email</h2>
-                    <div class="footer-description">
-                        Đăng ký bản tin của chúng tôi để nhận được thông tin cập nhật và tin tức mới nhất
+                <div class="col-12 col-lg-4 mb-4">
+                    <h2 class="footer-title" style="color: var(--red); font-family: var(--font-secondary); font-size: 20px;">KẾT NỐI VỚI CHÚNG TÔI</h2>
+                    <div class="footer-social-theme d-flex gap-3 mb-4">
+                        <a href="{{$setting->facebook}}" style="width: 40px; height: 40px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center;"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="{{$setting->youtube}}" style="width: 40px; height: 40px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center;"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="{{$setting->zalo}}" style="width: 40px; height: 40px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center;"><i class="fa fa-comment"></i></a>
                     </div>
-                    <div class="footer-form">
-                        <form action="{{ route('newsletter.subscribe') }}" method="POST">
-                            @csrf
-                            <input type="email" required placeholder="Nhập địa chỉ Email của bạn vào">
-                            <button type="submit">
-                                <i class="fa-solid fa-right-long"></i>
-                            </button>
-                        </form>
-                    </div>      
                 </div>
             </div>
         </div>
     </div>
-    <div class="copyright">
-        <div class="container">
-            <span>© Bản quyền thuộc về <b>{{$setting->name}}</b> | Cung cấp bởi <a href="https://webappbacninh.vn/" rel="nofollow" target="_blank">Webapp Bắc Ninh</a></span>
+    <div class="copyright py-3" style="background-color: #e5e5e5; border-top: 1px solid #ccc;">
+        <div class="container text-center">
+            <span style="color: #666; font-size: 14px;">© Bản quyền thuộc về <b>{{$setting->name}}</b> | Cung cấp bởi <a href="https://webappbacninh.vn/" rel="nofollow" target="_blank" style="color: var(--red); font-weight: 700;">Webapp Bắc Ninh</a></span>
         </div>
     </div>
 </footer>

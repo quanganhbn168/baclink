@@ -9,7 +9,7 @@ trait HasImages
 {
     public function images(): MorphMany
     {
-        return $this->morphMany(Image::class, 'imageable')->orderBy('position');
+        return $this->morphMany(Image::class, 'item')->orderBy('position');
     }
 
     public function mainImage(): ?Image

@@ -23,7 +23,7 @@ class HomeController extends Controller
     public function index()
     {
         $slides         = Slide::where("status",1)->get();
-        $introMain      = Intro::findOrFail(1);
+        $intro          = Intro::first() ?? new Intro(['title' => 'Baclink', 'description' => 'Giải pháp liên kết doanh nghiệp']);
         $homeProducts   = Product::where("status",1)->where("is_home",1)->get();
         $homeCategories = Category::where("status",1)->where("is_home",1)->get();
         $homeServices   = Service::where("status",1)->where("is_home",1)->get();
@@ -46,7 +46,7 @@ class HomeController extends Controller
         $brands = Brand::get();
         $testimonials   = Testimonial::where('status', 1)->latest('id')->get();
 
-        return view('frontend.index', compact("slides","introMain","homeProducts","homeCategories","homeServices","homeProjectCategories","homeFields","homeProjects","homePosts","careers","testimonials","brands"));
+        return view('frontend.index', compact("slides","intro","homeProducts","homeCategories","homeServices","homeProjectCategories","homeFields","homeProjects","homePosts","careers","testimonials","brands"));
     }
     public function search(Request $request)
     {

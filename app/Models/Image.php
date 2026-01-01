@@ -11,7 +11,7 @@ class Image extends Model
     use HasFactory;
 
     protected $fillable = [
-        'imageable_type', 'imageable_id', 'role',
+        'item_type', 'item_id', 'role', 'image',
         'dir', 'main_path', 'variants', 'original_path', 'disk',
         'filename', 'ext', 'mime', 'size', 'width', 'height',
         'position', 'alt', 'title', 'custom',
@@ -26,7 +26,7 @@ class Image extends Model
         'position' => 'integer',
     ];
 
-    public function imageable(): MorphTo
+    public function item(): MorphTo
     {
         return $this->morphTo();
     }
