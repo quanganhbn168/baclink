@@ -1,0 +1,30 @@
+:root {
+    /* === FONT === */
+    --font-base: 'Roboto Regular', sans-serif;
+    --font-heading: 'Roboto Bold', sans-serif;
+
+    /* === MÀU CƠ BẢN === */
+    --primary-color: #1e88e5;
+    --primary-color-hover: #1565c0;
+    --secondary-color: #43a047;
+    --accent-color: #ff5722;
+
+    /* === MÀU NỀN & TEXT === */
+    --background-color: #ffffff;
+    --background-alt: #f8f9fa;
+    --text-color: #333333;
+    --heading-color: #111111;
+
+    /* === BORDER & SHADOW === */
+    --border-color: #dddddd;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    /* === TRANSITION === */
+    --transition-speed: 0.3s;
+
+    /* === Z-INDEX === */
+    --z-header: 1000;
+    --z-overlay: 2000;
+    --z-modal: 3000;
+}

@@ -1,0 +1,47 @@
+/* ---- General ---- */
+#wrapper {
+    background-color: #f7f7f7;
+}
+/* ---- Login/Register Box ---- */
+.login-box {
+    border-radius: 3px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+.login-box h3 {
+    font-weight: 600;
+    color: #333;
+}
+/* ---- Form Elements ---- */
+.form-control {
+    height: 48px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #1a2a98;
+}
+/* ---- Main Button (Login/Register) ---- */
+.btn-login {
+    background-color: #1a2a98;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 0;
+    border-radius: 3px;
+    border: none;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+}
+.btn-login:hover {
+    background-color: var(--red);
+    color: #fff;
+}
+/* ---- Links ---- */
+.login-box a {
+    color: #1a2a98;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.login-box a:hover {
+    text-decoration: underline;
+}
