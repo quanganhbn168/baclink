@@ -12,33 +12,17 @@
     <div class="container-fluid">
         {{-- Row 1: Thống kê chính --}}
         <div class="row">
-            {{-- Đơn hàng mới --}}
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-info">
-                    <div class="inner">
-                        <h3>{{ $newOrdersCount ?? 0 }}</h3>
-                        <p>Đơn hàng mới</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <a href="{{ route('admin.orders.index') }}" class="small-box-footer">
-                        Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            {{-- Đăng ký đại lý mới --}}
+            {{-- Hội viên --}}
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>{{ $newDealerAppsCount ?? 0 }}</h3>
-                        <p>Đăng ký Đại lý mới</p>
+                        <h3>{{ $totalMembers ?? 0 }}</h3>
+                        <p>Hội viên</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-user-plus"></i>
+                        <i class="fas fa-users"></i>
                     </div>
-                    <a href="{{ route('admin.dealer-applications.index') }}" class="small-box-footer">
+                    <a href="{{ route('admin.members.index') }}" class="small-box-footer">
                         Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
                     </a>
                 </div>
@@ -59,149 +43,40 @@
                     </a>
                 </div>
             </div>
-
-            {{-- Doanh thu (ví dụ) --}}
-            <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>{{ number_format($revenue ?? 0, 0, ',', '.') }}<sup style="font-size: 20px">đ</sup></h3>
-                        <p>Tổng doanh thu</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <a href="{{ route('admin.orders.index') }}" class="small-box-footer">
-                        Báo cáo <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
         </div>
 
-        {{-- Row 2: Biểu đồ --}}
+        {{-- Row 2: Bảng chi tiết --}}
         <div class="row">
-            <div class="col-md-8">
-                <div class="card card-primary card-outline">
-                    <div class="card-header">
-                        <h3 class="card-title">Doanh thu 6 tháng gần nhất</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart">
-                            <canvas id="revenueChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-warning card-outline">
-                    <div class="card-header">
-                        <h3 class="card-title">Trạng thái đơn hàng</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="orderStatusChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Row 3: Bảng chi tiết --}}
-        <div class="row">
-            {{-- Cột trái: Đơn hàng & Đại lý --}}
+            {{-- Cột trái: Hội viên --}}
             <section class="col-lg-7 connectedSortable">
-                
-                {{-- Đơn hàng gần đây --}}
-                <div class="card">
-                    <div class="card-header border-transparent">
-                        <h3 class="card-title">Đơn hàng gần đây</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table m-0">
-                                <thead>
-                                    <tr>
-                                        <th>Mã đơn</th>
-                                        <th>Khách hàng</th>
-                                        <th>Trạng thái</th>
-                                        <th>Tổng tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($recentOrders as $order)
-                                        <tr>
-                                            <td><a href="{{ route('admin.orders.show', $order->id) }}">{{ $order->code }}</a></td>
-                                            <td>{{ $order->customer_name }}</td>
-                                            <td>
-                                                <span class="badge badge-{{ $order->status->color() }}">
-                                                    {{ $order->status->label() }}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                    {{ number_format($order->total_price, 0, ',', '.') }}đ
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr><td colspan="4" class="text-center">Chưa có đơn hàng nào</td></tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer clearfix">
-                        <a href="{{ route('admin.orders.index') }}" class="btn btn-sm btn-secondary float-right">Xem tất cả đơn hàng</a>
-                    </div>
-                </div>
 
-                {{-- Đăng ký đại lý gần đây --}}
+                {{-- Hội viên mới đăng ký --}}
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Đăng ký Đại lý mới</h3>
+                        <h3 class="card-title">Hội viên mới đăng ký</h3>
                     </div>
                     <div class="card-body p-0">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Tên</th>
-                                    <th>Công ty</th>
-                                    <th>Trạng thái</th>
+                                    <th>Cán bộ đại diện</th>
+                                    <th>Tên công ty</th>
+                                    <th>Ngày đăng ký</th>
                                     <th style="width: 40px"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($recentDealerApps as $app)
+                                @forelse($recentMembers as $member)
                                     <tr>
-                                        <td>{{ $app->name }}</td>
-                                        <td>{{ $app->company }}</td>
+                                        <td>{{ $member->representative_name }}</td>
+                                        <td>{{ Str::limit($member->company_name, 30) }}</td>
+                                        <td>{{ $member->created_at->format('d/m/Y') }}</td>
                                         <td>
-                                            @if($app->status == 'pending')
-                                                <span class="badge badge-warning">Chờ duyệt</span>
-                                            @elseif($app->status == 'approved')
-                                                <span class="badge badge-success">Đã duyệt</span>
-                                            @else
-                                                <span class="badge badge-danger">{{ $app->status }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('admin.dealer-applications.index') }}" class="btn btn-xs btn-info"><i class="fas fa-eye"></i></a>
+                                            <a href="{{ route('admin.members.show', $member->id) }}" class="btn btn-xs btn-info"><i class="fas fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 @empty
-                                    <tr><td colspan="4" class="text-center">Chưa có đăng ký nào</td></tr>
+                                    <tr><td colspan="4" class="text-center">Chưa có hội viên nào</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
@@ -260,96 +135,3 @@
         </div>
     </div>
 @stop
-
-@push('js')
-    {{-- ChartJS --}}
-    <script src="{{ asset('vendor/adminlte/plugins/chart.js/Chart.min.js') }}"></script>
-
-    <script>
-        $(function () {
-            // ---------------------
-            // - REVENUE CHART -
-            // ---------------------
-            var revenueChartCanvas = $('#revenueChart').get(0).getContext('2d')
-            var revenueChartData = {
-                labels: @json($chartRevenueLabels),
-                datasets: [
-                    {
-                        label: 'Doanh thu',
-                        backgroundColor: 'rgba(60,141,188,0.9)',
-                        borderColor: 'rgba(60,141,188,0.8)',
-                        pointRadius: false,
-                        pointColor: '#3b8bba',
-                        pointStrokeColor: 'rgba(60,141,188,1)',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: @json($chartRevenueData)
-                    }
-                ]
-            }
-
-            var revenueChartOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-                legend: {
-                    display: false
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display: false,
-                        }
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display: false,
-                        },
-                         ticks: {
-                            beginAtZero: true,
-                            callback: function(value, index, values) {
-                                return new Intl.NumberFormat('vi-VN').format(value) + 'đ';
-                            }
-                        }
-                    }]
-                },
-                tooltips: {
-                     callbacks: {
-                        label: function(tooltipItem, data) {
-                            return new Intl.NumberFormat('vi-VN').format(tooltipItem.yLabel) + 'đ';
-                        }
-                    }
-                }
-            }
-
-            // This will get the first returned node in the jQuery collection.
-            new Chart(revenueChartCanvas, {
-                type: 'bar', // or 'line'
-                data: revenueChartData,
-                options: revenueChartOptions
-            })
-
-            // ---------------------------
-            // - ORDER STATUS CHART -
-            // ---------------------------
-            var donutChartCanvas = $('#orderStatusChart').get(0).getContext('2d')
-            var donutData = {
-                labels: @json($chartStatusLabels),
-                datasets: [
-                    {
-                        data: @json($chartStatusData),
-                        backgroundColor : @json($chartStatusColors),
-                    }
-                ]
-            }
-            var donutOptions = {
-                maintainAspectRatio: false,
-                responsive: true,
-            }
-            new Chart(donutChartCanvas, {
-                type: 'doughnut',
-                data: donutData,
-                options: donutOptions
-            })
-        })
-    </script>
-@endpush

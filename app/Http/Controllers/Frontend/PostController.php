@@ -12,15 +12,25 @@ class PostController extends Controller
     ) {}
     public function index(Request $request)
     {
-        // số bản ghi mỗi trang (mặc định 12, giới hạn an toàn 1..60)
-        $perPage = max(1, min((int) $request->query('per_page', 12), 60));
-        $posts = Post::query()
-            ->where('status', 1)
-            ->with(['category', 'images']) // nếu không cần có thể bỏ
-            ->latest('created_at')             // = orderBy('created_at', 'desc')
-            ->paginate($perPage)
-            ->withQueryString();               // giữ lại ?per_page=, ?page=...
-        return view('frontend.post.index', compact('posts', 'perPage'));
+        // Fetch only top-level categories or categories chosen to be displayed on home/news index
+        $categories = PostCategory::where('status', 1)
+            ->where(function($query) {
+                $query->whereNull('parent_id')->orWhere('parent_id', 0);
+            })
+            ->with(['posts' => function($query) {
+                $query->where('status', 1)->latest()->take(4);
+            }])
+            ->get()
+            ->filter(function($cat) {
+                return $cat->posts->count() > 0;
+            });
+            
+        $trendingPosts = Post::where('status', 1)
+            ->latest('updated_at')
+            ->take(5)
+            ->get();
+
+        return view('frontend.post.index', compact('categories', 'trendingPosts'));
     }
     public function detail(Post $post)
     {
@@ -29,9 +39,16 @@ class PostController extends Controller
             ->where('post_category_id', $post->post_category_id)
             ->where('id', '!=', $post->id)
             ->latest()
-            ->take(6)
+            ->take(3)
             ->get();
-        return view('frontend.post.detail', compact('post', 'relatedPosts'));
+            
+        $trendingPosts = Post::where('status', 1)
+            ->where('id', '!=', $post->id)
+            ->latest('updated_at')
+            ->take(5)
+            ->get();
+
+        return view('frontend.post.detail', compact('post', 'relatedPosts', 'trendingPosts'));
     }
     public function postByCate(PostCategory $postCategory)
     {
@@ -42,19 +59,22 @@ class PostController extends Controller
         } else {
             $categoryIds = [$postCategory->id];
         }
+        
         $posts = Post::whereIn('post_category_id', $categoryIds)
-        ->where('status', 1)
-        ->latest()
-        ->paginate(10);
-        $featuredPosts = Post::where('status', 1)
-        ->latest('updated_at')
-        ->limit(5)
-        ->get();
+            ->where('status', 1)
+            ->latest()
+            ->paginate(10);
+
+        $trendingPosts = Post::where('status', 1)
+            ->latest('updated_at')
+            ->take(5)
+            ->get();
+
         return view('frontend.post.postByCate', [
             'category' => $postCategory,
             'posts' => $posts,
             'allCategories' => $allCategories,
-            'featuredPosts' => $featuredPosts,
+            'trendingPosts' => $trendingPosts,
         ]);
     }
 }

@@ -27,6 +27,7 @@ class GlobalBulkActionController extends Controller
         'career_application' => \App\Models\CareerApplication::class,
         'user' => \App\Models\User::class,
         'order' => \App\Models\Order::class,
+        'member' => \App\Models\DealerProfile::class,
         // Thêm model mới vào đây là xong
     ];
 

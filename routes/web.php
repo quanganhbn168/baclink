@@ -21,6 +21,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\PageContentController;
 use App\Http\Controllers\Frontend\CareerController;
+use App\Http\Controllers\Frontend\MemberController;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomerWelcomeEmail;
 use App\Http\Controllers\MediaLibraryController;
@@ -91,6 +92,8 @@ Route::get('/order-success', [CheckoutController::class, 'success'])->name('chec
 
 Route::get('/tuyen-dung', [CareerController::class, 'index'])->name('frontend.careers.index');
 Route::get('/tuyen-dung/{career:slug}', [CareerController::class, 'show'])->name('frontend.careers.show');
+
+Route::get('/hoi-vien', [MemberController::class, 'index'])->name('frontend.members.index');
 
 Route::get('thank-you',function(){
     return view('page/thank-you');

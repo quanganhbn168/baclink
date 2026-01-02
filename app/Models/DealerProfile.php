@@ -21,7 +21,16 @@ class DealerProfile extends Model
         'wallet_balance',
         'total_spent',
         'discount_rate',
-        'admin_note'
+        'admin_note',
+        'honorific',
+        'position',
+        'business_sector',
+        'company_intro',
+        'featured_products',
+        'website',
+        'assistant_name',
+        'assistant_phone',
+        'assistant_email',
     ];
 
     // Quan hệ ngược về User

@@ -1,20 +1,3 @@
-.section-title {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1.3;
-    text-transform: uppercase;
-    position: relative;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-}
-
-.section-title a {
-    color: var(--cnet-blue-primary);
-    text-decoration: none;
-}
-
 .daily-box {
     border-radius: 8px;
     background-color: #ededed;
@@ -43,12 +26,6 @@ section#slider {
     padding: 0px;
 }
 
-.product-section {
-    background-image: url('../images/setting/car-bg.webp');
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-size: 100% 50%;
-}
 
 /* Homepage Specific */
 .section-partners {
@@ -75,7 +52,7 @@ section#slider {
 .product-item,
 .post-item {
     background: #fff;
-    border-radius: var(--border-radius);
+    border-radius: var(--asymmetric-radius);
     overflow: hidden;
     transition: var(--transition);
     height: 100%;
@@ -162,4 +139,308 @@ section#slider {
     transition: var(--transition);
     border: none;
     margin-top: 30px;
+}
+
+/* Partner Marquee */
+.partner-slider-row1 .swiper-wrapper,
+.partner-slider-row2 .swiper-wrapper {
+    transition-timing-function: linear !important;
+}
+
+/* Partner Section Redesign (HAMI Style) */
+.partner-section {
+    background-color: #f8f9fa;
+}
+
+.partner-item-simple {
+    background: #fff;
+    padding: 15px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.partner-item-simple img {
+    max-height: 50px;
+    max-width: 100%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.partner-item-simple:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+}
+
+.partner-marquee-single .swiper-wrapper {
+    transition-timing-function: linear !important;
+}
+
+.event-photo-slider {
+    padding: 40px 0;
+}
+
+.event-photo-item {
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.event-photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.event-photo-slider .swiper-slide {
+    width: 60%;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.event-photo-slider .swiper-slide-active {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .event-photo-slider .swiper-slide {
+        width: 80%;
+    }
+}
+
+/* Member Section Redesign (HAMI Style) */
+.member-section {
+    overflow: hidden;
+}
+
+.industry-wheel-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.industry-wheel {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wheel-center {
+    width: 120px;
+    height: 120px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 20px;
+}
+
+.wheel-center img {
+    max-width: 100%;
+    height: auto;
+}
+
+.wheel-items {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.wheel-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90px;
+    height: 90px;
+    margin-top: -45px;
+    margin-left: -45px;
+    transform: rotate(calc(var(--index) * 45deg)) translateY(-160px) rotate(calc(var(--index) * -45deg));
+    z-index: 5;
+}
+
+@media (max-width: 576px) {
+    .wheel-item {
+        width: 70px;
+        height: 70px;
+        margin-top: -35px;
+        margin-left: -35px;
+        transform: rotate(calc(var(--index) * 45deg)) translateY(-120px) rotate(calc(var(--index) * -45deg));
+    }
+}
+
+.wheel-item-inner {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 50%;
+    border: 2px solid var(--bubble-color, #eee);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.wheel-icon {
+    font-size: 16px;
+    color: var(--bubble-color);
+    margin-bottom: 2px;
+}
+
+@media (max-width: 576px) {
+    .wheel-icon {
+        font-size: 12px;
+    }
+}
+
+.wheel-item:hover .wheel-item-inner {
+    transform: scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.industry-name {
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #333;
+}
+
+/* Industry Specific Colors (Matching HAMI Image) */
+.industry-1 {
+    --bubble-color: #92d050;
+}
+
+.industry-2 {
+    --bubble-color: #ffc000;
+}
+
+.industry-3 {
+    --bubble-color: #ed7d31;
+}
+
+.industry-4 {
+    --bubble-color: #ff5c5c;
+}
+
+.industry-5 {
+    --bubble-color: #7030a0;
+}
+
+.industry-6 {
+    --bubble-color: #0070c0;
+}
+
+.industry-7 {
+    --bubble-color: #00b0f0;
+}
+
+.industry-8 {
+    --bubble-color: #4472c4;
+}
+
+/* Featured Member List */
+.featured-member-list {
+    padding: 10px;
+}
+
+.featured-member-item {
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border-left: 5px solid transparent;
+}
+
+.featured-member-item:hover {
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border-left-color: var(--red);
+    transform: translateX(10px);
+}
+
+.member-logo {
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.member-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.company-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.representative-info {
+    color: #555;
+    font-size: 14px;
+}
+
+.rep-name {
+    font-weight: 700;
+}
+
+.rep-role {
+    font-style: italic;
+}
+
+.btn-red {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    padding: 12px 35px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-red:hover {
+    background: var(--red-hover);
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(197, 160, 101, 0.3);
+}
+
+.rounded-px {
+    border-radius: 30px;
 }

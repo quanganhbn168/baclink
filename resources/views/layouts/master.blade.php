@@ -39,6 +39,11 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?v={{ filemtime(public_path('css/responsive.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/project-slider.css') }}?v={{ filemtime(public_path('css/project-slider.css')) }}">
+    <style>
+        :root {
+            --site-favicon: url('{{ asset($setting->favicon) }}');
+        }
+    </style>
 
     @stack('css')
     {!!$setting->head_script!!}

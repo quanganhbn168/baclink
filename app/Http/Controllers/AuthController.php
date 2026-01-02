@@ -55,28 +55,76 @@ class AuthController extends Controller
         ];
 
         $attributes = [
-            'name' => 'Họ và tên',
+            'name' => 'Tên chủ doanh nghiệp',
             'phone' => 'Số điện thoại',
             'email' => 'Email',
             'password' => 'Mật khẩu',
+            'company_name' => 'Tên công ty',
+            'honorific' => 'Danh xưng',
+            'position' => 'Chức danh',
+            'business_sector' => 'Nhóm ngành sản xuất',
+            'company_intro' => 'Giới thiệu công ty',
+            'featured_products' => 'Sản phẩm nổi bật',
+            'website' => 'Website',
         ];
 
         $data = $request->validate([
+            // User info
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'unique:users,phone'],
-            'email' => ['required', 'email', 'unique:users,email'],
+            'email' => ['nullable', 'email', 'unique:users,email'], // Nullable as per form implication, but check Auth
             'password' => ['required', 'min:6', 'confirmed'],
+            
+            // Dealer/Company info
+            'company_name' => ['required', 'string', 'max:255'],
+            'honorific' => ['required', 'string'],
+            'position' => ['required', 'string'],
+            'business_sector' => ['required', 'string'],
+            'company_intro' => ['required', 'string'],
+            'featured_products' => ['required', 'string'],
+            'website' => ['required', 'string'],
+
+            // Assistant info (Nullable)
+            'assistant_name' => ['nullable', 'string'],
+            'assistant_phone' => ['nullable', 'string'],
+            'assistant_email' => ['nullable', 'email'],
         ], $messages, $attributes);
+
+        // Handle empty email for User creation if necessary
+        // Auth requires email usually? Let's check User model.
+        // Assuming we need a unique email, if user leaves it blank, we might need a workaround or just require column nullable.
+        // For now, let's assume email is provided or we generate a placeholder. 
+        // Changing strategy: If email is empty, use phone@baclink.local
+        $email = $data['email'] ?? ($data['phone'] . '@baclink.local');
 
         $user = User::create([
             'name' => $data['name'],
             'phone' => $data['phone'],
-            'email' => $data['email'],
+            'email' => $email,
             'password' => Hash::make($data['password']),
         ]);
         $user->assignRole('customer');
+
+        // Create Dealer Profile
+        \App\Models\DealerProfile::create([
+            'user_id' => $user->id,
+            'company_name' => $data['company_name'],
+            'representative_name' => $data['name'],
+            'honorific' => $data['honorific'],
+            'position' => $data['position'],
+            'business_sector' => $data['business_sector'],
+            'company_intro' => $data['company_intro'],
+            'featured_products' => $data['featured_products'],
+            'website' => $data['website'],
+            'assistant_name' => $data['assistant_name'],
+            'assistant_phone' => $data['assistant_phone'],
+            'assistant_email' => $data['assistant_email'],
+            'address' => 'Đang cập nhật', // Placeholder as form has no address
+            'phone' => $data['phone'], // Sync phone to profile
+        ]);
+
         Auth::login($user);
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Đăng ký hội viên thành công!');
     }
 
     public function logout(Request $request)

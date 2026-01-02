@@ -34,6 +34,10 @@ class Image extends Model
     // URL tiện dụng
     public function url(?string $variant = null): string
     {
+        if (!$variant && $this->image && (strpos($this->image, 'http') === 0)) {
+            return $this->image;
+        }
+        
         $path = $variant ? ($this->variants[$variant] ?? null) : $this->main_path;
         return $path ? \Storage::disk($this->disk)->url($path) : '';
     }

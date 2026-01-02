@@ -36,6 +36,7 @@ use App\Http\Controllers\Admin\FieldController as AdminFieldController;
 use App\Http\Controllers\Admin\CareerController;
 use App\Http\Controllers\Admin\SlugAjaxController;
 use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\MemberController;
 
 Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -105,6 +106,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
     Route::patch('dealer-applications/{id}/status', [DealerApplicationController::class, 'updateStatus'])
          ->name('dealer-applications.status');
     Route::resource('branches', BranchController::class);
+    Route::resource('members', MemberController::class);
     Route::get('/file-manager', [App\Http\Controllers\Admin\FileManagerController::class, 'index'])->name('file-manager.index');
 
     // --- QUẢN LÝ MENU (AlpineJS Refactor) ---

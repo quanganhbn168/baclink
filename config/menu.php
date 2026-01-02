@@ -9,6 +9,14 @@ return [
         'permission' => 'view-dashboard',
     ],
 
+    // ===== HỘI VIÊN (MỚI) =====
+    [
+        'title' => 'Quản lý Hội viên',
+        'icon' => 'bi bi-person-badge-fill',
+        'route' => 'admin.members.index',
+        'active_pattern' => 'admin.members.*',
+    ],
+
     // ===== NHÓM 1: SẢN PHẨM & DỊCH VỤ =====
     ['type' => 'header', 'title' => 'SẢN PHẨM'],
 
@@ -20,18 +28,18 @@ return [
         'submenu' => [
             ['title' => 'Danh mục sản phẩm', 'route' => 'admin.categories.index', 'active_pattern' => 'admin.categories.*'],
             ['title' => 'Sản phẩm',           'route' => 'admin.products.index',  'active_pattern' => 'admin.products.*'],
-            ['title' => 'Thuộc tính',         'route' => 'admin.attributes.index','active_pattern' => 'admin.attributes.*'],
+            // ['title' => 'Thuộc tính',         'route' => 'admin.attributes.index','active_pattern' => 'admin.attributes.*'],
         ],
     ],
     // ===== NHÓM 1: Đơn hàng =====
-    ['type' => 'header', 'title' => 'Đơn hàng'],
+    /*['type' => 'header', 'title' => 'Đơn hàng'],
 
     [
         'title' => 'Quản lý Đơn hàng',
         'icon' => 'bi bi-boxes',
         'route' => 'admin.orders.index',
         'active_pattern' => 'admin.orders.*',
-    ],
+    ],*/
     
     /*[
         'title' => 'Quản lý dịch vụ',
@@ -109,7 +117,7 @@ return [
     // ===== NHÓM 4: ĐỐI TÁC & TUYỂN DỤNG =====
     ['type' => 'header', 'title' => 'ĐỐI TÁC & TUYỂN DỤNG'],
 
-    [
+    /*[
         'title' => 'Quản lý Đại lý',
         'icon' => 'bi bi-people',
         'active_pattern' => ['admin.agents.*','admin.dealer-applications.*'],
@@ -126,7 +134,7 @@ return [
         'route' => 'admin.careers.index',
         'active_pattern' => 'admin.careers.*',
         'permission' => 'manage-careers',
-    ],
+    ],*/
 
     // ===== NHÓM 5: HỆ THỐNG =====
     ['type' => 'header', 'title' => 'HỆ THỐNG'],

@@ -20,7 +20,7 @@
 <header class="header">
     <!-- Header Top -->
     <div class="main-header">
-        <div class="container-fluid">
+        <div class="container">
             <div class="main-header-inner">
                 <div class="header-col-left">
                     <div class="mobile-menu-toggle d-lg-none">
@@ -69,34 +69,6 @@
                     <a href="{{ route('register') }}" class="btn btn-red-cta">ĐĂNG KÝ HỘI VIÊN</a>
                 </div>
                 </div>
-                <div class="header-col-right">
-                    <ul class="box-header d-flex d-md-none justify-content-center align-items-center mb-0">
-                        <li>
-    @auth
-        {{-- Nội dung chỉ hiện khi ĐÃ đăng nhập --}}
-        <a href="{{ route('user.dashboard') }}">
-            <i class="fa-regular fa-user"></i> 
-        </a>
-    @endauth
-
-    @guest
-        {{-- Nội dung chỉ hiện khi CHƯA đăng nhập (Khách) --}}
-        <a href="{{ route('login') }}">
-            <i class="fa-regular fa-user"></i>
-        </a>
-    @endguest
-</li>
-                        <li class="cart-icon-wrapper position-relative">
-                            <a href="{{ route('cart.page') }}">
-                                <i class="fa-solid fa-bag-shopping"></i>
-                                <span class="cart-count" data-role="cart-count" data-place="mobile" aria-hidden="true">0</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <div class="d-none d-lg-block">
-                        <a href="{{ route('register') }}" class="text-white">Đăng ký tài khoản</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -118,73 +90,6 @@
     <div class="offcanvas-menu-content">
         </div>
 </div>
-<div class="cart-offcanvas-wrapper">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Giỏ Hàng Của Bạn</h5>
-        <a href="#" class="offcanvas-close js-close-cart"><i class="fa fa-times"></i></a>
-    </div>
-    @auth('web')
-        <div class="offcanvas-body">
-            @forelse($cartItems as $item)
-            <div class="cart-item cart-item-auth">
-                <div class="cart-item_image">
-                    <img src="{{ asset($item->product->image ?? 'https://placehold.co/100x100') }}" alt="{{ $item->product->name }}">
-                </div>
-                <div class="cart-item_info">
-                    <a href="{{ route('frontend.product.show', $item->product->slug) }}" class="item-name">{{ $item->product->name }}</a>
-                    <div class="item-meta">
-                        <span class="item-price">{{ number_format($item->product->price) }}đ</span>
-                        <span class="item-quantity">x {{ $item->quantity }}</span>
-                    </div>
-                </div>
-                <a href="#" class="item-remove" title="Xóa sản phẩm" data-item-id="{{ $item->id }}">
-                    <i class="fa fa-trash"></i>
-                </a>
-            </div>
-            @empty
-            <p class="text-center p-4">Giỏ hàng của bạn đang trống.</p>
-            @endforelse
-        </div>
-        <div class="offcanvas-footer">
-            <div class="cart-summary">
-                <span>Tổng cộng:</span>
-                <span class="total-price">{{ number_format($cartTotal ?? 0) }}đ</span>
-            </div>
-            <a href="/cart" class="btn btn-dark w-100">Xem Giỏ Hàng</a>
-            <a href="/checkout" class="btn btn-primary w-100 mt-2">Thanh Toán</a>
-        </div>
-    @else
-        <div id="guest-cart-body" class="offcanvas-body">
-            <p class="text-center p-4">Giỏ hàng của bạn đang trống.</p>
-        </div>
-        <div id="guest-cart-footer" class="offcanvas-footer" style="display: none;">
-            <div class="cart-summary">
-                <span>Tổng cộng:</span>
-                <span id="guest-cart-total" class="total-price">0đ</span>
-            </div>
-            <a href="/cart" class="btn btn-dark w-100">Xem Giỏ Hàng</a>
-            <a href="/checkout" class="btn bg-main w-100 mt-2">Thanh Toán</a>
-        </div>
-    @endauth   
-</div>
-<template id="guest-cart-item-template">
-    <div class="cart-item">
-        <div class="cart-item_image">
-            <img src="__IMAGE__" alt="__NAME__">
-        </div>
-        <div class="cart-item_info">
-            <a href="__URL__" class="item-name">__NAME__</a>
-            <div class="item-variant text-muted small">__VARIANT__</div>
-            <div class="item-meta">
-                <span class="item-price">__PRICE__đ</span>
-                <span class="item-quantity">x __QUANTITY__</span>
-            </div>
-        </div>
-        <a href="#" class="item-remove" title="Xóa sản phẩm" data-item-id="__ID__">
-            <i class="fa fa-trash"></i>
-        </a>
-    </div>
-</template>
 <div class="offcanvas-overlay"></div>
 @push('js')
 <script>

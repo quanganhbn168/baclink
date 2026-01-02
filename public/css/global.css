@@ -1,4 +1,60 @@
 @font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-Book.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-BookItalic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FS Magistral';
+    src: url('../fonts/FSMagistral/FSMagistral-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
     font-family: 'Oswald';
     src: url('../fonts/oswald-500-vn.woff2') format('woff2');
     font-weight: 500;
@@ -43,12 +99,12 @@
 }
 
 :root {
-    --font-primary: 'Inter', sans-serif;
-    --font-secondary: 'Oswald', sans-serif;
-    --blue: #0E1830;
-    --red: #E5282B;
-    --red-hover: #C42124;
-    --bg-dark: #0E1830;
+    --font-primary: 'Oswald', sans-serif;
+    --font-secondary: 'FS Magistral', sans-serif;
+    --blue: #003366;
+    --red: #C5A065;
+    --red-hover: #A0804D;
+    --bg-dark: #003366;
     --bg-light: #ffffff;
     --bg-alt: #F5F5FA;
     --border-radius: 8px;
@@ -221,7 +277,7 @@ section {
     -webkit-box-orient: vertical
 }
 
-.section-title-theme {
+.section-title {
     font-family: var(--font-secondary);
     font-size: clamp(2rem, 1.5rem + 3vw, 48px);
     font-weight: 700;
@@ -236,26 +292,23 @@ section {
     gap: 15px;
 }
 
-.section-title-theme::before {
+.section-title::before {
     content: "";
     display: block;
     width: 35px;
     height: 35px;
-    background: url('../images/setting/logo.png') center center / contain no-repeat;
-    filter: brightness(0) saturate(100%) invert(18%) sepia(85%) devia(4955%) hue-rotate(352deg) brightness(91%) contrast(97%);
+    background: var(--site-favicon) center center / contain no-repeat;
+    /* filter: removed for original colors */
     /* Approximation of red */
 }
 
-.section-title-theme::after {
-    display: none;
-}
 
-.section-title-theme a {
+.section-title a {
     color: inherit;
     transition: var(--transition);
 }
 
-.section-title-theme a:hover {
+.section-title a:hover {
     opacity: 0.8;
 }
 
@@ -580,7 +633,7 @@ body.show-offcanvas {
     overflow: hidden;
     font-weight: 700;
     color: var(--text-dark);
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
 }
 
 .top-bar a {
@@ -742,7 +795,7 @@ body.show-offcanvas {
     padding: 10px 15px;
     color: var(--blue);
     text-transform: uppercase;
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
     font-size: 16px;
     font-weight: 500;
     position: relative;
@@ -775,7 +828,7 @@ body.show-offcanvas {
     padding: 10px 25px;
     border-radius: 4px;
     font-weight: 700;
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
     text-transform: uppercase;
     transition: var(--transition);
     border: none;
@@ -839,7 +892,7 @@ body.show-offcanvas .offcanvas-overlay {
     margin: 0;
     font-size: 16px;
     text-transform: uppercase;
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
 }
 
 .offcanvas-header .offcanvas-close {
@@ -869,7 +922,7 @@ body.show-offcanvas .offcanvas-overlay {
     padding: 12px 20px;
     color: var(--blue);
     border-bottom: 1px solid var(--border-dark);
-    font-family: var(--font-secondary);
+    font-family: var(--font-primary);
 }
 
 .offcanvas-menu-content ul li a:hover {
@@ -1150,18 +1203,6 @@ section.section-title-theme {
     position: relative;
     padding-bottom: 15px;
     color: var(--blue);
-}
-
-.section-title-theme::after {
-    content: "";
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: var(--red);
-    position: absolute;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .section-title-theme a {

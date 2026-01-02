@@ -39,14 +39,40 @@ class HomeController extends Controller
         $homeProjects = $homeProjectCategories->pluck('projects')->flatten();
         $homePosts = Post::where('status', 1)
             ->where('is_home', 1)
+            ->with('category')
             ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
+            
+        $members = \App\Models\User::where('email', 'like', 'member%@baclink.test')
+            ->with('dealerProfile')
+            ->take(5)
+            ->get();
+
+        $industries = [
+            ['name' => 'Điện, Điện tử', 'icon' => 'fa-bolt'],
+            ['name' => 'CNTT, Kinh tế số', 'icon' => 'fa-laptop-code'],
+            ['name' => 'Hóa chất, cao su, ...', 'icon' => 'fa-flask'],
+            ['name' => 'Cơ khí, Chế tạo', 'icon' => 'fa-cog'],
+            ['name' => 'Nông sản, thực phẩm', 'icon' => 'fa-leaf'],
+            ['name' => 'Dệt may, da giày ...', 'icon' => 'fa-tshirt'],
+            ['name' => 'Vật liệu xây dựng', 'icon' => 'fa-building'],
+            ['name' => 'Thủ công mỹ nghệ', 'icon' => 'fa-palette'],
+        ];
+
         $careers = Career::get();
         $brands = Brand::get();
         $testimonials   = Testimonial::where('status', 1)->latest('id')->get();
 
-        return view('frontend.index', compact("slides","intro","homeProducts","homeCategories","homeServices","homeProjectCategories","homeFields","homeProjects","homePosts","careers","testimonials","brands"));
+        $eventPhotos = [
+            'https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=1200&h=800',
+            'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=1200&h=800',
+            'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=1200&h=800',
+            'https://images.unsplash.com/photo-1475721027785-f74dea327912?auto=format&fit=crop&q=80&w=1200&h=800',
+            'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1200&h=800',
+        ];
+
+        return view('frontend.index', compact("slides","intro","homeProducts","homeCategories","homeServices","homeProjectCategories","homeFields","homeProjects","homePosts","careers","testimonials","brands", "members", "industries", "eventPhotos"));
     }
     public function search(Request $request)
     {

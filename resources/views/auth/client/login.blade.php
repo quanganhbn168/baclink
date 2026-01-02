@@ -50,7 +50,7 @@
                 </form>
                 <div class="d-flex justify-content-between">
                     <a href="#">Quên mật khẩu?</a>
-                    <a href="{{ route('register') }}">Đăng ký tại đây</a>
+                    <a href="{{ route('register') }}">Đăng ký hội viên tại đây</a>
                 </div>
             </div>
         </div>

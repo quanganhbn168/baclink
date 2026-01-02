@@ -20,7 +20,7 @@
                         <div class="row no-gutters">
                             <div class="col-md-2 p-2">
                                 <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}">
-                                    <img src="{{ optional($result->mainImage())->url() ?? asset('images/no-image.png') }}" class="card-img" alt="{{ $result->name }}" style="max-height: 100px; object-fit: contain;">
+                                    <img src="{{ optional($result->mainImage())->url() ?? asset('images/setting/no-image.png') }}" class="card-img" alt="{{ $result->name }}" style="max-height: 100px; object-fit: contain;">
                                 </a>
                             </div>
                             <div class="col-md-10">
