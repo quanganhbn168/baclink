@@ -1,5 +1,0 @@
-ERROR CAUGHT:
-SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0965625210' for key 'users.users_phone_unique' (Connection: mysql, SQL: insert into `users` (`name`, `email`, `phone`, `password`, `updated_at`, `created_at`) values (Hội viên 2, member2@baclink.test, 0965625210, $2y$12$o0JFkpThBJTEsOhqhtKPoOQRCP9pa8LuiU0310mY9.Tsm1IwTG342, 2026-01-02 22:54:48, 2026-01-02 22:54:48))
-SQL that failed: insert into `users` (`name`, `email`, `phone`, `password`, `updated_at`, `created_at`) values (?, ?, ?, ?, ?, ?)
-Bindings: ["H\u1ed9i vi\u00ean 2","member2@baclink.test","0965625210","$2y$12$o0JFkpThBJTEsOhqhtKPoOQRCP9pa8LuiU0310mY9.Tsm1IwTG342","2026-01-02 22:54:48","2026-01-02 22:54:48"]
-In file: D:\laragon\www\baclink\vendor\laravel\framework\src\Illuminate\Database\Connection.php on line 820
