@@ -45,6 +45,17 @@ php artisan migrate:fresh --seed
 *   **Email**: `admin@baclink.vn`
 *   **Password**: `password` (hoặc `12345678` tùy cấu hình seed)
 
+### 4. Cấu hình quyền (Permission) cho aaPanel/VPS
+Nếu deploy lên VPS (đặc biệt là aaPanel), bạn cần cấp quyền ghi cho các thư mục hệ thống:
+
+```bash
+# Cách 1: Dùng lệnh (trong Terminal)
+chmod -R 775 storage bootstrap/cache
+chown -R www:www storage bootstrap/cache # Với aaPanel user thường là 'www'
+```
+
+*Lưu ý: Trong giao diện aaPanel, bạn có thể vào "Files", tìm đến thư mục code, nhấp chuột phải chọn "Permission", set User là `www` và quyền là `755` cho toàn bộ thư mục.*
+
 ---
 
 ## 🛠 Hướng dẫn vận hành
