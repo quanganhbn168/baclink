@@ -36,7 +36,7 @@ php artisan key:generate
 
 Chạy migration và seed dữ liệu mẫu (Quan trọng để có Account Admin và Menu):
 ```bash
-php artisan migrate:fresh --seed --class=BaclinkSeeder
+php artisan migrate:fresh --seed
 ```
 *Lệnh này sẽ tạo lại database sạch và nạp dữ liệu cần thiết như Tài khoản Admin, Intro, Menu Header/Footer.*
 
