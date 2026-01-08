@@ -30,15 +30,9 @@
     <link rel="icon" href="{{ asset($setting->favicon) }}" type="image/x-icon" />
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset($setting->favicon) }}" />
     {{-- CSS & JS --}}
-    <link rel="stylesheet" href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/fontawesome/css/all.min.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/swiper/swiper-bundle.min.css')}}">
-    <link rel="stylesheet" href="{{asset('plugins/sweetalert2/bootstrap-4.min.css')}}">
-    <link rel="stylesheet" href="{{ asset('css/slide.css') }}?v={{ filemtime(public_path('css/slide.css')) }}">
-    <link rel="stylesheet" href="{{ asset('css/global.css') }}?v={{ filemtime(public_path('css/global.css')) }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?v={{ filemtime(public_path('css/responsive.css')) }}">
-    <link rel="stylesheet" href="{{ asset('css/project-slider.css') }}?v={{ filemtime(public_path('css/project-slider.css')) }}">
+    {{-- CSS & JS handled by Vite --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     <style>
         :root {
             --site-favicon: url('{{ asset($setting->favicon) }}');
@@ -84,17 +78,9 @@
         </a>
 
     </div>
-    <script src="{{asset('/js/jquery-3.7.1.min.js')}}?{{time()}}"></script>
-    <script src="{{asset('/vendor/bootstrap/popper.min.js')}}?{{time()}}"></script>
-    <script src="{{asset('/vendor/bootstrap/js/bootstrap.min.js')}}?{{time()}}"></script>
-    <script src="{{asset('/vendor/swiper/swiper-bundle.min.js')}}?{{time()}}"></script>
-    <script src="{{asset('plugins/sweetalert2/sweetalert2.min.js')}}"></script>
-    <script src="{{ asset('js/cart.js') }}"></script>
-    <script src="{{ asset('js/counter.js') }}"></script>
-    <script src="{{ asset('js/TabbedSwiperHandler.js') }}?v={{ filemtime(public_path('js/TabbedSwiperHandler.js')) }}"></script>
 
     @if(session('success'))
-    <script>
+    <script type="module">
         Swal.fire({
             icon: 'success',
             title: 'Thành công',
@@ -104,7 +90,7 @@
     </script>
     @endif
     @if(session('error'))
-    <script>
+    <script type="module">
         Swal.fire({
             icon: 'error',
             title: 'Lỗi',
@@ -113,67 +99,6 @@
         });
     </script>
     @endif
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    const backToTopButton = document.getElementById('js-back-to-top');
-
-    if (backToTopButton) {
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        backToTopButton.addEventListener('click', function (e) {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    }
-});
-    </script>
-    @push('js')
-    <script>
-    $(function () {
-        const $badges = $('[data-role="cart-count"]');
-        if (!$badges.length) return;
-
-        function renderQty(qty) {
-            qty = Number(qty || 0);
-            $badges.each(function () {
-                const $b = $(this);
-                $b.text(qty);
-
-                if (qty > 0) {
-                    // Luôn là flex theo yêu cầu
-                    $b.css('display', 'flex').attr('aria-hidden', 'false');
-                } else {
-                    $b.css('display', 'none').attr('aria-hidden', 'true');
-                }
-            });
-        }
-
-        // Lấy count ban đầu
-        $.ajax({
-            url: "{{ route('cart.index') }}",
-            method: "GET",
-            headers: { "Accept": "application/json" }
-        }).done(function (data) {
-            renderQty(data?.total_quantity);
-        }).fail(function () {
-            console.warn("Could not load cart count.");
-        });
-
-        // Nếu nơi khác cần cập nhật realtime, chỉ việc bắn event này:
-        // $(document).trigger('cart:count-refresh', { qty: 5 });
-        $(document).on('cart:count-refresh', function (e, payload) {
-            renderQty(payload?.qty);
-        });
-    });
-    </script>
-    @endpush
-
 
     @stack('js')
 </body>

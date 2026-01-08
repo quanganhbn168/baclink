@@ -4,7 +4,7 @@
 @section('title', $category->name)
 
 @push('css')
-<link rel="stylesheet" href="{{asset('css/product.css')}}">
+@vite(['resources/css/custom/product.css'])
 @endpush
 
 @section("content")

@@ -2,7 +2,7 @@
 @section('title', $category->name . ' - ' . $setting->name)
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
+    @vite(['resources/css/custom/post.css'])
 @endpush
 
 @section('content')
@@ -18,7 +18,7 @@
         <div class="row">
             <!-- Left Column: Post List -->
             <div class="col-lg-9">
-                <h1 class="sidebar-heading" style="font-size: 24px; border-bottom: none; margin-bottom: 30px;">{{ $category->name }}</h1>
+                <h1 class="sidebar-heading text-blue" style="font-size: 24px; border-bottom: none; margin-bottom: 30px;">{{ $category->name }}</h1>
 
                 <div class="cate-post-list">
                     @forelse($posts as $index => $post)

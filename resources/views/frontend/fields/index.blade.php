@@ -2,62 +2,81 @@
 @section('title', $pageTitle)
 
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/product.css') }}">
+<style>
+    .field-banner {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{{ asset('images/setting/hero_bg_new.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        padding: 100px 0;
+        color: #fff;
+    }
+    .field-category-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .field-category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .field-category-img {
+        height: 200px;
+        object-fit: cover;
+    }
+    .category-title {
+        color: var(--blue);
+        font-weight: 700;
+        transition: color 0.3s;
+    }
+    .field-category-card:hover .category-title {
+        color: var(--red);
+    }
+</style>
 @endpush
 
 @section('content')
 
-{{-- Phần Banner --}}
-<div class="banner">
-    @isset($category)
-        <img src="{{ optional($category->bannerImage()->url() ?? '') }}" alt="{{ $category->name }}">
-    @else
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-5">
-                    <img src="{{ asset('images/setting/contractors-bg-1.png') }}" alt="Lĩnh vực hoạt động">
-                </div>
-                <div class="col-md-7">
-                    <h3 class="">
-                        Cnet Group Là đơn vị thi công uy tín với đội ngũ 50+ nhân sự có chuyên môn cao.
-                    </h3>
-                    <div>
-                        tổng thầu Tư vấn, thiết kế, thi công, bảo trì bảo dưỡng về Xây dựng, Cơ điện và Nội thất cho các công trình dân dụng, nhà máy, khách sạn, chung cư cao tầng tại Bắc Ninh, Bắc Giang và các tỉnh lân cận. Với hơn 10 năm kinh nghiệm cùng các đội ngũ kỹ sư lành nghề, phương trâm làm việc lấy uy tín, trách nhiệm, coi trọng khách hàng là mục tiêu lớn nhất mà Tân Tiến luôn hướng tới. Tầm nhìn của Tân Tiến Group sẽ trở thành nhà thầu cung cấp các dịch vụ về Xây dựng, Cơ điện và Nội thất tốt nhất miền Bắc. Quý đối tác có nhu cầu hãy liên hệ với Tân Tiến để nhận được những công trình có chất lượng tốt nhất.
-                    </div>
-                    <a href="tel:{{ $setting->phone }}" class="btn btn-primary rounded-pill btn-crossover">
-                        <span class="btn-crossover-text">Gọi ngay</span>
-                        <span class="btn-crossover-icon">
-                            <i class="fa-solid fa-arrow-right-long"></i>
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    @endisset
+{{-- Breadcrumbs --}}
+<div class="bg-light py-3">
+    <div class="container container-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 bg-transparent p-0">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $pageTitle }}</li>
+            </ol>
+        </nav>
+    </div>
 </div>
 
-{{-- Phần Lĩnh vực hoạt động --}}
-<section class="section section-field">
-    @isset($category)
-        <h2 class="section-title"><a href="{{ route('frontend.slug.handle', $category->slug) }}">{{ $category->name }}</a></h2>
-    @else
-        <h2 class="section-title"><a href="{{ route('frontend.fields.index') }}">Lĩnh vực hoạt động</a></h2>
-    @endisset
-
+{{-- Page Header --}}
+<div class="field-banner text-center">
     <div class="container">
+        <h1 class="display-4 font-weight-bold mb-3">{{ $pageTitle }}</h1>
+        <p class="lead">BACLINK - Hệ sinh thái kết nối và phát triển doanh nghiệp bền vững</p>
+    </div>
+</div>
+
+<section class="section py-5">
+    <div class="container container-custom">
         <div class="row">
             @foreach($field_categories as $field_category)
-            <div class="col-6 col-md-4">
-                <div class="field-category-item">
-                    <div class="field-category-item__image">
-                        <a href="{{ route('frontend.slug.handle', $field_category->slug) }}">
-                            <img src="{{ asset($field_category->image) }}" alt="{{ $field_category->name }}">
-                        </a>
-                    </div>
-                    <div class="field-category-item__name">
-                        <a href="{{ route('frontend.slug.handle', $field_category->slug) }}">
-                            {{ $field_category->name }}
-                        </a>
+            <div class="col-6 col-md-4 mb-4">
+                <div class="card field-category-card h-100 shadow-sm">
+                    <a href="{{ route('frontend.slug.handle', $field_category->slug) }}">
+                        <img src="{{ optional($field_category->mainImage())->url() ?? asset('images/setting/no-image.png') }}" 
+                             alt="{{ $field_category->name }}" 
+                             class="card-img-top field-category-img">
+                    </a>
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">
+                            <a href="{{ route('frontend.slug.handle', $field_category->slug) }}" class="category-title text-decoration-none">
+                                {{ $field_category->name }}
+                            </a>
+                        </h5>
+                        @if($field_category->fields->count() > 0)
+                            <p class="text-muted small mt-2 mb-0">{{ $field_category->fields->count() }} lĩnh vực</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -65,5 +84,4 @@
         </div>
     </div>
 </section>
-
 @endsection

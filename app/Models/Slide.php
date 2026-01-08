@@ -19,6 +19,7 @@ class Slide extends Model
         'position',
         'status',
         'is_home',
+        'description',
     ];
     protected $casts = [
         'image' => 'json',
@@ -50,7 +51,17 @@ class Slide extends Model
      */
     public function getImageUrlAttribute(): string
     {
-        return $this->image ? asset($this->image) : asset('images/setting/no-image.png');
+        // 1. Check MediaService relation first
+        if ($this->mainImage()) {
+            return $this->mainImage()->url();
+        }
+
+        // 2. Check legacy column
+        if (!empty($this->image) && is_string($this->image)) {
+             return asset($this->image);
+        }
+
+        return asset('images/setting/no-image.png');
     }
 
     /**

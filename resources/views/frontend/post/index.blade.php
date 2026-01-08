@@ -2,7 +2,7 @@
 @section('title', 'Tin tức - ' . $setting->name)
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
+    @vite(['resources/css/custom/post.css'])
 @endpush
 
 @section('content')
@@ -15,7 +15,7 @@
             <span class="active">Tin tức</span>
         </nav>
 
-        <h1 class="member-page-title" style="text-align: left; margin: 20px 0 40px; padding-bottom: 0;">TIN MỚI - SỰ KIỆN</h1>
+        <h1 class="member-page-title text-blue" style="text-align: left; margin: 20px 0 40px; padding-bottom: 0;">TIN MỚI - SỰ KIỆN</h1>
 
         <div class="row">
             <!-- Left Column: Aggregated News -->

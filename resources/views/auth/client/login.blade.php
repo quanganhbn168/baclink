@@ -1,7 +1,7 @@
 @extends('layouts.master')
 @section('title','Đăng nhập tài khoản')
 @push('css')
-<link rel="stylesheet" href="{{asset('css/auth.css')}}">
+@vite(['resources/css/custom/auth.css'])
 @endpush
 @section("content")
 <div id="breadcrumb" class="bg-light">

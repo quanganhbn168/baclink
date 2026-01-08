@@ -44,4 +44,19 @@ class Post extends Model
     {
         return $this->belongsTo(PostCategory::class, 'post_category_id');
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        // 1. Check MediaService relation first
+        if ($this->mainImage()) {
+            return $this->mainImage()->url();
+        }
+
+        // 2. Check legacy column
+        if (!empty($this->image) && is_string($this->image)) {
+             return asset($this->image);
+        }
+
+        return asset('images/setting/no-image.png');
+    }
 }

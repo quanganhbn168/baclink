@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\HasImages;
+
 class DealerProfile extends Model
 {
-    use HasFactory;
+    use HasFactory, HasImages;
 
     protected $fillable = [
         'user_id',
@@ -37,5 +39,14 @@ class DealerProfile extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getLogoUrlAttribute(): string
+    {
+        if ($this->mainImage()) {
+            return $this->mainImage()->url();
+        }
+
+        return asset('images/setting/no-image.png');
     }
 }

@@ -57,7 +57,6 @@ section#slider {
     transition: var(--transition);
     height: 100%;
     display: flex;
-    flex-direction: column;
 }
 
 .product-item:hover,
@@ -115,7 +114,7 @@ section#slider {
 
 .product-price {
     font-family: var(--font-secondary);
-    color: var(--red);
+    color: var(--gold);
     font-weight: 700;
     font-size: 1.2rem;
     margin-top: auto;
@@ -128,7 +127,7 @@ section#slider {
 }
 
 .slide-overlay .btn-register {
-    background-color: var(--red);
+    background-color: var(--gold);
     color: #fff;
     padding: 15px 40px;
     border-radius: 4px;
@@ -381,7 +380,7 @@ section#slider {
 .featured-member-item:hover {
     background: #fff;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border-left-color: var(--red);
+    border-left-color: var(--gold);
     transform: translateX(10px);
 }
 
@@ -425,7 +424,7 @@ section#slider {
 }
 
 .btn-red {
-    background: var(--red);
+    background: var(--gold);
     color: #fff;
     border: none;
     font-weight: 700;
@@ -435,12 +434,158 @@ section#slider {
 }
 
 .btn-red:hover {
-    background: var(--red-hover);
+    background: var(--gold-hover);
     color: #fff;
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(197, 160, 101, 0.3);
 }
 
 .rounded-px {
-    border-radius: 30px;
+    border-radius: 50px !important;
+}
+
+/* Gradient Overlay for Featured Post */
+.bg-gradient-dark {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Member Section Decoration */
+.member-section {
+    position: relative;
+    background-color: #f8f9fa;
+    z-index: 1;
+}
+
+.member-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2    fill='%23C5A065' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Fields of Activity Section */
+.fields-section {
+    position: relative;
+    background-color: #ffffff;
+}
+
+.field-card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.field-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.field-img-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 65%;
+}
+
+.field-img-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.field-card:hover .field-img-container img {
+    transform: scale(1.05);
+}
+
+.field-content {
+    background: #fff;
+    padding: 1.25rem;
+    border-top: 3px solid var(--gold);
+}
+
+.field-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.field-title a:hover {
+    color: var(--gold);
+}
+
+.field-desc {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Member Section Redesign */
+.member-card {
+    border: 1px solid #f0f0f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    border-color: #fff;
+}
+
+.member-name {
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.member-card:hover .member-name {
+    color: var(--gold) !important;
+}
+
+.member-company {
+    line-height: 1.4;
+}
+
+.member-slider .swiper-pagination-bullet-active {
+    background-color: var(--gold);
+}
+
+/* Refining Intro Home Section Scale */
+.intro-home-section {
+    padding: 60px 0 !important;
+}
+
+.intro-home-title {
+    font-size: clamp(1.5rem, 1.2rem + 2vw, 2.5rem) !important;
+    line-height: 1.2 !important;
+    font-weight: 700;
+    margin-bottom: 1.5rem !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding-left: 0 !important;
+}
+
+.intro-home-title::before {
+    display: none !important;
+    /* Remove the icon for this specific title to save space */
+}
+
+.intro-home-section .intro-content {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.intro-home-section .img-fluid {
+    max-height: 380px !important;
+    width: auto;
+    margin: 0 auto;
 }

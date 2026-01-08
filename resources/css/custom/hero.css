@@ -1,0 +1,161 @@
+/* resources/css/custom/hero.css */
+
+.hero-slider-section {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    min-height: 500px;
+    font-family: var(--font-secondary);
+    overflow: hidden;
+    padding: 0px !important;
+    /* User requested padding 0px */
+}
+
+.hero-slider,
+.hero-slide {
+    width: 100%;
+    height: 100%;
+}
+
+.hero-slide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Ảnh nền phủ kín */
+.hero__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Lớp phủ */
+.hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.95) 15%, rgba(255, 255, 255, 0.3) 100%);
+    z-index: 0;
+}
+
+.hero__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.hero__content {
+    max-width: 700px;
+}
+
+.hero__title {
+    font-size: 42px;
+    font-weight: 800;
+    color: #1a2a5a;
+    line-height: 1.25;
+    margin-bottom: 20px;
+}
+
+.hero__title br {
+    display: block;
+}
+
+.hero__subtitle {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 35px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Button */
+.hero__btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--gold);
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 50px;
+    /* Rounded pill style */
+    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(197, 160, 101, 0.35);
+}
+
+.hero__btn:hover {
+    background-color: var(--gold-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(197, 160, 101, 0.5);
+    color: #fff;
+}
+
+.hero__btn-icon {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.hero__btn-main {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.hero__btn-sub {
+    display: block;
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+/* Animation cho text khi slide change */
+.animated-text {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.swiper-slide-active .animated-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.hero-slider .swiper-pagination-bullet-active {
+    background: var(--gold);
+}
+
+@media (max-width: 768px) {
+    .hero__title {
+        font-size: 28px;
+    }
+
+    .hero__subtitle {
+        font-size: 24px;
+    }
+
+    .hero__content {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .hero__overlay {
+        background: rgba(255, 255, 255, 0.85);
+        /* Mobile cần nền rõ hơn */
+    }
+
+    .hero__btn {
+        margin-top: 10px;
+    }
+}

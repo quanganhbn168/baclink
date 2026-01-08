@@ -41,11 +41,14 @@ class MenuController extends Controller
         // Link hệ thống định nghĩa ngay tại đây để dễ quản lý
         $systemLinks = [
             ['title' => 'Trang chủ', 'route' => 'home'],
-            ['title' => 'Tất cả Sản phẩm', 'route' => 'products.index'],
-            ['title' => 'Tất cả Tin tức', 'route' => 'frontend.posts.index'],
+            ['title' => 'Giới thiệu', 'route' => 'frontend.intro.index'],
+            ['title' => 'Lĩnh vực hoạt động', 'route' => 'frontend.fields.index'],
+            ['title' => 'Hội viên', 'route' => 'frontend.members.index'],
+            ['title' => 'Tin tức', 'route' => 'frontend.posts.index'],
             ['title' => 'Dịch vụ', 'route' => 'frontend.services.index'],
             ['title' => 'Dự án', 'route' => 'frontend.projects.index'],
             ['title' => 'Tuyển dụng', 'route' => 'frontend.careers.index'],
+            ['title' => 'Sản phẩm', 'route' => 'products.index'],
             ['title' => 'Đăng ký Đại lý', 'route' => 'frontend.dealers.create'],
             ['title' => 'Liên hệ', 'route' => 'contact.show'],
         ];

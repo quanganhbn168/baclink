@@ -1,64 +1,95 @@
-{{-- Giả sử bạn có layout chung là 'frontend.layouts.app' --}}
 @extends('layouts.master') 
 
 @section('title', 'Kết quả tìm kiếm cho: ' . $keyword)
 
+{{-- Push styles --}}
+@push('css')
+    @vite(['resources/css/custom/search.css', 'resources/css/custom/premium_bg.css'])
+@endpush
+
 @section('content')
-<div class="container py-5">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="search-header mb-4">
-                <h1 class="h2">Kết quả tìm kiếm</h1>
-                <p class="lead">
-                    Tìm thấy <strong class="text-danger">{{ $results->total() }}</strong> kết quả cho từ khóa: <strong>"{{ $keyword }}"</strong>
-                </p>
-            </div>
-
-            <div class="search-results">
-                @forelse($results as $result)
-                    <div class="card mb-3 shadow-sm product-search-item">
-                        <div class="row no-gutters">
-                            <div class="col-md-2 p-2">
-                                <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}">
-                                    <img src="{{ optional($result->mainImage())->url() ?? asset('images/setting/no-image.png') }}" class="card-img" alt="{{ $result->name }}" style="max-height: 100px; object-fit: contain;">
-                                </a>
-                            </div>
-                            <div class="col-md-10">
-                                <div class="card-body py-2">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <h5 class="card-title mb-0" style="font-size: 1.1rem;">
-                                            <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}" class="text-decoration-none text-dark font-weight-bold">
-                                                {{ $result->name }}
-                                            </a>
-                                        </h5>
-                                        <span class="badge badge-primary">Sản phẩm</span>
-                                    </div>
-                                    <p class="card-text text-muted mb-2 small">
-                                        <span class="text-danger font-weight-bold">{{ number_format($result->price ?? 0) }}đ</span>
-                                        @if($result->old_price)
-                                            <del class="text-muted ml-2 small">{{ number_format($result->old_price) }}đ</del>
-                                        @endif
-                                    </p>
-                                    <p class="card-text text-muted small mb-0">
-                                        {{ Str::limit(strip_tags($result->description), 120) }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="alert alert-warning text-center">
-                        <i class="fas fa-exclamation-triangle"></i> Rất tiếc, không tìm thấy kết quả nào phù hợp với từ khóa của bạn.
-                    </div>
-                @endforelse
-            </div>
-
-            {{-- Hiển thị link phân trang --}}
-            <div class="d-flex justify-content-center mt-4">
-                {{ $results->links() }}
-            </div>
-
+{{-- Header Section with Dot Grid Pattern --}}
+<div class="search-header-wrapper bg-pattern-grid text-center">
+    <div class="container container-custom">
+        <h1 class="h2 font-weight-bold mb-2">ĐANG TÌM KIẾM</h1>
+        <div class="search-title h4">
+            "{{ $keyword }}"
         </div>
+        <p class="text-muted mb-0">
+            Tìm thấy <strong class="text-gold">{{ $results->total() }}</strong> kết quả phù hợp
+        </p>
     </div>
+</div>
+
+<div class="container container-custom py-5 bg-white min-vh-50">
+    @if($results->count() > 0)
+        <div class="search-results-grid">
+            @foreach($results as $result)
+            <div class="search-card-wrapper h-100">
+                <div class="search-card shadow-sm">
+                    <div class="search-card-img-wrapper">
+                        {{-- Badge (Optional logic: News vs Product) --}}
+                        @if(isset($result->price))
+                            <span class="search-card-badge">Sản phẩm</span>
+                        @else
+                            <span class="search-card-badge" style="background: var(--blue);">Tin tức</span>
+                        @endif
+
+                        <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}" class="d-block h-100">
+                            <img src="{{ optional($result->mainImage())->url() ?? asset('images/setting/no-image.png') }}" 
+                                 class="search-card-img" 
+                                 alt="{{ $result->name }}">
+                        </a>
+                    </div>
+                    
+                    <div class="search-card-body">
+                        <h3 class="search-card-title">
+                            <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}">
+                                {{ $result->name }}
+                            </a>
+                        </h3>
+                        
+                        <p class="search-card-desc">
+                            {{ Str::limit(strip_tags($result->description ?? $result->content), 100) }}
+                        </p>
+
+                        @if(isset($result->price))
+                        <div class="search-card-price">
+                            {{ number_format($result->price) }}đ
+                            @if($result->old_price)
+                                <del class="text-muted small font-weight-normal ml-2">{{ number_format($result->old_price) }}đ</del>
+                            @endif
+                        </div>
+                        @else
+                        <div class="mt-auto">
+                            <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}" class="text-gold small font-weight-bold text-decoration-none">
+                                Xem chi tiết <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        {{-- Pagination --}}
+        <div class="d-flex justify-content-center mt-5">
+            {{ $results->links() }}
+        </div>
+
+    @else
+        {{-- Zero State --}}
+        <div class="search-no-result text-center bg-texture-noise mt-3">
+            <div class="search-icon-large text-muted opacity-50 mb-3">
+                <i class="fas fa-search"></i>
+            </div>
+            <h4 class="font-weight-bold opacity-75">Không tìm thấy kết quả nào</h4>
+            <p class="text-muted">Rất tiếc, chúng tôi không tìm thấy nội dung phù hợp cho từ khóa <strong>"{{ $keyword }}"</strong>.</p>
+            <a href="{{ route('home') }}" class="btn btn-gold rounded-pill px-4 mt-3 shadow-sm">
+                <i class="fas fa-home mr-2"></i> Quay về trang chủ
+            </a>
+        </div>
+    @endif
 </div>
 @endsection

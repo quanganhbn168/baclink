@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@push('css')
+    @vite(['resources/css/custom/post.css'])
+@endpush
 
 @section('title', $page->title)
 

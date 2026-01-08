@@ -1,0 +1,24 @@
+/* resources/css/app.css */
+
+/* Vendor */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "swiper/css/bundle";
+@import "aos/dist/aos.css";
+@import "sweetalert2/dist/sweetalert2.min.css";
+@import "./vendor/all.min.css";
+
+/* Custom - Global essential */
+@import "./custom/global.css";
+@import "./custom/style.css";
+@import "./custom/responsive.css";
+@import "./custom/modal.css";
+@import "./custom/premium_bg.css";
+
+/* Page-specific styles (Loaded conditionally via @vite) */
+/* @import "./custom/hero.css"; */
+/* @import "./custom/home.css"; */
+/* @import "./custom/post.css"; */
+/* @import "./custom/member.css"; */
+/* @import "./custom/product.css"; */
+/* @import "./custom/auth.css"; */
+/* @import "./custom/counter.css"; */

@@ -1,0 +1,327 @@
+/* ===== TITLE & META ===== */
+.title-product {
+  font-weight: 800;
+  font-size: clamp(1.6rem, 2.2vw, 2.6rem);
+  line-height: 1.2;
+  margin-bottom: .75rem;
+}
+
+.product-top .sku-product,
+.product-top .status-product {
+  display: flex;
+  gap: .35rem;
+  align-items: center;
+  margin-bottom: .35rem;
+  font-size: 15px;
+}
+
+/* ===== PRICE ===== */
+.price-product {
+  margin: .6rem 0 1rem;
+}
+
+.price-main {
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.1vw, 2rem);
+  color: var(--gold);
+}
+
+.price-compare {
+  margin-left: 10px;
+  color: #6b7280;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.badge-sale {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+  background: #fffdf0;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+/* ===== DESCRIPTION SHORT ===== */
+.product-des {
+  color: #374151;
+  font-size: 15px;
+}
+
+/* ===== QTY GROUP ===== */
+.qty-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 16px;
+}
+
+.qty-title {
+  font-weight: 800;
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+.qty-group {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 46px;
+}
+
+.qty-group .btn-qty {
+  width: 46px;
+  height: 46px;
+  border: 0;
+  background: #f8fafc;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.qty-group input {
+  width: 64px;
+  height: 46px;
+  border: 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  outline: none;
+}
+
+@media (max-width: 767.98px) {
+  .qty-title {
+    font-size: 16px
+  }
+
+  .qty-group input {
+    width: 56px
+  }
+}
+
+/* ===== ACTION BUTTONS ===== */
+.btn-primary-cart {
+  background: #16169c;
+  color: #fff;
+  border: none;
+  font-weight: 800;
+  padding: .9rem 1.4rem;
+  border-radius: 12px;
+}
+
+.btn-primary-cart:hover {
+  filter: brightness(.95);
+  color: #fff;
+}
+
+.btn-buy-now {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  font-weight: 800;
+  padding: .9rem 1.4rem;
+  border-radius: 12px;
+}
+
+.btn-buy-now:hover {
+  filter: brightness(.95);
+  color: #fff;
+}
+
+/* ===== GALLERY ===== */
+.product-images .swiper {
+  width: 100%;
+}
+
+.product-images .main-slider {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.product-images .gallery-thumbs {
+  margin-top: 10px;
+}
+
+.product-images .gallery-thumbs .swiper-slide {
+  opacity: .6;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-images .gallery-thumbs .swiper-slide-thumb-active {
+  opacity: 1;
+  border-color: #16169c;
+}
+
+.product-images img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Ẩn radio button gốc */
+.variant-input {
+  display: none;
+}
+
+/* Style chung cho label chọn */
+.variant-label {
+  cursor: pointer;
+  border: 1px solid #dee2e6;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Hover */
+.variant-label:hover {
+  border-color: #aaa;
+}
+
+/* Khi được chọn */
+.variant-input:checked+.variant-label {
+  border-color: #007bff;
+  /* Màu primary */
+  background-color: #e7f1ff;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Riêng cho Color Swatch */
+.variant-label.is-color {
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border-radius: 50%;
+  /* Bo tròn cho đẹp */
+  position: relative;
+}
+
+/* Khi chọn màu: Thêm vòng bao bên ngoài */
+.variant-input:checked+.variant-label.is-color {
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #007bff;
+  border-color: transparent;
+}
+
+/* Nút liên hệ ẩn mặc định */
+#btnContact {
+  display: none;
+}
+
+/* Tùy chỉnh Tabs */
+.product-nav-tabs {
+  border-bottom: 2px solid #ddd;
+  background-color: #f8f9fa;
+  /* Màu nền nhẹ cho thanh tab */
+}
+
+.product-nav-tabs .nav-item {
+  margin-bottom: -2px;
+  /* Đẩy tab đè lên đường viền dưới */
+}
+
+.product-nav-tabs .nav-link {
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #555;
+  font-weight: 600;
+  padding: 15px 25px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  border-radius: 0;
+  /* Bỏ bo tròn */
+}
+
+.product-nav-tabs .nav-link:hover {
+  color: var(--primary-color, #007bff);
+  /* Đổi màu khi di chuột */
+  background-color: transparent;
+}
+
+/* Trạng thái Active (Đang chọn) */
+.product-nav-tabs .nav-link.active {
+  color: var(--gold);
+  /* Màu chữ active (ví dụ đỏ hoặc xanh chủ đạo) */
+  background-color: #fff;
+  border-bottom: 2px solid var(--gold);
+  /* Gạch chân màu chủ đạo */
+  border-top: 2px solid transparent;
+  /* Giữ layout không nhảy */
+}
+
+/* Nội dung bên trong Tab */
+.product-tab-content {
+  background: #fff;
+  min-height: 300px;
+  /* Đảm bảo chiều cao tối thiểu cho đẹp */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  /* Đổ bóng nhẹ */
+}
+
+/* Fix ảnh trong mô tả luôn full width trên mobile */
+.product-tab-content img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Responsive cho Mobile */
+@media (max-width: 768px) {
+  .product-nav-tabs .nav-link {
+    padding: 10px 15px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Wrapper nội dung mô tả */
+.description-wrapper {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  /* Hiệu ứng mở mượt mà */
+}
+
+/* Trạng thái THU GỌN (Mặc định) */
+.description-wrapper.collapsed {
+  max-height: 500px;
+  /* Chiều cao mặc định (bạn có thể chỉnh số này) */
+}
+
+/* Trạng thái MỞ RỘNG */
+.description-wrapper.expanded {
+  max-height: none;
+  /* Mở full chiều cao */
+  overflow: visible;
+}
+
+/* Lớp phủ mờ (Gradient trắng) ở chân */
+.desc-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  /* Độ cao của lớp mờ */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  pointer-events: none;
+  /* Để vẫn bôi đen được văn bản bên dưới nếu cần */
+  display: none;
+  /* Mặc định ẩn, JS sẽ hiện nếu bài dài */
+}
+
+/* Khi thu gọn mới hiện gradient */
+.description-wrapper.collapsed .desc-gradient {
+  display: block;
+}

@@ -106,16 +106,16 @@
                 </div>
             </div>
 
-             {{-- 4. INTROS --}}
+             {{-- 4. VỀ CHÚNG TÔI (INTROS) --}}
              <div class="card mb-3 shadow-sm">
                 <div class="card-header bg-light" data-toggle="collapse" data-target="#collapseIntros" style="cursor: pointer;">
-                    <h3 class="card-title text-warning"><i class="fas fa-info-circle mr-1"></i> Giới thiệu</h3>
+                    <h3 class="card-title text-warning"><i class="fas fa-info-circle mr-1"></i> Về chúng tôi</h3>
                 </div>
                 <div class="collapse" id="collapseIntros">
                     <div class="card-body" style="max-height: 250px; overflow-y: auto;">
                         <div class="custom-control custom-checkbox mb-2 border-bottom pb-2">
                             <input class="custom-control-input" type="checkbox" id="intro_all" x-model="isAllIntros">
-                            <label for="intro_all" class="custom-control-label font-weight-bold text-primary">Tất cả giới thiệu (Tự động)</label>
+                            <label for="intro_all" class="custom-control-label font-weight-bold text-primary">Tất cả bài viết intro (Tự động)</label>
                         </div>
                         <template x-if="!isAllIntros">
                             <div>

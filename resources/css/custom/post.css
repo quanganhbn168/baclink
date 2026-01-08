@@ -80,7 +80,7 @@
 }
 
 .share-gp {
-    background: #dd4b39;
+    background: var(--gold);
 }
 
 .share-tw {
@@ -130,7 +130,7 @@
 /* Sidebar Styles */
 
 .sidebar-cta-card {
-    background: #e32124;
+    background: var(--blue);
     background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
     background-size: 20px 20px;
     color: #fff;
@@ -141,16 +141,17 @@
     align-items: center;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(227, 33, 36, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 51, 102, 0.2);
     position: relative;
     overflow: hidden;
+    border: 1px solid rgba(197, 160, 101, 0.3);
 }
 
 .sidebar-cta-card:hover {
-    background: #c41a1d;
+    background: #002244;
     color: #fff;
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(227, 33, 36, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 51, 102, 0.3);
 }
 
 .sidebar-cta-card::after {
@@ -168,6 +169,7 @@
     font-size: 32px;
     margin-right: 15px;
     flex-shrink: 0;
+    color: var(--gold);
 }
 
 .sidebar-cta-card .card-content {
@@ -389,7 +391,7 @@
 }
 
 .cate-featured-item .cf-title a {
-    color: #e32124;
+    color: var(--blue);
     text-decoration: none;
 }
 
@@ -425,7 +427,7 @@
 }
 
 .cate-standard-item .cs-title a {
-    color: #e32124;
+    color: var(--blue);
     text-decoration: none;
 }
 
@@ -559,7 +561,7 @@
     left: 0;
     width: 60px;
     height: 2px;
-    background: #e32124;
+    background: var(--gold);
 }
 
 .block-header .view-all {
@@ -617,7 +619,7 @@
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     font-size: 6px;
-    color: #e32124;
+    color: var(--gold);
     margin-top: 7px;
 }
 

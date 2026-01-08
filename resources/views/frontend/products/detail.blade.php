@@ -4,81 +4,108 @@
 @section('meta_keywords', $product->meta_keywords ?? '')
 @section('meta_image', optional($product->mainImage())->url() ?? (optional($product->bannerImage())->url() ??
     asset('images/default-product.png')))
+@push('css')
+    @vite(['resources/css/custom/product.css'])
+@endpush
 @push('schema')
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "{{ $product->name }}",
-  "image": [
-    "{{ optional($product->mainImage())->url() ?? asset('images/default-product.png') }}"
-  ],
-  "description": "{{ Str::limit(strip_tags($product->description ?? $product->content), 160) }}",
-  "sku": "{{ $product->code ?? $product->id }}",
-  "mpn": "{{ $product->code ?? $product->id }}",
-  "brand": {
-    "@type": "Brand",
-    "name": "{{ $product->brand->name ?? $setting->name ?? config('app.name') }}" 
-  },
-  "review": {
-    "@type": "Review",
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "5",
-      "bestRating": "5"
-    },
-    "author": {
-      "@type": "Person",
-      "name": "Admin"
-    }
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5",
-    "reviewCount": "1"
-  },
-  "offers": [
-    @if($product->variants->count() > 0)
-        @foreach($product->variants as $index => $variant)
-        {
-            "@type": "Offer",
-            "name": "{{ $product->name }} - {{ $variant->variant_name }}",
-            "url": "{{ url()->current() }}?variant={{ $variant->id }}",
-            "priceCurrency": "VND",
-            "price": "{{ $variant->price }}",
-            "sku": "{{ $variant->sku }}",
-            "priceValidUntil": "{{ now()->addYear()->format('Y-m-d') }}",
-            "itemCondition": "https://schema.org/NewCondition",
-            "availability": "https://schema.org/{{ ($variant->stock > 0) ? 'InStock' : 'OutOfStock' }}",
-            "seller": {
-                "@type": "Organization",
-                "name": "{{ $setting->name ?? config('app.name') }}"
-            }
-        }{{ $index < $product->variants->count() - 1 ? ',' : '' }}
-        @endforeach
-    @else
-        {
-            "@type": "Offer",
-            "url": "{{ url()->current() }}",
-            "priceCurrency": "VND",
-            "price": "{{ $product->price_discount > 0 ? $product->price_discount : $product->price }}",
-            "priceValidUntil": "{{ now()->addYear()->format('Y-m-d') }}",
-            "itemCondition": "https://schema.org/NewCondition",
-            "availability": "https://schema.org/{{ ($product->stock > 0 || $product->stock === null) ? 'InStock' : 'OutOfStock' }}",
-            "seller": {
-                "@type": "Organization",
-                "name": "{{ $setting->name ?? config('app.name') }}"
-            }
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "name": "{{ $product->name }}",
+      "image": [
+        "{{ optional($product->mainImage())->url() ?? asset('images/default-product.png') }}"
+      ],
+      "description": "{{ Str::limit(strip_tags($product->description ?? $product->content), 160) }}",
+      "sku": "{{ $product->code ?? $product->id }}",
+      "mpn": "{{ $product->code ?? $product->id }}",
+      "brand": {
+        "@type": "Brand",
+        "name": "{{ $product->brand->name ?? $setting->name ?? config('app.name') }}"
+      },
+      "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Admin"
         }
-    @endif
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "1"
+      },
+      "offers": [
+        @if($product->variants->count() > 0)
+            @foreach($product->variants as $index => $variant)
+            {
+                "@type": "Offer",
+                "name": "{{ $product->name }} - {{ $variant->variant_name }}",
+                "url": "{{ url()->current() }}?variant={{ $variant->id }}",
+                "priceCurrency": "VND",
+                "price": "{{ $variant->price }}",
+                "sku": "{{ $variant->sku }}",
+                "priceValidUntil": "{{ now()->addYear()->format('Y-m-d') }}",
+                "itemCondition": "https://schema.org/NewCondition",
+                "availability": "https://schema.org/{{ ($variant->stock > 0) ? 'InStock' : 'OutOfStock' }}",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "{{ $setting->name ?? config('app.name') }}"
+                }
+            }{{ $index < $product->variants->count() - 1 ? ',' : '' }}
+            @endforeach
+        @else
+            {
+                "@type": "Offer",
+                "url": "{{ url()->current() }}",
+                "priceCurrency": "VND",
+                "price": "{{ $product->price_discount > 0 ? $product->price_discount : $product->price }}",
+                "priceValidUntil": "{{ now()->addYear()->format('Y-m-d') }}",
+                "itemCondition": "https://schema.org/NewCondition",
+                "availability": "https://schema.org/{{ ($product->stock > 0 || $product->stock === null) ? 'InStock' : 'OutOfStock' }}",
+                "seller": {
+                    "@type": "Organization",
+                    "name": "{{ $setting->name ?? config('app.name') }}"
+                }
+            }
+        @endif
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "{{ url('/') }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{ $product->category->name }}",
+          "item": "{{ route('frontend.slug.handle', $product->category->slug) }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ $product->name }}",
+          "item": "{{ url()->current() }}"
+        }
+      ]
+    }
   ]
 }
 </script>
 @endpush
 
-    @push('css')
-        <link rel="stylesheet" href="{{ asset('css/product.css') }}">
-    @endpush
 @section('content')
     <div id="toasts" aria-live="polite" aria-atomic="true"></div>
     <nav aria-label="breadcrumb" class="mb-3">
@@ -120,8 +147,6 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
                                 </div>
                             </div>
                             <div class="swiper gallery-thumbs">
@@ -409,10 +434,6 @@
                 
                 new Swiper(mainEl, {
                     spaceBetween: 10,
-                    navigation: {
-                        nextEl: root.querySelector('.swiper-button-next'),
-                        prevEl: root.querySelector('.swiper-button-prev'),
-                    },
                     thumbs: {
                         swiper: thumbs
                     },
@@ -425,10 +446,6 @@
                     loop: false,
                     slidesPerView: 2,
                     spaceBetween: 15,
-                    navigation: {
-                        nextEl: slider.querySelector('.swiper-button-next'),
-                        prevEl: slider.querySelector('.swiper-button-prev'),
-                    },
                     breakpoints: {
                         576: { slidesPerView: 2, spaceBetween: 20 },
                         768: { slidesPerView: 3, spaceBetween: 20 },
@@ -494,6 +511,4 @@
             cartCount: {{ $cartCount ?? 0 }}
         };
     </script>
-{{-- File JS xử lý thêm vào giỏ hàng (Cart) --}}
-<script src="{{ asset('js/frontend/product.js') }}"></script>
 @endpush

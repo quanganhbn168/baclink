@@ -1,8 +1,7 @@
 @extends('layouts.master')
 @section('title', $post->title)
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    @vite(['resources/css/custom/post.css'])
     <style>
     .toc-container {
         border: 1px solid #aaa;

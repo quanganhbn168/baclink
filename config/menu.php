@@ -17,6 +17,14 @@ return [
         'active_pattern' => 'admin.members.*',
     ],
 
+    // ===== GIỚI THIỆU (TOP LEVEL) =====
+    [
+        'title' => 'Quản lý Giới thiệu',
+        'icon' => 'bi bi-info-circle-fill',
+        'route' => 'admin.intros.index',
+        'active_pattern' => 'admin.intros.*',
+    ],
+
     // ===== NHÓM 1: SẢN PHẨM & DỊCH VỤ =====
     ['type' => 'header', 'title' => 'SẢN PHẨM'],
 
@@ -77,7 +85,7 @@ return [
         'submenu' => [
             ['title' => 'Slide trang chủ',  'route' => 'admin.slides.index',        'active_pattern' => 'admin.slides.*'],
             ['title' => 'Feedback (Testimonial)', 'route' => 'admin.testimonials.index', 'active_pattern' => 'admin.testimonials.*'],
-            ['title' => 'Giới thiệu (Pages)',     'route' => 'admin.intros.index',       'active_pattern' => 'admin.intros.*'],
+// ['title' => 'Giới thiệu (Pages)',     'route' => 'admin.intros.index',       'active_pattern' => 'admin.intros.*'],
             ['title' => 'Thương hiệu (Brand)',    'route' => 'admin.brands.index',       'active_pattern' => 'admin.brands.*'],
             ['title' => 'Khối nội dung (Content Block)',    'route' => 'admin.content-blocks.index',       'active_pattern' => 'admin.content-blocks.*'],
             ['title' => 'Chính sách (Pages)',    'route' => 'admin.pages.index',       'active_pattern' => 'admin.pages.*'],
@@ -103,16 +111,16 @@ return [
     //         ['title' => 'Dự án',          'route' => 'admin.projects.index',           'active_pattern' => 'admin.projects.*'],
     //     ],
     // ],
-    // [
-    //     'title' => 'Quản lý Lĩnh vực',
-    //     'icon' => 'bi bi-journal-richtext',
-    //     'permission' => 'manage-fields',
-    //     'active_pattern' => ['admin.field-categories.*', 'admin.fields.*'],
-    //     'submenu' => [
-    //         ['title' => 'Danh mục Lĩnh vực', 'route' => 'admin.field-categories.index', 'active_pattern' => 'admin.field-categories.*'],
-    //         ['title' => 'Lĩnh vực',          'route' => 'admin.fields.index',           'active_pattern' => 'admin.fields.*'],
-    //     ],
-    // ],
+    [
+        'title' => 'Quản lý Lĩnh vực',
+        'icon' => 'bi bi-journal-richtext',
+        'permission' => 'manage-fields',
+        'active_pattern' => ['admin.field-categories.*', 'admin.fields.*'],
+        'submenu' => [
+            ['title' => 'Danh mục Lĩnh vực', 'route' => 'admin.field-categories.index', 'active_pattern' => 'admin.field-categories.*'],
+            ['title' => 'Lĩnh vực',          'route' => 'admin.fields.index',           'active_pattern' => 'admin.fields.*'],
+        ],
+    ],
 
     // ===== NHÓM 4: ĐỐI TÁC & TUYỂN DỤNG =====
     ['type' => 'header', 'title' => 'ĐỐI TÁC & TUYỂN DỤNG'],

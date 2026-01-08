@@ -1,8 +1,44 @@
 @extends('layouts.master')
 @section('title', 'Giới thiệu - ' . $setting->name)
 
+@push('schema')
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "{{ url()->current() }}#webpage",
+      "url": "{{ url()->current() }}",
+      "name": "Giới thiệu - {{ $setting->name }}",
+      "publisher": {
+        "@id": "{{ url('/') }}#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "{{ url('/') }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Giới thiệu",
+          "item": "{{ url()->current() }}"
+        }
+      ]
+    }
+  ]
+}
+</script>
+@endpush
+
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
+    @vite(['resources/css/custom/post.css'])
     <style>
         .intro-sidebar {
             background: #fff;
@@ -11,7 +47,7 @@
             overflow: hidden;
         }
         .intro-sidebar .sidebar-title {
-            background: #203e7d;
+            background: var(--blue);
             color: #fff;
             padding: 15px 20px;
             margin: 0;
@@ -41,7 +77,7 @@
         .intro-sidebar ul li a:hover,
         .intro-sidebar ul li a.active {
             background: #f9f9f9;
-            color: #e32124;
+            color: var(--gold);
             padding-left: 25px;
         }
         .intro-sidebar ul li a.active {
@@ -55,10 +91,11 @@
             border-radius: 4px;
         }
         .intro-content h1 {
+            font-family: var(--font-secondary);
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 20px;
-            color: #203e7d;
+            color: var(--blue);
             text-transform: uppercase;
             padding-bottom: 15px;
             border-bottom: 2px solid #eee;
@@ -75,6 +112,22 @@
         }
         .intro-content .content p {
             margin-bottom: 15px;
+        }
+
+        @media (max-width: 991px) {
+            .intro-sidebar {
+                position: static !important;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .intro-content {
+                padding: 20px 15px;
+            }
+            .intro-content h1 {
+                font-size: 20px;
+            }
         }
     </style>
 @endpush

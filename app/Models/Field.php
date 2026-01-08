@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\HasImages;
+use Illuminate\Support\Str;
 class Field extends Model
 {
     use HasFactory, HasImages;
@@ -77,5 +78,30 @@ class Field extends Model
     {
         return $this->morphOne(Slug::class, 'sluggable');
     }
-    
+
+    /**
+     * Get the full image URL.
+     *
+     * @return string
+     */
+    public function getImageUrlAttribute()
+    {
+        // 1. Prioritize mainImage relationship (real uploaded images)
+        if ($this->mainImage()) {
+            return $this->mainImage()->url();
+        }
+
+        // 2. Fallback to image column (seeded or legacy URLs)
+        $image = $this->image;
+
+        if (!$image) {
+            return asset('images/setting/no-image.png');
+        }
+
+        if (Str::startsWith($image, ['http://', 'https://'])) {
+            return $image;
+        }
+
+        return asset($image);
+    }
 }

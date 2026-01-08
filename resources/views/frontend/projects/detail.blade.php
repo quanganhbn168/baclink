@@ -1,14 +1,6 @@
-@extends('layouts.master')
-@section('title', $pageTitle)
-
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/product.css') }}">
-    {{-- Link CSS của Swiper Slider (BẮT BUỘC) --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
+@vite(['resources/css/custom/product.css'])
     <style>
-        /* CSS cho phần thông tin và bố cục cơ bản */
-        .project-info ul { list-style: none; padding-left: 0; }
         .project-info ul li {
             padding: 8px 0;
             border-bottom: 1px dashed #eee;
@@ -141,9 +133,6 @@
                         </div>
                     @endforeach
                 </div>
-
-                <button class="swiper-button-prev"></button>
-                <button class="swiper-button-next"></button>
             </div>
 
             <!-- Thumbnails -->
@@ -214,10 +203,7 @@
 
             const galleryTop = new Swiper('.gallery-top', {
                 spaceBetween: 10,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
+                lazy: { loadPrevNext: true, loadOnTransitionStart: true },
                 lazy: { loadPrevNext: true, loadOnTransitionStart: true },
                 preloadImages: false,
                 watchSlidesProgress: true,

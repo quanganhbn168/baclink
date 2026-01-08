@@ -2,8 +2,7 @@
 @section('title', 'Danh sách hội viên - ' . $setting->name)
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/member.css') }}">
+    @vite(['resources/css/custom/member.css'])
 @endpush
 
 @section('content')

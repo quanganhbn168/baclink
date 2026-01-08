@@ -1,7 +1,5 @@
-@extends('layouts.master')
-@section('title', $currentCategory? $currentCategory->name : 'Sản phẩm')
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/product.css') }}">
+@vite(['resources/css/custom/product.css'])
 <style>
 .category-card {
     border-radius: 14px;

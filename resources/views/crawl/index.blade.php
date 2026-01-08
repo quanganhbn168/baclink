@@ -43,7 +43,7 @@
             <div x-show="statusMessage" class="mb-4">
                 <div 
                     class="p-4 rounded-lg"
-                    :class="{ 'bg-green-100 text-green-700': isSuccess, 'bg-red-100 text-red-700': !isSuccess }"
+                    :class="{ 'bg-green-100 text-green-700': isSuccess, 'bg-red-100 text-gold-700': !isSuccess }"
                     x-text="statusMessage"
                 >
                 </div>

@@ -9,9 +9,18 @@ class FieldController extends Controller
 {
     public function index()
     {
-        $field_categories = FieldCategory::where("status",1)->whereNull("parent_id")->get();
-        $pageTitle = "Lĩnh vực";
-        return view("frontend.fields.index",compact("field_categories","pageTitle"));
+        $field_categories = FieldCategory::where("status", 1)
+            ->whereNull("parent_id")
+            ->with(['fields' => function($q) {
+                $q->where('status', 1);
+            }])
+            ->orderBy('order', 'asc')
+            ->get();
+            
+        $pageTitle = "Lĩnh vực hoạt động";
+        $breadcrumbs = []; // Root level
+        
+        return view("frontend.fields.index", compact("field_categories", "pageTitle", "breadcrumbs"));
     }
     public function byCategory(FieldCategory $fieldCategory): View
     {
@@ -41,6 +50,10 @@ class FieldController extends Controller
             $currentCategory = $currentCategory->parent;
         }
 
-        return view("frontend.fields.detail", compact("field", "pageTitle", "breadcrumbs"));
+        // Fetch data for Sidebar (Trending Posts) and Related Section (using recent posts as related)
+        $trendingPosts = \App\Models\Post::where('status', 1)->latest('updated_at')->take(5)->get();
+        $relatedPosts = \App\Models\Post::where('status', 1)->latest()->take(3)->get();
+
+        return view("frontend.fields.detail", compact("field", "pageTitle", "breadcrumbs", "trendingPosts", "relatedPosts"));
     }
 }

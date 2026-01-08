@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('title', 'Đăng ký Hội viên')
+@push('css')
+    @vite(['resources/css/custom/auth.css'])
+@endpush
 @section('content')
 <div class="register-page py-5 bg-light">
     <div class="container custom-container">
@@ -8,7 +11,7 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-5">
                         <div class="text-center mb-5">
-                            <h1 class="font-weight-bold text-uppercase" style="color: #1a2a5a; font-family: 'FS Magistral', sans-serif;">Thông tin đăng ký gia nhập hội<br><span style="color: #e32124;">BACLINK</span></h1>
+                            <h1 class="font-weight-bold text-uppercase" style="color: var(--blue); font-family: inherit;">Thông tin đăng ký gia nhập hội<br><span style="color: var(--gold);">BACLINK</span></h1>
                             <p class="text-muted mt-3">
                                 Để đăng ký gia nhập Hội, doanh nghiệp vui lòng đọc Thông tin Quyền và Nghĩa vụ Hội viên tại: 
                                 <a href="#" class="text-primary">Đường dẫn này</a>
@@ -162,7 +165,7 @@
                             </div>
 
                             <div class="text-center">
-<button type="submit" class="btn btn-danger btn-lg px-5 font-weight-bold text-uppercase" style="background: #e32124;">Đăng ký hội viên</button>
+<button type="submit" class="btn btn-gold btn-lg px-5 font-weight-bold text-uppercase">Đăng ký hội viên</button>
                             </div>
 
                         </form>

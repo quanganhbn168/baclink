@@ -19,27 +19,38 @@
 </div>
 <header class="header">
     <!-- Header Top -->
-    <div class="main-header">
+    <div class="main-header" style="overflow: visible;">
         <div class="container">
-            <div class="main-header-inner">
-                <div class="header-col-left">
-                    <div class="mobile-menu-toggle d-lg-none">
-                        <a href="#" aria-label="Toggle Menu"><i class="fa fa-bars"></i></a>
-                    </div>
-                    <div class="logo d-none d-lg-block">
-                        <a href="{{ url('/') }}">
-                            <img src="{{asset($setting->logo)}}" alt="Logo">
-                        </a>
-                    </div>
+            <div class="main-header-inner row align-items-center position-relative">
+                
+                {{-- Mobile Toggle --}}
+                <div class="mobile-menu-toggle d-lg-none col-2 text-left">
+                    <a href="#" aria-label="Toggle Menu"><i class="fa fa-bars"></i></a>
                 </div>
-                <div class="header-col-center">
-                    <div class="logo text-center d-lg-none">
-                        <a href="{{ url('/') }}">
-                            <img src="{{asset($setting->logo)}}" alt="Logo">
-                        </a>
-                    </div>
-                    <ul class="main-menu-desktop d-none d-lg-flex" id="main-menu-desktop-source">
-                        @foreach($headerMenu as $menuItem)
+
+                {{-- Logo Mobile --}}
+                <div class="logo text-center d-lg-none col-8 mx-auto">
+                    <a href="{{ url('/') }}" class="d-inline-block">
+                        <img src="{{asset($setting->logo)}}" alt="Logo" class="img-fluid" style="max-height: 50px; margin: 0 auto;">
+                    </a>
+                </div>
+                
+                {{-- Mobile Search Toggle --}}
+                <div class="mobile-search-toggle d-lg-none col-2 text-right">
+                    <a href="#" aria-label="Toggle Search" id="mobile-search-trigger"><i class="fa fa-search"></i></a>
+                </div>
+
+                @php
+                    $menuItems = collect($headerMenu);
+                    $midPoint = ceil($menuItems->count() / 2);
+                    $leftMenu = $menuItems->slice(0, $midPoint);
+                    $rightMenu = $menuItems->slice($midPoint);
+                @endphp
+
+                {{-- LEFT MENU --}}
+                <div class="col-lg-5 d-none d-lg-flex align-items-center justify-content-end pr-4">
+                    <ul class="main-menu-desktop d-flex justify-content-end mb-0">
+                        @foreach($leftMenu as $menuItem)
                         <li class="{{ !empty($menuItem['children']) ? 'menu-item-has-children' : '' }}">
                             <a href="{{ $menuItem['url'] }}" target="{{ $menuItem['target'] ?? '_self' }}">{{ $menuItem['title'] }}</a>
                             @if(!empty($menuItem['children']))
@@ -63,20 +74,60 @@
                         </li>
                         @endforeach
                     </ul>
+                </div>
+
+                {{-- CENTER LOGO (Standard) --}}
+                <div class="col-lg-2 d-none d-lg-flex justify-content-center align-items-center">
+                     <div class="logo text-center">
+                         <a href="{{ url('/') }}" class="d-block">
+                             <img src="{{asset($setting->logo)}}" alt="Logo" class="img-fluid">
+                         </a>
+                     </div>
+                </div>
+
+                {{-- RIGHT MENU --}}
+                <div class="col-lg-5 d-none d-lg-flex align-items-center justify-content-start pl-4 flex-nowrap">
+                    <ul class="main-menu-desktop d-flex justify-content-start mb-0">
+                        @foreach($rightMenu as $menuItem)
+                        <li class="{{ !empty($menuItem['children']) ? 'menu-item-has-children' : '' }}">
+                            <a href="{{ $menuItem['url'] }}" target="{{ $menuItem['target'] ?? '_self' }}">{{ $menuItem['title'] }}</a>
+                            @if(!empty($menuItem['children']))
+                            <span class="submenu-toggle"><i class="fa fa-angle-down"></i></span>
+                            <ul class="sub-menu">
+                                @foreach($menuItem['children'] as $childItem)
+                                <li class="{{ !empty($childItem['children']) ? 'menu-item-has-children' : '' }}">
+                                    <a href="{{ $childItem['url'] }}" target="{{ $childItem['target'] ?? '_self' }}">{{ $childItem['title'] }}</a>
+                                    @if(!empty($childItem['children']))
+                                    <span class="submenu-toggle"><i class="fa fa-angle-right"></i></span>
+                                    <ul class="sub-menu">
+                                        @foreach($childItem['children'] as $grandChildItem)
+                                        <li><a href="{{ $grandChildItem['url'] }}" target="{{ $grandChildItem['target'] ?? '_self' }}">{{ $grandChildItem['title'] }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                    @endif
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </li>
+                        @endforeach
                     </ul>
+                    
+                    {{-- CTA Button --}}
+                    <div class="ml-3">
+                        <a href="{{ route('register') }}" class="btn btn-gold-cta btn-sm text-nowrap px-3">ĐĂNG KÝ HỘI VIÊN</a>
+                    </div>
                 </div>
-                <div class="header-col-right d-none d-lg-flex">
-                    <a href="{{ route('register') }}" class="btn btn-red-cta">ĐĂNG KÝ HỘI VIÊN</a>
-                </div>
-                </div>
+
             </div>
         </div>
     </div>
-    <div class="mobile-search-container d-lg-none">
+    {{-- Mobile Search Dropdown (Hidden by default) --}}
+    <div id="mobile-search-dropdown" class="d-none animate__animated animate__fadeInDown" style="position: absolute; top: 100%; left: 0; width: 100%; background: #fff; padding: 15px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); z-index: 1000;">
         <div class="search-box">
-            <form action="/search" method="get">
-                <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                <button type="submit"><i class="fa fa-search"></i></button>
+            <form action="{{ route('frontend.search') }}" method="get">
+                <input type="text" name="q" class="form-control" placeholder="nhập từ khóa tìm kiếm" style="border: 1px solid var(--gold); border-radius: 4px;">
+                <button type="submit" style="background: var(--gold); color: #fff; border: none; padding: 0 15px; border-radius: 0 4px 4px 0;"><i class="fa fa-search"></i></button>
             </form>
         </div>
     </div>
@@ -92,7 +143,7 @@
 </div>
 <div class="offcanvas-overlay"></div>
 @push('js')
-<script>
+<script type="module">
     $(document).ready(function() {
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
@@ -110,12 +161,12 @@
                 }
             }
         });
-        if ($('.offcanvas-menu-content #main-menu-desktop-source').length === 0) {
-    // Chỉ clone menu gốc có ID là "main-menu-desktop-source"
-                $('#main-menu-desktop-source').clone()
-            .removeAttr('id') // Xóa ID để tránh bị trùng lặp
-            .removeClass('d-none d-lg-flex') // Xóa class ẩn/hiện của desktop
-            .appendTo('.offcanvas-menu-content');
+        if ($('.offcanvas-menu-content .main-menu-mobile').length === 0) {
+            const $mobileMenu = $('<ul class="main-menu-mobile"></ul>');
+            $('.main-menu-desktop').each(function() {
+                $(this).children().clone().appendTo($mobileMenu);
+            });
+            $mobileMenu.appendTo('.offcanvas-menu-content');
         }
         $('.mobile-menu-toggle a').on('click', function(e) {
             e.preventDefault();
@@ -149,13 +200,17 @@
     // Thêm/xóa class 'active' trên chính nó để bật/tắt menu
         $(this).toggleClass('active'); 
     });
-    // Bấm ra ngoài khu vực menu thì sẽ đóng menu lại
-    $(document).on('click', function() {
-        $('.header-actions .frame-fix').removeClass('active');
-        $('#desktop-search-dropdown').addClass('d-none'); // Đóng search dropdown
+    // Mobile Search Toggle
+    $('#mobile-search-trigger').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('#mobile-search-dropdown').toggleClass('d-none');
+        if (!$('#mobile-search-dropdown').hasClass('d-none')) {
+            $('#mobile-search-dropdown input').focus();
+        }
     });
-    
-    // Desktop Search Toggle
+
+    // Desktop Search Toggle (Keep for safety or consolidate)
     $('#desktop-search-toggle').on('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -163,6 +218,17 @@
         if (!$('#desktop-search-dropdown').hasClass('d-none')) {
             $('#desktop-search-dropdown input').focus();
         }
+    });
+
+    // Close logic
+    $(document).on('click', function() {
+        $('.header-actions .frame-fix').removeClass('active');
+        $('#mobile-search-dropdown').addClass('d-none'); 
+        $('#desktop-search-dropdown').addClass('d-none');
+    });
+
+    $('#mobile-search-dropdown, #desktop-search-dropdown').on('click', function(e) {
+        e.stopPropagation(); 
     });
 
     $('#desktop-search-dropdown').on('click', function(e) {

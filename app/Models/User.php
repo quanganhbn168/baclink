@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Traits\HasImages;
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasImages;
 
     protected $fillable = [
         'name',
@@ -80,5 +82,18 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(DealerTransaction::class, 'user_id');
+    }
+
+    public function getAvatarUrlAttribute(): string
+    {
+        if ($this->mainImage()) {
+            return $this->mainImage()->url();
+        }
+
+        if (!empty($this->avatar)) {
+            return asset($this->avatar);
+        }
+
+        return asset('images/setting/no-image.png');
     }
 }

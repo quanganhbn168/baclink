@@ -6,50 +6,72 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "NewsArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "{{ $post->slug_url ?? url()->current() }}"
-  },
-  "headline": "{{ $post->title }}",
-  "description": "{{ Str::limit(strip_tags($post->summary ?? $post->content), 160) }}",
-  "image": [
-    "{{ optional($post->mainImage())->url() ?? asset($setting->meta_image) }}" 
-  ],
-  "datePublished": "{{ $post->created_at->toIso8601String() }}",
-  "dateModified": "{{ $post->updated_at->toIso8601String() }}",
-  "author": {
-    "@type": "Person",
-    "name": "{{ $post->user->name ?? 'Admin' }}",
-    "url": "{{ url('/') }}"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "{{ $setting->name }}",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "{{ asset($setting->logo) }}"
+  "@graph": [
+    {
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ url()->current() }}"
+      },
+      "headline": "{{ $post->title }}",
+      "description": "{{ Str::limit(strip_tags($post->description ?? $post->content), 160) }}",
+      "image": [
+        "{{ optional($post->mainImage())->url() ?? asset($setting->meta_image) }}"
+      ],
+      "datePublished": "{{ $post->created_at->toIso8601String() }}",
+      "dateModified": "{{ $post->updated_at->toIso8601String() }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ $post->user->name ?? 'Admin' }}",
+        "url": "{{ url('/') }}"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "{{ $setting->name }}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "{{ asset($setting->logo) }}"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "{{ url('/') }}"
+        },
+        @if($post->category)
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{ $post->category->name }}",
+          "item": "{{ route('frontend.slug.handle', $post->category->slug) }}"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{{ $post->title }}",
+          "item": "{{ url()->current() }}"
+        }
+        @else
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "{{ $post->title }}",
+          "item": "{{ url()->current() }}"
+        }
+        @endif
+      ]
     }
-  }
+  ]
 }
 </script>
 @endpush
 @push('css')
-    <link rel="stylesheet" href="{{ asset('css/post.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-    <style>
-    .toc-container {
-        border: 1px solid #aaa;
-        background: #f9f9f9;
-        padding: 16px;
-        margin-bottom: 24px;
-        max-height: 300px;
-        overflow-y: auto;
-    }
-    .toc-container h3 { font-size: 18px; margin-bottom: 10px; }
-    .toc-container ul { list-style: decimal inside; padding-left: 0; }
-    .toc-container ul ul { list-style-type: decimal; margin-left: 20px; }
-    </style>
+    @vite(['resources/css/custom/post.css'])
 @endpush
 @section('content')
 <main class="post-detail-wrapper bg-white">
@@ -111,7 +133,7 @@
                                     </a>
                                 </div>
                                 <div class="rp-info">
-                                    <span class="rp-label">TIN LIÊN QUAN</span>
+                                    <span class="rp-label text-gold font-weight-bold">TIN LIÊN QUAN</span>
                                     <h4 class="rp-title">
                                         <a href="{{ route('frontend.slug.handle', $related->slug) }}">{{ $related->title }}</a>
                                     </h4>

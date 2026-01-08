@@ -41,12 +41,12 @@ class HomeController extends Controller
             ->where('is_home', 1)
             ->with('category')
             ->latest()
-            ->take(3)
+            ->take(10)
             ->get();
             
         $members = \App\Models\User::where('email', 'like', 'member%@baclink.test')
             ->with('dealerProfile')
-            ->take(5)
+            ->take(8)
             ->get();
 
         $industries = [
@@ -72,7 +72,10 @@ class HomeController extends Controller
             'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1200&h=800',
         ];
 
-        return view('frontend.index', compact("slides","intro","homeProducts","homeCategories","homeServices","homeProjectCategories","homeFields","homeProjects","homePosts","careers","testimonials","brands", "members", "industries", "eventPhotos"));
+        // Specific Category for "Fields of Activity" Section
+        $activityCategory = $homeFields->firstWhere('slug', 'linh-vuc-hoat-dong') ?? $homeFields->first();
+
+        return view('frontend.index', compact("slides","intro","homeProducts","homeCategories","homeServices","homeProjectCategories","homeFields","homeProjects","homePosts","careers","testimonials","brands", "members", "industries", "eventPhotos", "activityCategory"));
     }
     public function search(Request $request)
     {
@@ -82,17 +85,46 @@ class HomeController extends Controller
             return redirect()->back();
         }
 
-        // Tìm kiếm và phân trang trực tiếp từ database
+        // 1. Search Products
         $products = Product::where('status', 1)
             ->where(function ($query) use ($keyword) {
                 $query->where('name', 'LIKE', "%{$keyword}%")
                       ->orWhere('description', 'LIKE', "%{$keyword}%");
             })
-            ->latest() // Sắp xếp theo ngày tạo mới nhất (tùy chọn)
-            ->paginate(10); // Lấy 10 sản phẩm mỗi trang
+            ->latest()
+            ->get(); // Get collection
+
+        // 2. Search Posts (Title, Description OR Category Name)
+        $posts = Post::where('posts.status', 1)
+            ->leftJoin('post_categories', 'posts.post_category_id', '=', 'post_categories.id')
+            ->where(function ($query) use ($keyword) {
+                $query->where('posts.title', 'LIKE', "%{$keyword}%")
+                      ->orWhere('posts.description', 'LIKE', "%{$keyword}%")
+                      ->orWhere('post_categories.name', 'LIKE', "%{$keyword}%");
+            })
+            ->select('posts.*', 'posts.title as name') // Alias title as name
+            ->with('category')
+            ->latest('posts.created_at')
+            ->get();
+
+        // 3. Merge and Sort
+        $mergedResults = $products->concat($posts)->sortByDesc('created_at');
+
+        // 4. Manual Pagination
+        $page = \Illuminate\Pagination\Paginator::resolveCurrentPage() ?: 1;
+        $perPage = 12;
+        $currentPageItems = $mergedResults->slice(($page - 1) * $perPage, $perPage)->values();
+
+        $paginatedResults = new \Illuminate\Pagination\LengthAwarePaginator(
+            $currentPageItems,
+            $mergedResults->count(),
+            $perPage,
+            $page,
+            ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(), 'query' => $request->query()]
+        );
 
         return view('frontend.search_result', [
-            'results' => $products,
+            'results' => $paginatedResults,
             'keyword' => $keyword
         ]);
     }

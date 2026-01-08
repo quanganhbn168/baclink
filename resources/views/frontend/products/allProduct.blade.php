@@ -1,9 +1,5 @@
 @extends('layouts.master')
 @section('title','Tất cả sản phẩm')
-@push('css')
-<link rel="stylesheet" href="{{asset('css/product.css')}}">
-
-@endpush
 @section("content")
 <nav aria-label="breadcrumb" class="mb-3">
     <ol class="breadcrumb bg-light px-3 py-2">
@@ -130,6 +126,9 @@
     </div>          
 </div>
 @endsection
+@push('css')
+@vite(['resources/css/custom/product.css'])
+@endpush
 @push('js')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
