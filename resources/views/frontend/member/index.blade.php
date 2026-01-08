@@ -2,7 +2,7 @@
 @section('title', 'Danh sách hội viên - ' . $setting->name)
 
 @push('css')
-    @vite(['resources/css/custom/member.css'])
+    @vite(['resources/css/custom/member.css', 'resources/css/custom/post.css'])
 @endpush
 
 @section('content')
@@ -23,8 +23,12 @@
                 <div class="member-grid">
                     @forelse($members as $member)
                         <div class="member-card">
-                            <div class="member-logo-wrap">
-                                <img src="{{ $member->avatar ?? asset('images/setting/no-image.png') }}" alt="{{ optional($member->dealerProfile)->company_name }}">
+                            <div class="member-logo-wrap d-flex align-items-center justify-content-center p-3 border-right" style="width: 150px; background: #fff;">
+                                <div style="width: 100px; height: 100px;">
+                                    <img src="{{ $member->avatar_url }}" 
+                                         alt="{{ $member->name }}" 
+                                         class="w-100 h-100 rounded-circle object-fit-cover border border-3 border-light shadow-sm">
+                                </div>
                             </div>
                             <div class="member-info">
                                 <div class="company-name">{{ optional($member->dealerProfile)->company_name ?? 'CÔNG TY THÀNH VIÊN' }}</div>
