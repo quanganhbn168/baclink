@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title','Đăng ký đại lý Ekokemika')
+@section('title', __('Đăng ký đại lý'))
+@section('meta_description', __('Đăng ký đại lý') . ' - ' . $setting->name)
+@section('meta_image', $setting->share_image)
 
 @push('css')
 <style>
@@ -348,12 +350,12 @@ a.btn { color:#fff !important; }
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>Họ và tên <span class="text-danger">*</span></label>
+                            <label>{{ __('Họ và tên') }} <span class="text-danger">*</span></label>
                             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                             @error('name') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Số điện thoại <span class="text-danger">*</span></label>
+                            <label>{{ __('Số điện thoại') }} <span class="text-danger">*</span></label>
                             <input type="text" name="phone" class="form-control" value="{{ old('phone') }}" required>
                             @error('phone') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
@@ -363,22 +365,22 @@ a.btn { color:#fff !important; }
                             @error('email') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Tên công ty/Cửa hàng</label>
+                            <label>{{ __('Tên công ty/Cửa hàng') }}</label>
                             <input type="text" name="company" class="form-control" value="{{ old('company') }}">
                             @error('company') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Địa chỉ kinh doanh /Tỉnh /Thành phố <span class="text-danger">*</span></label>
+                            <label>{{ __('Địa chỉ kinh doanh /Tỉnh /Thành phố') }} <span class="text-danger">*</span></label>
                             <input type="text" name="address" class="form-control" value="{{ old('address') }}" required>
                             @error('address') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Bạn biết đến Ekokemika qua đâu? <span class="text-danger">*</span></label>
+                            <label>{{ __('Bạn biết đến chúng tôi qua đâu?') }} <span class="text-danger">*</span></label>
                             <select name="source" class="form-control" required>
                                 @php
                                     $sources = ['Google'=>'Tìm kiếm Google','Social'=>'Mạng xã hội','Friend'=>'Giới thiệu từ bạn bè','Ads'=>'Quảng cáo','Other'=>'Khác...'];
                                 @endphp
-                                <option value="" disabled {{ old('source') ? '' : 'selected' }}>Chọn nguồn</option>
+                                <option value="" disabled {{ old('source') ? '' : 'selected' }}>{{ __('Chọn nguồn') }}</option>
                                 @foreach($sources as $v=>$label)
                                     <option value="{{ $v }}" {{ old('source')===$v ? 'selected':'' }}>{{ $label }}</option>
                                 @endforeach
@@ -386,14 +388,14 @@ a.btn { color:#fff !important; }
                             @error('source') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                         <div class="form-group col-12">
-                            <label>Thông điệp/Câu hỏi khác</label>
+                            <label>{{ __('Thông điệp/Câu hỏi khác') }}</label>
                             <textarea name="message" rows="5" class="form-control">{{ old('message') }}</textarea>
                             @error('message') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                     </div>
 
                     <button class="btn btn-primary btn-lg">
-                        <i class="fa-solid fa-paper-plane mr-1"></i> Gửi đăng ký
+                        <i class="fa-solid fa-paper-plane mr-1"></i> {{ __('Gửi đăng ký') }}
                     </button>
                 </form>
             </div>

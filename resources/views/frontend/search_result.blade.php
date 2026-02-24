@@ -1,6 +1,7 @@
 @extends('layouts.master') 
 
-@section('title', 'Kết quả tìm kiếm cho: ' . $keyword)
+@section('title', __('Kết quả tìm kiếm cho') . ': ' . $keyword)
+@section('meta_description', __('Kết quả tìm kiếm cho') . ': ' . $keyword)
 
 {{-- Push styles --}}
 @push('css')
@@ -11,12 +12,12 @@
 {{-- Header Section with Dot Grid Pattern --}}
 <div class="search-header-wrapper bg-pattern-grid text-center">
     <div class="container container-custom">
-        <h1 class="h2 font-weight-bold mb-2">ĐANG TÌM KIẾM</h1>
+        <h1 class="h2 font-weight-bold mb-2">{{ __('ĐANG TÌM KIẾM') }}</h1>
         <div class="search-title h4">
             "{{ $keyword }}"
         </div>
         <p class="text-muted mb-0">
-            Tìm thấy <strong class="text-gold">{{ $results->total() }}</strong> kết quả phù hợp
+            {{ __('Tìm thấy') }} <strong class="text-gold">{{ $results->total() }}</strong> {{ __('kết quả phù hợp') }}
         </p>
     </div>
 </div>
@@ -30,9 +31,9 @@
                     <div class="search-card-img-wrapper">
                         {{-- Badge (Optional logic: News vs Product) --}}
                         @if(isset($result->price))
-                            <span class="search-card-badge">Sản phẩm</span>
+                            <span class="search-card-badge">{{ __('Sản phẩm') }}</span>
                         @else
-                            <span class="search-card-badge" style="background: var(--blue);">Tin tức</span>
+                            <span class="search-card-badge" style="background: var(--blue);">{{ __('Tin tức') }}</span>
                         @endif
 
                         <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}" class="d-block h-100">
@@ -63,7 +64,7 @@
                         @else
                         <div class="mt-auto">
                             <a href="{{ route('frontend.slug.handle', $result->slug ?? $result->id) }}" class="text-gold small font-weight-bold text-decoration-none">
-                                Xem chi tiết <i class="fas fa-arrow-right ml-1"></i>
+                                {{ __('Xem chi tiết') }} <i class="fas fa-arrow-right ml-1"></i>
                             </a>
                         </div>
                         @endif
@@ -84,10 +85,10 @@
             <div class="search-icon-large text-muted opacity-50 mb-3">
                 <i class="fas fa-search"></i>
             </div>
-            <h4 class="font-weight-bold opacity-75">Không tìm thấy kết quả nào</h4>
-            <p class="text-muted">Rất tiếc, chúng tôi không tìm thấy nội dung phù hợp cho từ khóa <strong>"{{ $keyword }}"</strong>.</p>
+            <h4 class="font-weight-bold opacity-75">{{ __('Không tìm thấy kết quả nào') }}</h4>
+            <p class="text-muted">{{ __('Rất tiếc, chúng tôi không tìm thấy nội dung phù hợp cho từ khóa') }} <strong>"{{ $keyword }}"</strong>.</p>
             <a href="{{ route('home') }}" class="btn btn-gold rounded-pill px-4 mt-3 shadow-sm">
-                <i class="fas fa-home mr-2"></i> Quay về trang chủ
+                <i class="fas fa-home mr-2"></i> {{ __('Quay về trang chủ') }}
             </a>
         </div>
     @endif
