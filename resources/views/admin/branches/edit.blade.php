@@ -8,8 +8,8 @@
     @method('PUT')
     <div class="card">
         <div class="card-body">
-            <x-form.input name="name" label="Tên chi nhánh" :value="$branch->name" required />
-            <x-form.input name="address" label="Địa chỉ" :value="$branch->address" required />
+            <x-form.translatable-input name="name" label="Tên chi nhánh" :value="$branch->getTranslations('name')" required />
+            <x-form.translatable-input name="address" label="Địa chỉ" :value="$branch->getTranslations('address')" />
             <x-form.input name="phone" label="Số điện thoại" :value="$branch->phone" />
             <x-form.input name="email" label="Email" :value="$branch->email" />
 

@@ -50,7 +50,7 @@
                                 <i class="fas fa-user-plus"></i>
                             </div>
                             <div class="hero__btn-text">
-                                <span class="hero__btn-main">ĐĂNG KÝ HỘI VIÊN</span>
+                                <span class="hero__btn-main">{{ __('frontend.register_member') }}</span>
                                 <span class="hero__btn-sub">Hội công nghiệp chủ lực Bắc Ninh</span>
                             </div>
                         </a>

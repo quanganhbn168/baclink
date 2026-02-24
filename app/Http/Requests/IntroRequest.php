@@ -25,15 +25,19 @@ class IntroRequest extends FormRequest
         $introId = $this->route('intro') ? $this->route('intro')->id : null;
 
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|array',
+            'title.vi' => 'required|string|max:255',
+            'title.en' => 'nullable|string|max:255',
             'slug' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('intros', 'slug')->ignore($introId)
             ],
-            'description' => 'nullable|string',
-            'content' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.*' => 'nullable|string',
+            'content' => 'nullable|array',
+            'content.*' => 'nullable|string',
             'status' => 'boolean',
         ];
     }
@@ -45,6 +49,8 @@ class IntroRequest extends FormRequest
     {
         return [
             'title' => 'tiêu đề',
+            'title.vi' => 'tiêu đề (VN)',
+            'title.en' => 'tiêu đề (EN)',
             'slug' => 'slug',
             'description' => 'mô tả ngắn',
             'content' => 'nội dung',
@@ -59,7 +65,8 @@ class IntroRequest extends FormRequest
     {
         return [
             'title.required' => 'Vui lòng nhập tiêu đề',
-            'title.max' => 'Tiêu đề không được vượt quá 255 ký tự',
+            'title.vi.required' => 'Vui lòng nhập tiêu đề tiếng Việt',
+            'title.vi.max' => 'Tiêu đề không được vượt quá 255 ký tự',
             'slug.required' => 'Vui lòng nhập slug',
             'slug.unique' => 'Slug đã tồn tại',
             'status.boolean' => 'Trạng thái không hợp lệ',
@@ -71,10 +78,12 @@ class IntroRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        // Tự động tạo slug từ title nếu slug trống
-        if (!$this->slug && $this->title) {
+        // Tự động tạo slug từ title (lấy vi) nếu slug trống
+        $title = $this->title;
+        if (!$this->slug && $title) {
+            $viTitle = is_array($title) ? ($title['vi'] ?? '') : $title;
             $this->merge([
-                'slug' => \Illuminate\Support\Str::slug($this->title),
+                'slug' => \Illuminate\Support\Str::slug($viTitle),
             ]);
         }
 

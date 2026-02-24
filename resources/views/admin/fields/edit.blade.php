@@ -24,11 +24,11 @@
         <div class="card-body">
             
             {{-- Tên lĩnh vực --}}
-            <x-form.input
+            <x-form.translatable-input
                 name="name"
                 id="name"
                 label="Tên lĩnh vực"
-                :value="old('name', $field->name)"
+                :value="$field->getTranslations('name')"
                 required
             />
 
@@ -61,17 +61,17 @@
             />
 
             {{-- Tóm tắt --}}
-            <x-form.textarea
+            <x-form.translatable-textarea
                 name="summary"
                 label="Tóm tắt"
-                :value="old('summary', $field->summary)"
+                :value="$field->getTranslations('summary')"
             />
 
             {{-- Nội dung --}}
-            <x-form.ckeditor
+            <x-form.translatable-ckeditor
                 name="content"
                 label="Nội dung"
-                :value="old('content', $field->content)"
+                :value="$field->getTranslations('content')"
             />
 
             {{-- Trạng thái --}}

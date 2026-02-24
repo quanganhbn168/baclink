@@ -18,11 +18,11 @@
     <div class="card shadow mb-4">
         <div class="card-header"><h6 class="m-0 font-weight-bold text-primary">Thông tin testimonial</h6></div>
         <div class="card-body">
-            <x-form.input name="name" label="Tên khách hàng" :value="old('name')" required />
+            <x-form.translatable-input name="name" label="Tên khách hàng" :value="old('name', [])" required />
 
             <x-form.input name="position" label="Thứ tự" type="number" :value="old('position', 0)" />
 
-            <x-form.ckeditor name="content" label="Nội dung" :value="old('content')" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung" :value="old('content', [])" />
 
             <x-form.switch name="status" label="Hiển thị" :checked="old('status', true)" />
         </div>

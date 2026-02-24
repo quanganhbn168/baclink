@@ -8,9 +8,9 @@
     <form action="{{ route('admin.service_categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
-            <x-form.input name="name" label="Tên danh mục" :value="old('name')" />
-            <x-form.textarea name="description" label="Mô tả" :value="old('description')" />
-            <x-form.ckeditor name="content" label="Nội dung" :value="old('content')" />
+            <x-form.translatable-input name="name" label="Tên danh mục" :value="old('name', [])" />
+            <x-form.translatable-textarea name="description" label="Mô tả" :value="old('description', [])" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung" :value="old('content', [])" />
             <x-form.select-best
                 name="parent_id"
                 label="Danh mục"

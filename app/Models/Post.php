@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Traits\HasImages;
 use App\Traits\HasSlug;
+use App\Traits\HasTranslatable;
 
 class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
-    use HasFactory, HasImages, HasSlug;
+    use HasFactory, HasImages, HasSlug, HasTranslatable;
+
+    public array $translatable = ['title', 'description', 'content'];
     protected $fillable = [
         'post_category_id',
         'title',

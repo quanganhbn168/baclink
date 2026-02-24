@@ -9,8 +9,8 @@
             <div class="d-flex align-items-center text-truncate" style="max-width: 70%;">
                 <i class="fas fa-arrows-alt text-muted mr-2" style="font-size: 12px; cursor: move;"></i>
                 <span class="font-weight-bold text-dark">{{ $item->title }}</span>
-                @if($item->url)
-                    <small class="text-muted ml-2 font-italic font-weight-normal d-none d-md-inline">({{ Str::limit($item->url, 30) }})</small>
+                @if($item->link && $item->link !== 'javascript:void(0);')
+                    <small class="text-muted ml-2 font-italic font-weight-normal d-none d-md-inline">({{ Str::limit($item->link, 40) }})</small>
                 @endif
             </div>
 

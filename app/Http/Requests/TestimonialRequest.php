@@ -11,9 +11,13 @@ class TestimonialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'     => 'required|string|max:255',
+            'name'     => 'required|array',
+            'name.vi'  => 'required|string|max:255',
+            'name.en'  => 'nullable|string|max:255',
             'position' => 'nullable|integer|min:0',
-            'content'  => 'required|string',
+            'content'  => 'required|array',
+            'content.vi' => 'required|string',
+            'content.en' => 'nullable|string',
             'status'   => 'sometimes|boolean',
             // media-input trả về path ẩn, không validate file ở đây
             'image_original_path' => 'nullable|string',

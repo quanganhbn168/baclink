@@ -13,11 +13,11 @@
         @csrf
         @method('PUT')
         <div class="card-body">
-            <x-form.input type="text" name="title" label="Tiêu đề" :value="old('title', $intro->title)" />
+            <x-form.translatable-input name="title" label="Tiêu đề" :value="$intro->getTranslations('title')" required />
 
-            <x-form.ckeditor name="description" label="Mô tả ngắn" :value="old('description', $intro->description)" />
+            <x-form.translatable-ckeditor name="description" label="Mô tả ngắn" :value="$intro->getTranslations('description')" />
 
-            <x-form.ckeditor name="content" label="Nội dung chi tiết" :value="old('content', $intro->content)" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung chi tiết" :value="$intro->getTranslations('content')" />
 
             <x-admin.form.media-input
                 name="image_original_path"

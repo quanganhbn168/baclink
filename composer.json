@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.9",
         "spatie/laravel-permission": "^6.21",
         "spatie/laravel-sitemap": "^7.3",
+        "spatie/laravel-translatable": "^6.12",
         "symfony/css-selector": "^7.3",
         "symfony/dom-crawler": "^7.3"
     },

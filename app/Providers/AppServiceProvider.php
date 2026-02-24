@@ -18,7 +18,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFour();
-        
+
+        // Share locale/translation config with all views
+        view()->composer('*', function ($view) {
+            $view->with([
+                'availableLocales' => config('translatable.locales', ['vi', 'en']),
+                'localeLabels'     => config('translatable.labels', []),
+                'localeShortLabels'=> config('translatable.short_labels', []),
+                'currentLocale'    => app()->getLocale(),
+            ]);
+        });
+
         // Share Header Menu with header view
         view()->composer('partials.frontend.header', function ($view) {
             $menuBuilder = app(\App\Services\MenuBuilderService::class);

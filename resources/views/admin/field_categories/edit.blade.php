@@ -26,7 +26,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Thông tin chính</h6>
             </div>
             <div class="card-body">
-                <x-form.input name="name" label="Tên danh mục" :value="old('name', $fieldCategory->name)" required />
+                <x-form.translatable-input name="name" label="Tên danh mục" :value="$fieldCategory->getTranslations('name')" required />
 
                 <div class="form-group">
                     <label for="parent_id">Danh mục cha</label>
@@ -51,9 +51,9 @@
                     :current-id="$fieldCategory->id"
                 />
                 
-                <x-form.textarea name="description" label="Mô tả" :value="old('description', $fieldCategory->description)" rows="5" />
+                <x-form.translatable-textarea name="description" label="Mô tả" :value="$fieldCategory->getTranslations('description')" rows="5" />
 
-                <x-form.ckeditor name="content" label="Nội dung chi tiết" :value="old('content', $fieldCategory->content)" />
+                <x-form.translatable-ckeditor name="content" label="Nội dung chi tiết" :value="$fieldCategory->getTranslations('content')" />
             </div>
         </div>
     </div>

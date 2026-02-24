@@ -6,11 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasImages;
 use App\Traits\HasSlug;
+use App\Traits\HasTranslatable;
 
 class Intro extends Model
 {
     /** @use HasFactory<\Database\Factories\IntroFactory> */
-    use HasFactory, HasImages, HasSlug;
+    use HasFactory, HasImages, HasSlug, HasTranslatable;
+
+    public $translatable = ['title', 'description', 'content'];
     protected $fillable = [
         'title',
         'slug',

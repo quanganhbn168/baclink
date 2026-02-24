@@ -31,7 +31,9 @@ class PostRequest extends FormRequest
 
         return [
             'post_category_id' => ['required', 'integer', 'exists:post_categories,id'],
-            'title'            => ['required', 'string', 'max:255'],
+            'title'            => ['required', 'array'],
+            'title.vi'         => ['required', 'string', 'max:255'],
+            'title.en'         => ['nullable', 'string', 'max:255'],
             'slug'             => [
                 'nullable',
                 'string',
@@ -40,8 +42,10 @@ class PostRequest extends FormRequest
             ],
             'image'            => ['nullable', 'string',],
             'banner'           => ['nullable', 'string',],
-            'description'      => ['nullable', 'string'],
-            'content'          => ['nullable', 'string'],
+            'description'      => ['nullable', 'array'],
+            'description.*'    => ['nullable', 'string'],
+            'content'          => ['nullable', 'array'],
+            'content.*'        => ['nullable', 'string'],
             'is_featured'      => ['sometimes', 'in:0,1'],
             'status'           => ['sometimes', 'in:0,1'],
         ];

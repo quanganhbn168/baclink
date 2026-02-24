@@ -6,10 +6,13 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use App\Traits\HasImages;
 use App\Traits\HasSlug;
+use App\Traits\HasTranslatable;
 class Category extends Model
 {
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
-    use HasFactory, HasImages, HasSlug;
+    use HasFactory, HasImages, HasSlug, HasTranslatable;
+
+    public array $translatable = ['name', 'meta_description'];
     protected $fillable = [
         'parent_id',
         'name',

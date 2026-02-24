@@ -19,10 +19,10 @@
     <div class="card shadow mb-4">
         <div class="card-header"><h6 class="m-0 font-weight-bold text-primary">Thông tin testimonial</h6></div>
         <div class="card-body">
-            <x-form.input
+            <x-form.translatable-input
                 name="name"
                 label="Tên khách hàng"
-                :value="old('name', $testimonial->name)"
+                :value="$testimonial->getTranslations('name')"
                 required
             />
 
@@ -33,10 +33,10 @@
                 :value="old('position', $testimonial->position)"
             />
 
-            <x-form.ckeditor
+            <x-form.translatable-ckeditor
                 name="content"
                 label="Nội dung"
-                :value="old('content', $testimonial->content)"
+                :value="$testimonial->getTranslations('content')"
             />
 
             <x-form.switch

@@ -19,7 +19,7 @@ class PostController extends Controller
     }
     public function create()
     {
-        $categories = PostCategory::pluck("name","id");
+        $categories = PostCategory::orderBy('name')->get()->mapWithKeys(fn($c) => [$c->id => $c->name]);
 
         return view('admin.posts.create', compact('categories'));
     }
@@ -35,7 +35,7 @@ class PostController extends Controller
     }
     public function edit(Post $post)
     {
-        $categories = PostCategory::pluck("name","id");
+        $categories = PostCategory::orderBy('name')->get()->mapWithKeys(fn($c) => [$c->id => $c->name]);
         return view('admin.posts.edit', compact('post', 'categories'));
     }
     public function update(PostRequest $request, Post $post)

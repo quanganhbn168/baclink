@@ -12,11 +12,11 @@
     <form action="{{ route('admin.intros.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
-            <x-form.input type="text" name="title" label="Tiêu đề" :value="old('title')" />
+            <x-form.translatable-input name="title" label="Tiêu đề" :value="old('title', [])" required />
             <x-form.slug type="" />
-            <x-form.ckeditor name="description" label="Mô tả ngắn" :value="old('description')" />
+            <x-form.translatable-ckeditor name="description" label="Mô tả ngắn" :value="old('description', [])" />
 
-            <x-form.ckeditor name="content" label="Nội dung chi tiết" :value="old('content')" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung chi tiết" :value="old('content', [])" />
 
 
             <x-admin.form.media-input

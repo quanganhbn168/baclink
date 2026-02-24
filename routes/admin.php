@@ -121,7 +121,9 @@ Route::middleware(['auth:admin'])->prefix('admin')->as('admin.')->group(function
         // Legacy/Standard Resource support if needed (optional)
         Route::put('/{menu}', [MenuController::class, 'update'])->name('update'); 
         Route::delete('/{id}', [MenuController::class, 'destroy'])->name('destroy');
+        Route::get('/items/{id}', [MenuController::class, 'showItem'])->name('items.show');
         Route::put('/items/{id}', [MenuController::class, 'updateItem'])->name('items.update');
+        Route::post('/refresh-urls', [MenuController::class, 'refreshUrls'])->name('refresh-urls');
     });
     Route::post('/duplicate', [DuplicateController::class, 'duplicate'])->name('duplicate');
 });

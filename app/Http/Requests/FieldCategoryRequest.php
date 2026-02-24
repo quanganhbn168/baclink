@@ -17,7 +17,9 @@ class FieldCategoryRequest extends FormRequest
         $categoryId = $this->route('field_category') ? $this->route('field_category')->id : null;
 
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|array',
+            'name.vi' => 'required|string|max:255',
+            'name.en' => 'nullable|string|max:255',
             'slug' => [
                 'required',
                 'string',
@@ -25,8 +27,10 @@ class FieldCategoryRequest extends FormRequest
                 Rule::unique('field_categories', 'slug')->ignore($categoryId)
             ],
             'parent_id' => 'nullable|exists:field_categories,id',
-            'description' => 'nullable|string',
-            'content' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.*' => 'nullable|string',
+            'content' => 'nullable|array',
+            'content.*' => 'nullable|string',
             'status' => 'boolean',
             'order' => 'nullable|integer|min:0',
         ];
@@ -47,9 +51,11 @@ class FieldCategoryRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        if (!$this->slug && $this->name) {
+        $name = $this->name;
+        if (!$this->slug && $name) {
+            $viName = is_array($name) ? ($name['vi'] ?? '') : $name;
             $this->merge([
-                'slug' => \Illuminate\Support\Str::slug($this->name),
+                'slug' => \Illuminate\Support\Str::slug($viName),
             ]);
         }
 

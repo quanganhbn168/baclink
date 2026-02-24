@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\HasTranslatable;
+
 class Setting extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslatable;
+
+    public $translatable = ['name', 'address', 'meta_description', 'meta_keywords'];
 
     protected $table = 'settings';
 

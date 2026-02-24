@@ -6,12 +6,12 @@
     @csrf
     <div class="card">
         <div class="card-body">
-            <x-form.input name="title" label="Tiêu đề" required />
+            <x-form.translatable-input name="title" label="Tiêu đề" required />
             <x-form.slug
                 name="slug"
                 label="Đường dẫn (slug)"
                 :value="old('slug')"
-                source="#title"
+                source="#title_vi"
                 table="posts"
                 field="slug"
             />
@@ -33,8 +33,8 @@
                     :multiple="false"
                     :value="old('banner_original_path')"
             />
-            <x-form.textarea name="description" label="Mô tả ngắn" />
-            <x-form.ckeditor name="content" label="Nội dung" />
+            <x-form.translatable-textarea name="description" label="Mô tả ngắn" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung" />
             <x-form.switch name="is_featured" label="Nổi bật" :checked="false" />
             <x-form.switch name="status" label="Hiển thị" :checked="true" />
         </div>

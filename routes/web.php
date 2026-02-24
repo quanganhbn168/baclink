@@ -128,4 +128,14 @@ Route::get('/fix-cache', function() {
     return "Cache cleared! <br>Header & Footer Menu Cache: Forgot. <br>System Cache: Cleared. <br>Config: Cleared. <br>View: Cleared. <br><a href='/'>Go Home</a>";
 });
 
+// --- Locale Switcher ---
+Route::get('/locale/{locale}', function (string $locale) {
+    $locales = config('translatable.locales', ['vi', 'en']);
+    if (in_array($locale, $locales)) {
+        session(['locale' => $locale]);
+        cookie()->queue('locale', $locale, 60 * 24 * 365);
+    }
+    return redirect()->back();
+})->name('locale.switch');
+
 Route::get('/{slug}', [SlugController::class, 'handle'])->where('slug', '.*')->name('frontend.slug.handle');

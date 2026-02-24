@@ -7,7 +7,7 @@
     @csrf
     <div class="card">
         <div class="card-body">
-            <x-form.input name="name" label="Tên lĩnh vực" required />
+            <x-form.translatable-input name="name" label="Tên lĩnh vực" :value="old('name', [])" required />
             
             <x-form.slug
                 name="slug"
@@ -33,8 +33,8 @@
                 :value="old('image_original_path')"
             />
             
-            <x-form.textarea name="summary" label="Tóm tắt" />
-            <x-form.ckeditor name="content" label="Nội dung" />
+            <x-form.translatable-textarea name="summary" label="Tóm tắt" :value="old('summary', [])" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung" :value="old('content', [])" />
             
             <x-form.switch name="status" label="Hiển thị" :checked="true" />
             <x-form.switch name="is_featured" label="Nổi bật" :checked="false" />

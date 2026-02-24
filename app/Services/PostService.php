@@ -69,7 +69,7 @@ class PostService
     /** Dùng cho filter dropdown ở index */
     public function getFilterCategories(): array
     {
-        return PostCategory::orderBy('name')->pluck('name', 'id')->toArray();
+        return PostCategory::orderBy('name')->get()->mapWithKeys(fn($c) => [$c->id => $c->name])->toArray();
     }
 
     /** Giữ lại nếu nơi khác còn dùng */

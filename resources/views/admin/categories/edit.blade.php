@@ -12,12 +12,12 @@
                     <h6 class="m-0 font-weight-bold text-primary">Thông tin chính</h6>
                 </div>
                 <div class="card-body">
-                    <x-form.input name="name" label="Tên danh mục" :value="old('name', $category->name)" required />
+                    <x-form.translatable-input name="name" label="Tên danh mục" :value="$category->getTranslations('name')" required />
                     <x-form.slug
                         name="slug"
                         label="Đường dẫn (slug)"
                         :value="old('slug', $category->slug)"
-                        source="#name"
+                        source="#name_vi"
                         table="categories"
                         field="slug"
                         :current-id="$category->id"
@@ -65,7 +65,7 @@
                         :value="$category->bannerImage() ? $category->bannerImage()->original_path : old('banner_original_path')"
                     />
                     <hr>
-                    <x-form.textarea name="meta_description" label="Meta Description" :value="old('meta_description', $category->meta_description)" />
+                    <x-form.translatable-textarea name="meta_description" label="Meta Description" :value="$category->getTranslations('meta_description')" />
                     <x-form.input name="meta_keywords" label="Meta Keywords" :value="old('meta_keywords', $category->meta_keywords)" />
                 </div>
             </div>

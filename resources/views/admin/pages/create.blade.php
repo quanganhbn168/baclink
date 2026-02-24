@@ -24,17 +24,7 @@
             @endif
 
             {{-- 2. FIELD TIÊU ĐỀ --}}
-            <div class="form-group">
-                <label>Tiêu đề trang <span class="text-danger">*</span></label>
-                {{-- Thêm class is-invalid nếu có lỗi --}}
-                <input type="text" name="title" 
-                       class="form-control @error('title') is-invalid @enderror" 
-                       value="{{ old('title') }}" required>
-                {{-- Hiển thị chi tiết lỗi --}}
-                @error('title')
-                    <span class="error invalid-feedback" style="display: block">{{ $message }}</span>
-                @enderror
-            </div>
+            <x-form.translatable-input name="title" label="Tiêu đề trang" required />
 
             {{-- 3. FIELD SLUG --}}
             <div class="form-group">
@@ -48,10 +38,7 @@
                 @enderror
             </div>
 
-            {{-- 4. FIELD CONTENT (CKEditor) --}}
-            {{-- Lưu ý: Vì đây là Component, nếu bên trong component chưa xử lý error, 
-                 ta hiển thị lỗi ngay bên dưới component này --}}
-            <x-form.ckeditor name="content" label="Nội dung trang" :value="old('content')" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung trang" :value="old('content', [])" />
 
             <div class="form-group">
                 <div class="custom-control custom-switch">

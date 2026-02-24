@@ -11,7 +11,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Thông tin chính</h6>
                 </div>
                 <div class="card-body">
-                    <x-form.input name="name" label="Tên danh mục" required />
+                    <x-form.translatable-input name="name" label="Tên danh mục" required />
                     <div class="form-group">
                         <label for="parent_id">Danh mục cha</label>
                         <select id="parent_id" name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
@@ -27,7 +27,7 @@
                         name="slug"
                         label="Đường dẫn (slug)"
                         :value="old('slug')"
-                        source="#name"
+                        source="#name_vi"
                         table="categories"
                         field="slug"
                     />

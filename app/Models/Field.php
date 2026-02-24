@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Traits\HasImages;
+use App\Traits\HasTranslatable;
 use Illuminate\Support\Str;
 class Field extends Model
 {
-    use HasFactory, HasImages;
+    use HasFactory, HasImages, HasTranslatable;
+
+    public $translatable = ['name', 'summary', 'content'];
 
     /**
      * Các thuộc tính có thể được gán hàng loạt.

@@ -22,10 +22,13 @@ class SettingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'             => 'required|string|max:255',
+            'name'             => 'required|array',
+            'name.vi'          => 'required|string|max:255',
+            'name.en'          => 'nullable|string|max:255',
             'email'            => 'nullable|email',
             'phone'            => 'nullable|string|max:20',
-            'address'          => 'nullable|string|max:255',
+            'address'          => 'nullable|array',
+            'address.*'        => 'nullable|string|max:255',
             'bank_name'        => 'nullable|string|max:255',
             'bank_account_no'  => 'nullable|string|max:50',
             'bank_account_name'=> 'nullable|string|max:255',
@@ -35,10 +38,11 @@ class SettingRequest extends FormRequest
             'head_script'      => 'nullable|string',
             'body_script'      => 'nullable|string',
             'logo'             => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
-            'banner'           => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
             'meta_image'       => 'nullable|image|mimes:jpg,jpeg,png,webp,gif|max:2048',
-            'meta_description' => 'nullable|string|max:500',
-            'meta_keywords'    => 'nullable|string|max:255', 
+            'meta_description' => 'nullable|array',
+            'meta_description.*' => 'nullable|string|max:500',
+            'meta_keywords'    => 'nullable|array',
+            'meta_keywords.*'  => 'nullable|string|max:255', 
             'zalo'             => 'nullable|url',
             'mess'             => 'nullable|url',
             'tiktok'           => 'nullable|url',
@@ -77,11 +81,11 @@ class SettingRequest extends FormRequest
             'meta_image.mimes'          => 'Ảnh chia sẻ phải có định dạng: jpg, jpeg, png, webp, gif.',
             'meta_image.max'            => 'Kích thước ảnh chia sẻ không được vượt quá :max KB.',
 
-            'meta_description.string'   => 'Mô tả meta phải là chuỗi ký tự.',
-            'meta_description.max'      => 'Mô tả meta không được vượt quá :max ký tự.',
+            'meta_description.array'    => 'Mô tả meta phải là mảng.',
+            'meta_description.*.max'    => 'Mô tả meta không được vượt quá :max ký tự.',
 
-            'meta_keywords.string'      => 'Từ khóa meta phải là chuỗi ký tự.',
-            'meta_keywords.max'         => 'Từ khóa meta không được vượt quá :max ký tự.',
+            'meta_keywords.array'       => 'Từ khóa meta phải là mảng.',
+            'meta_keywords.*.max'       => 'Từ khóa meta không được vượt quá :max ký tự.',
 
             'zalo.url'                  => 'Link Zalo không đúng định dạng URL.',
             'mess.url'                  => 'Link Messenger không đúng định dạng URL.',

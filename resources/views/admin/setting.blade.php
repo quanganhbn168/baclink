@@ -10,14 +10,14 @@
         @csrf
         @method('PUT')
         <div class="card-body">
-            <x-form.input name="name" label="Tên Công ty" :value="$setting->name ?? ''" />
+            <x-form.translatable-input name="name" label="Tên Công ty" :value="isset($setting) ? $setting->getTranslations('name') : old('name', [])" required />
             <x-form.input name="email" label="Email" :value="$setting->email ?? ''" />
             <x-form.input name="phone" label="Số điện thoại" :value="$setting->phone ?? ''" />
             <x-form.input name="zalo" label="Zalo" :value="$setting->zalo ?? ''" />
             <x-form.input name="mess" label="Mess" :value="$setting->mess ?? ''" />
             <x-form.input name="tiktok" label="Tiktok" :value="$setting->tiktok ?? ''" />
             <x-form.input name="youtube" label="Youtube" :value="$setting->youtube ?? ''" />
-            <x-form.input name="address" label="Địa chỉ" :value="$setting->address ?? ''" />
+            <x-form.translatable-input name="address" label="Địa chỉ" :value="isset($setting) ? $setting->getTranslations('address') : old('address', [])" />
             
             <hr>
             <h4>Thông tin Ngân hàng (Dùng cho QR Code)</h4>
@@ -59,8 +59,8 @@
             <x-form.textarea name="head_script" label="Code trước </head>" :value="$setting->head_script ?? ''" />
             <x-form.textarea name="body_script" label="Code trước </body>" :value="$setting->body_script ?? ''" />
                 <hr>
-            <x-form.textarea name="meta_description" label="Meta Description" :value="$setting->meta_description ?? ''" />
-            <x-form.textarea name="meta_keywords" label="Meta Keyword" :value="$setting->meta_keywords ?? ''" />
+            <x-form.translatable-textarea name="meta_description" label="Meta Description" :value="isset($setting) ? $setting->getTranslations('meta_description') : old('meta_description', [])" />
+            <x-form.translatable-input name="meta_keywords" label="Meta Keyword" :value="isset($setting) ? $setting->getTranslations('meta_keywords') : old('meta_keywords', [])" />
             <x-form.image-input
                 name="meta_image"
                 label="Ảnh chia sẻ"

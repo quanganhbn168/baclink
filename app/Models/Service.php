@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasImageGallery;
 use App\Traits\UploadImageTrait;
+use App\Traits\HasTranslatable;
 
 class Service extends Model
 {
-    use HasFactory, HasImageGallery, UploadImageTrait;
+    use HasFactory, HasImageGallery, UploadImageTrait, HasTranslatable;
+
+    public array $translatable = ['name', 'description', 'content'];
 
     protected $fillable = [
         'service_category_id',

@@ -56,7 +56,9 @@ class ProjectRequest extends FormRequest
 
         return [
             // Chính
-            'name'                => ['required', 'string', 'max:255'],
+            'name'                => ['required', 'array'],
+            'name.vi'             => ['required', 'string', 'max:255'],
+            'name.en'             => ['nullable', 'string', 'max:255'],
             'project_category_id' => ['required', 'integer', 'exists:project_categories,id'],
 
             // Slug có thể để trống (tự sinh ở service/controller nếu muốn)
@@ -74,8 +76,10 @@ class ProjectRequest extends FormRequest
             'value'               => ['nullable', 'integer', 'min:0'],
 
             // Nội dung
-            'description'         => ['nullable', 'string'],
-            'content'             => ['nullable', 'string'],
+            'description'         => ['nullable', 'array'],
+            'description.*'       => ['nullable', 'string'],
+            'content'             => ['nullable', 'array'],
+            'content.*'           => ['nullable', 'string'],
 
             // Media (chuẩn MediaService)
             'image_original_path'  => ['nullable', 'string', 'max:1024'],
@@ -94,8 +98,8 @@ class ProjectRequest extends FormRequest
     {
         return [
             'name.required'                => 'Tên dự án là bắt buộc.',
-            'name.string'                  => 'Tên dự án phải là chuỗi.',
-            'name.max'                     => 'Tên dự án không vượt quá 255 ký tự.',
+            'name.vi.required'             => 'Tên dự án (VN) là bắt buộc.',
+            'name.vi.max'                  => 'Tên dự án không vượt quá 255 ký tự.',
 
             'project_category_id.required' => 'Vui lòng chọn danh mục dự án.',
             'project_category_id.integer'  => 'Danh mục không hợp lệ.',

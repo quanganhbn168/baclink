@@ -171,8 +171,8 @@
                 <div class="card-header">
                     <h3 class="card-title font-weight-bold">Cấu trúc hiển thị</h3>
                     <div class="card-tools">
-                        <button type="button" class="btn btn-success btn-sm" id="btn-save-order" style="display:none;">
-                            <i class="fas fa-save mr-1"></i> Lưu vị trí
+                        <button type="button" class="btn btn-outline-info btn-sm mr-2" @click="refreshUrls()" :disabled="refreshing">
+                            <i class="fas fa-sync-alt mr-1" :class="{ 'fa-spin': refreshing }"></i> <span x-text="refreshing ? 'Đang cập nhật...' : 'Làm mới URL'"></span>
                         </button>
                     </div>
                 </div>
@@ -190,6 +190,35 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Bootstrap Modal for Menu Item Edit --}}
+<div class="modal fade" id="editMenuItemModal" tabindex="-1" role="dialog" aria-labelledby="editMenuItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="editMenuItemModalLabel"><i class="fas fa-pencil-alt mr-2"></i>Sửa tên mục menu</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit_item_url">
+                @foreach(config('translatable.locales', ['vi', 'en']) as $locale)
+                <div class="form-group">
+                    <label class="font-weight-bold">
+                        {{ config('translatable.labels.' . $locale, strtoupper($locale)) }}
+                    </label>
+                    <input type="text" class="form-control" id="modal_title_{{ $locale }}" placeholder="Nhập tên...">
+                </div>
+                @endforeach
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btn-save-menu-item"><i class="fas fa-save mr-1"></i>Lưu</button>
             </div>
         </div>
     </div>
@@ -284,6 +313,7 @@
             selectedIntros: [],
             isAllIntros: false,
             customLink: { title: '', url: '', target: '_self' },
+            refreshing: false,
 
             init() {
                 // Initialize Nestable
@@ -313,6 +343,25 @@
 
             addCustomLink() {
                 this.postItem({ type: 'custom', ...this.customLink });
+            },
+
+            refreshUrls() {
+                this.refreshing = true;
+                $.post("{{ route('admin.menus.refresh-urls') }}", {
+                    _token: '{{ csrf_token() }}',
+                    menu_id: this.menuId
+                }).done(response => {
+                    if (response.status === 'success') {
+                        toastr.success('Đã cập nhật ' + response.fixed + ' đường dẫn!');
+                        $('#menu-nestable > .dd-list').html(response.html);
+                        $('#menu-nestable').nestable('destroy');
+                        $('#menu-nestable').nestable({ maxDepth: 3, group: 1 }).on('change', () => { this.saveOrder(); });
+                    }
+                    this.refreshing = false;
+                }).fail(() => {
+                    toastr.error('Lỗi khi cập nhật!');
+                    this.refreshing = false;
+                });
             },
 
             postItem(data) {
@@ -388,44 +437,59 @@
         });
     });
 
-    // Handle Edit via jQuery
+    // Handle Edit via jQuery — opens Bootstrap modal
     $(document).on('click', '.btn-edit-item', function(e) {
         e.stopPropagation();
-        var itemId = $(this).data('id');
-        var currentTitle = $(this).data('title');
         var url = $(this).data('url');
+        $('#edit_item_url').val(url);
+        
+        // Clear all inputs first
+        var locales = @json(config('translatable.locales', ['vi', 'en']));
+        locales.forEach(function(locale) {
+            $('#modal_title_' + locale).val('');
+        });
 
-        Swal.fire({
-            title: 'Sửa tên mục menu',
-            input: 'text',
-            inputValue: currentTitle,
-            showCancelButton: true,
-            confirmButtonText: 'Lưu',
-            cancelButtonText: 'Hủy',
-            inputValidator: (value) => {
-                if (!value) {
-                    return 'Bạn cần viết gì đó!'
-                }
+        // Fetch current translations and fill inputs
+        $.get(url, function(data) {
+            var translations = data.translations || {};
+            locales.forEach(function(locale) {
+                $('#modal_title_' + locale).val(translations[locale] || '');
+            });
+            $('#editMenuItemModal').modal('show');
+        });
+    });
+
+    // Save from Bootstrap modal
+    $('#btn-save-menu-item').on('click', function() {
+        var url = $('#edit_item_url').val();
+        var locales = @json(config('translatable.locales', ['vi', 'en']));
+        var postData = { _token: '{{ csrf_token() }}' };
+        var hasValue = false;
+
+        locales.forEach(function(locale) {
+            var val = $('#modal_title_' + locale).val();
+            postData['title_' + locale] = val;
+            if (val) hasValue = true;
+        });
+
+        if (!hasValue) {
+            toastr.warning('Bạn cần nhập ít nhất 1 ngôn ngữ!');
+            return;
+        }
+
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            data: postData,
+            success: function(res) {
+                $('#editMenuItemModal').modal('hide');
+                toastr.success('Đã cập nhật tên!');
+                setTimeout(() => location.reload(), 300);
+            },
+            error: function(err) {
+                toastr.error('Lỗi cập nhật!');
             }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: url, 
-                    type: 'PUT',
-                    data: { 
-                        _token: '{{ csrf_token() }}',
-                        title: result.value
-                    },
-                    success: function(res) {
-                        toastr.success('Đã cập nhật tên!');
-                        setTimeout(() => location.reload(), 300); 
-                    },
-                    error: function(err) {
-                        toastr.error('Lỗi cập nhật!');
-                    }
-                });
-            }
-        })
+        });
     });
 </script>
 @endpush

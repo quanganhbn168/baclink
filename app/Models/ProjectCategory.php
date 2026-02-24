@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Traits\HasImages;
+use App\Traits\HasTranslatable;
 class ProjectCategory extends Model
 {
     /** @use HasFactory<\Database\Factories\PostCategoryFactory> */
-    use HasFactory, HasImages;
+    use HasFactory, HasImages, HasTranslatable;
+
+    public $translatable = ['name', 'description'];
 
     protected $fillable = [
         'parent_id',

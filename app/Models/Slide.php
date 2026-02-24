@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use App\Traits\HasImages;
+use App\Traits\HasTranslatable;
 
 class Slide extends Model
 {
-    use HasFactory, HasImages;
+    use HasFactory, HasImages, HasTranslatable;
+
+    public $translatable = ['title', 'description'];
 
     protected $fillable = [
         'title',

@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','Trang chủ - '.$setting->name)
+@section('title',__('frontend.home').' - '.$setting->name)
 @section('meta_description',$setting->meta_description)
 @section('meta_keywords',$setting->meta_keywords)
 @section('meta_image',$setting->meta_image ? asset($setting->meta_image) : asset($setting->logo))
@@ -99,7 +99,7 @@
                      {!! Str::limit(strip_tags($intro->description), 800) !!}
                 </div>
                 <a href="{{ route('frontend.slug.handle', [$intro->slug ?? 'gioi-thieu']) }}" class="btn btn-gold px-4 py-2 rounded-pill shadow-sm">
-                    Tìm hiểu thêm <i class="fas fa-arrow-right ml-2"></i>
+                    {{ __('frontend.learn_more') }} <i class="fas fa-arrow-right ml-2"></i>
                 </a>
                 @endif
             </div>
@@ -148,7 +148,7 @@
 {{-- NEWS SECTION --}}
 <section class="section news-section py-5 bg-texture-noise" data-aos="fade-up" data-aos-delay="100">
     <div class="container container-custom">
-        <h2 class="section-title mb-5"><a href="{{ route('frontend.posts.index') }}">HOẠT ĐỘNG CỦA BACLINK</a></h2>
+        <h2 class="section-title mb-5"><a href="{{ route('frontend.posts.index') }}">{{ __('frontend.baclink_activities') }}</a></h2>
         
         @if($homePosts->count() > 0)
         @php
@@ -238,12 +238,12 @@
             </div>
         </div>
         @else
-        <p class="text-center">Chưa có tin tức nào.</p>
+        <p class="text-center">{{ __('frontend.no_news') }}</p>
         @endif
         
         <div class="text-center mt-5">
             <a href="{{ route('frontend.posts.index') }}" class="btn btn-gold px-4 py-2 rounded-pill shadow-sm">
-                Xem tất cả tin tức <i class="fas fa-arrow-right ml-2"></i>
+                {{ __('frontend.view_all_news') }} <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
     </div>
@@ -256,9 +256,9 @@
     
     <div class="container container-custom position-relative z-index-1">
         <div class="text-center mb-5">
-            <h2 class="section-title mb-3"><a href="{{ route('frontend.members.index') }}">HỘI VIÊN TIÊU BIỂU</a></h2>
+            <h2 class="section-title mb-3"><a href="{{ route('frontend.members.index') }}">{{ __('frontend.featured_members') }}</a></h2>
             <p class="text-muted mx-auto" style="max-width: 600px;">
-                Cộng đồng doanh nghiệp Bắc Ninh cùng kết nối, chia sẻ và phát triển
+                {{ __('frontend.members_desc') }}
             </p>
         </div>
 
@@ -275,10 +275,10 @@
                     <div class="member-info">
                         <h5 class="member-name font-weight-bold mb-1 text-dark text-truncate">{{ $member->name }}</h5>
                         <p class="member-role small text-muted mb-2 text-uppercase text-truncate">
-                            {{ optional($member->dealerProfile)->position ?? 'Đại diện doanh nghiệp' }}
+                            {{ optional($member->dealerProfile)->position ?? __('frontend.default_position') }}
                         </p>
                         <p class="member-company text-blue font-weight-bold small line-clamp-2" style="min-height: 40px;">
-                            {{ optional($member->dealerProfile)->company_name ?? 'Công ty Hội viên' }}
+                            {{ optional($member->dealerProfile)->company_name ?? __('frontend.default_company') }}
                         </p>
                     </div>
                     {{-- Hover overlay or link --}}
@@ -290,7 +290,7 @@
 
         <div class="text-center mt-4">
             <a href="{{ route('frontend.members.index') }}" class="btn btn-gold px-4 py-2 rounded-pill shadow-sm">
-                Tìm hiểu thêm <i class="fas fa-arrow-right ml-2"></i>
+                {{ __('frontend.learn_more') }} <i class="fas fa-arrow-right ml-2"></i>
             </a>
             </div>
     </div>
@@ -299,7 +299,7 @@
 {{-- PARTNERS SECTION --}}
 <section class="section partner-section py-5 bg-light" data-aos="fade-up" data-aos-delay="100">
     <div class="container container-custom">
-        <h2 class="section-title">ĐỐI TÁC BACLINK</h2>
+        <h2 class="section-title">{{ __('frontend.baclink_partners') }}</h2>
         
         <!-- Logo Marquee (Single Row) -->
         <div class="swiper partner-marquee-single mt-5 mb-5">

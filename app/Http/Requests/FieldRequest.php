@@ -26,15 +26,19 @@ class FieldRequest extends FormRequest
 
         return [
             'field_category_id' => 'required|exists:field_categories,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|array',
+            'name.vi' => 'required|string|max:255',
+            'name.en' => 'nullable|string|max:255',
             'slug' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('fields', 'slug')->ignore($fieldId)
             ],
-            'summary' => 'nullable|string',
-            'content' => 'nullable|string',
+            'summary' => 'nullable|array',
+            'summary.*' => 'nullable|string',
+            'content' => 'nullable|array',
+            'content.*' => 'nullable|string',
             'status' => 'boolean',
             'is_featured' => 'boolean',
             'meta_title' => 'nullable|string|max:255',
@@ -85,10 +89,12 @@ class FieldRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
-        // Tự động tạo slug từ name nếu slug trống
-        if (!$this->slug && $this->name) {
+        // Tự động tạo slug từ name (lấy vi) nếu slug trống
+        $name = $this->name;
+        if (!$this->slug && $name) {
+            $viName = is_array($name) ? ($name['vi'] ?? '') : $name;
             $this->merge([
-                'slug' => \Illuminate\Support\Str::slug($this->name),
+                'slug' => \Illuminate\Support\Str::slug($viName),
             ]);
         }
 

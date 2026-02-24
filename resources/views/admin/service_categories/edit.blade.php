@@ -11,22 +11,22 @@
         @method('PUT')
 
         <div class="card-body">
-            <x-form.input
+            <x-form.translatable-input
                 name="name"
                 label="Tên danh mục"
-                :value="old('name', $service_category->name)"
+                :value="$service_category->getTranslations('name')"
             />
 
-            <x-form.textarea
+            <x-form.translatable-textarea
                 name="description"
                 label="Mô tả"
-                :value="old('description', $service_category->description)"
+                :value="$service_category->getTranslations('description')"
             />
 
-            <x-form.ckeditor
+            <x-form.translatable-ckeditor
                 name="content"
                 label="Nội dung"
-                :value="old('content', $service_category->content)"
+                :value="$service_category->getTranslations('content')"
             />
 
         

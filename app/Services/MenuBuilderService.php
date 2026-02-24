@@ -6,7 +6,7 @@ class MenuBuilderService
 {
     public function getHeaderMenu()
     {
-        return Cache::rememberForever('header_menu_structure', function () {
+        return Cache::rememberForever('header_menu_structure_' . app()->getLocale(), function () {
             // Lấy Menu có location = 'top_nav'
             $menu = \App\Models\Menu::where('location', 'top_nav')->with(['items.children'])->first();
             
@@ -160,7 +160,7 @@ class MenuBuilderService
     }
     public function getMenuFooter()
     {
-        return Cache::rememberForever('footer_menu_structure', function () {
+        return Cache::rememberForever('footer_menu_structure_' . app()->getLocale(), function () {
             $menuConfig = config('menu_footer', []);
             $builtMenu = [];
             foreach ($menuConfig as $column) {

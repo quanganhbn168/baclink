@@ -27,11 +27,11 @@
         <div class="card-body">
 
             {{-- Tên dự án --}}
-            <x-form.input
+            <x-form.translatable-input
                 name="name"
                 id="name"
                 label="Tên dự án"
-                :value="old('name')"
+                :value="old('name', [])"
                 required
             />
 
@@ -90,15 +90,15 @@
             </div>
 
             {{-- Mô tả & Nội dung --}}
-            <x-form.textarea
+            <x-form.translatable-textarea
                 name="description"
                 label="Mô tả ngắn"
-                :value="old('description')"
+                :value="old('description', [])"
             />
-            <x-form.ckeditor
+            <x-form.translatable-ckeditor
                 name="content"
                 label="Nội dung chi tiết"
-                :value="old('content')"
+                :value="old('content', [])"
             />
         </div>
     </div>

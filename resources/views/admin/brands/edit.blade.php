@@ -9,7 +9,7 @@
     @method('PUT')
     <div class="card">
         <div class="card-body">
-            <x-form.input name="name" label="Tên thương hiệu" :value="$brand->name" required />
+            <x-form.translatable-input name="name" label="Tên thương hiệu" :value="$brand->getTranslations('name')" required />
             <x-form.slug
                 name="slug"
                 label="Đường dẫn (slug)"

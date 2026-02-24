@@ -7,7 +7,7 @@
     <form action="{{ route('admin.services.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
-            <x-form.input type="text" name="name" label="Tên dịch vụ" :value="old('name')" required />
+            <x-form.translatable-input type="text" name="name" label="Tên dịch vụ" :value="old('name', [])" required />
             <x-form.select-best
                 name="service_category_id"
                 label="Danh mục sản phẩm"
@@ -20,8 +20,8 @@
             />
             <x-form.image-input name="image" label="Ảnh dịch vụ" />
             <x-form.image-input name="banner" label="Banner (tuỳ chọn)" />
-            <x-form.textarea name="description" label="Mô tả ngắn" :value="old('description')" />
-            <x-form.ckeditor name="content" label="Nội dung chi tiết" :value="old('content')" />
+            <x-form.translatable-textarea name="description" label="Mô tả ngắn" :value="old('description', [])" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung chi tiết" :value="old('content', [])" />
             <x-form.switch name="status" label="Trạng thái" :checked="old('status', true)" />
         </div>
         <div class="card-footer">

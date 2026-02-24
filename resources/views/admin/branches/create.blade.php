@@ -7,8 +7,8 @@
     @csrf
     <div class="card">
         <div class="card-body">
-            <x-form.input name="name" label="Tên chi nhánh" required />
-            <x-form.input name="address" label="Địa chỉ" />
+            <x-form.translatable-input name="name" label="Tên chi nhánh" :value="old('name', [])" required />
+            <x-form.translatable-input name="address" label="Địa chỉ" :value="old('address', [])" />
             <x-form.input name="phone" label="Số điện thoại" />
             <x-form.input name="email" label="Email" />
 

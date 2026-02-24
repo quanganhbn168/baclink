@@ -14,7 +14,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Thông tin chính</h6>
                 </div>
                 <div class="card-body">
-                    <x-form.input name="name" label="Tên danh mục" :value="old('name', $postCategory->name)" required />
+                    <x-form.translatable-input name="name" label="Tên danh mục" :value="$postCategory->getTranslations('name')" required />
 
                     <div class="form-group">
                         <label for="parent_id">Danh mục cha</label>
@@ -33,7 +33,7 @@
                         name="slug"
                         label="Đường dẫn (slug)"
                         :value="old('slug', $postCategory->slug)"
-                        source="#name"
+                        source="#name_vi"
                         table="post_categories"
                         field="slug"
                         :current-id="$postCategory->id"

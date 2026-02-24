@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\MenuItem;
-use App\Models\Page; 
+use App\Models\Page;
+use App\Models\Intro;
 use App\Models\Category; // Nhớ use các model anh cần link tới
 use Illuminate\Support\Facades\Cache;
 
@@ -14,28 +15,28 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         // 1. Lấy danh sách menu
-        $menus = \App\Models\Menu::all(); 
+        $menus = Menu::all(); 
         
         // 2. Menu đang chọn
         $currentMenuId = $request->get('menu_id');
         if ($currentMenuId) {
-            $menu = \App\Models\Menu::findOrFail($currentMenuId);
+            $menu = Menu::findOrFail($currentMenuId);
         } else {
-            $menu = \App\Models\Menu::firstOrCreate(
+            $menu = Menu::firstOrCreate(
                 ['location' => 'top_nav'],
                 ['name' => 'Menu Chính (Top)']
             );
-            \App\Models\Menu::firstOrCreate(
+            Menu::firstOrCreate(
                 ['location' => 'footer_main'],
                 ['name' => 'Menu Chân trang (Footer)']
             );
-            $menus = \App\Models\Menu::all();
+            $menus = Menu::all();
         }
 
         // 3. Load dữ liệu phụ trợ
-        $pages = \App\Models\Page::select('id', 'title')->get();
-        $categories = \App\Models\Category::select('id', 'name')->get();
-        $intros = \App\Models\Intro::select('id', 'title')->get();
+        $pages = Page::select('id', 'title')->get();
+        $categories = Category::select('id', 'name')->get();
+        $intros = Intro::select('id', 'title')->get();
 
         // 4. Data cho JS (Alpine)
         // Link hệ thống định nghĩa ngay tại đây để dễ quản lý
@@ -62,7 +63,7 @@ class MenuController extends Controller
         ];
 
         // Lấy items dạng Eloquent Collection cho Blade render ban đầu
-        $menuItems = \App\Models\MenuItem::where('menu_id', $menu->id)
+        $menuItems = MenuItem::where('menu_id', $menu->id)
                     ->whereNull('parent_id')
                     ->orderBy('order')
                     ->with('children')
@@ -73,7 +74,7 @@ class MenuController extends Controller
 
     // Helper đệ quy lấy cây menu
     private function getTree($menuId) {
-        $items = \App\Models\MenuItem::where('menu_id', $menuId)
+        $items = MenuItem::where('menu_id', $menuId)
                     ->whereNull('parent_id')
                     ->orderBy('order')
                     ->with('children')
@@ -107,23 +108,23 @@ class MenuController extends Controller
 
         if ($request->type == 'system') {
             $this->clearMenuCache();
-            \App\Models\MenuItem::create([
+            MenuItem::create([
                 'menu_id' => $menuId,
                 'title' => $request->title,
-                'url' => route($request->route),
+                'url' => 'route:' . $request->route,
                 'target' => '_self',
                 'order' => 999
             ]);
         }
         elseif ($request->type == 'page') {
             foreach ($request->ids as $id) {
-                $page = \App\Models\Page::find($id);
+                $page = Page::find($id);
                 if ($page) {
-                    \App\Models\MenuItem::create([
+                    MenuItem::create([
                         'menu_id' => $menuId,
                         'title' => $page->title,
                         'linkable_id' => $page->id,
-                        'linkable_type' => \App\Models\Page::class,
+                        'linkable_type' => Page::class,
                         'order' => 999
                     ]);
                 }
@@ -132,25 +133,25 @@ class MenuController extends Controller
         elseif ($request->type == 'category') {
             if ($request->is_all) {
                 // Get ALL categories
-                $allCats = \App\Models\Category::all();
+                $allCats = Category::all();
                 foreach ($allCats as $cat) {
-                    \App\Models\MenuItem::create([
+                    MenuItem::create([
                         'menu_id' => $menuId,
                         'title' => $cat->name,
                         'linkable_id' => $cat->id,
-                        'linkable_type' => \App\Models\Category::class,
+                        'linkable_type' => Category::class,
                         'order' => 999
                     ]);
                 }
             } else {
                 foreach ($request->ids as $id) {
-                    $cat = \App\Models\Category::find($id);
+                    $cat = Category::find($id);
                     if ($cat) {
-                        \App\Models\MenuItem::create([
+                        MenuItem::create([
                             'menu_id' => $menuId,
                             'title' => $cat->name,
                             'linkable_id' => $cat->id,
-                            'linkable_type' => \App\Models\Category::class,
+                            'linkable_type' => Category::class,
                             'order' => 999
                         ]);
                     }
@@ -159,25 +160,25 @@ class MenuController extends Controller
         }
         elseif ($request->type == 'intro') {
             if ($request->is_all) {
-                $allIntros = \App\Models\Intro::all();
+                $allIntros = Intro::all();
                 foreach ($allIntros as $item) {
-                     \App\Models\MenuItem::create([
+                     MenuItem::create([
                         'menu_id' => $menuId,
                         'title' => $item->title,
                         'linkable_id' => $item->id,
-                        'linkable_type' => \App\Models\Intro::class,
+                        'linkable_type' => Intro::class,
                         'order' => 999
                     ]);
                 }
             } else {
                 foreach ($request->ids as $id) {
-                    $item = \App\Models\Intro::find($id);
+                    $item = Intro::find($id);
                     if ($item) {
-                        \App\Models\MenuItem::create([
+                        MenuItem::create([
                             'menu_id' => $menuId,
                             'title' => $item->title,
                             'linkable_id' => $item->id,
-                            'linkable_type' => \App\Models\Intro::class,
+                            'linkable_type' => Intro::class,
                             'order' => 999
                         ]);
                     }
@@ -185,7 +186,7 @@ class MenuController extends Controller
             }
         }
         elseif ($request->type == 'custom') {
-            \App\Models\MenuItem::create([
+            MenuItem::create([
                 'menu_id' => $menuId,
                 'title' => $request->title,
                 'url' => $request->url,
@@ -195,7 +196,7 @@ class MenuController extends Controller
         }
 
         // Return rendered HTML for frontend update
-        $newItems = \App\Models\MenuItem::where('menu_id', $menuId)
+        $newItems = MenuItem::where('menu_id', $menuId)
                     ->whereNull('parent_id')
                     ->orderBy('order')
                     ->with('children')
@@ -216,17 +217,21 @@ class MenuController extends Controller
     {
         Cache::forget('header_menu_structure');
         Cache::forget('footer_menu_structure');
+        foreach (config('translatable.locales', ['vi', 'en']) as $locale) {
+            Cache::forget('header_menu_structure_' . $locale);
+            Cache::forget('footer_menu_structure_' . $locale);
+        }
     }
 
     // API: Xóa Item
     public function destroyItem($id) {
-        $item = \App\Models\MenuItem::findOrFail($id);
+        $item = MenuItem::findOrFail($id);
         $menuId = $item->menu_id;
         $item->delete();
         $this->clearMenuCache();
 
         // Return updated HTML
-        $newItems = \App\Models\MenuItem::where('menu_id', $menuId)
+        $newItems = MenuItem::where('menu_id', $menuId)
                     ->whereNull('parent_id')
                     ->orderBy('order')
                     ->with('children')
@@ -243,10 +248,98 @@ class MenuController extends Controller
         ]);
     }
 
+    // API: Get Item translations (for edit popup)
+    public function showItem($id) {
+        $item = MenuItem::findOrFail($id);
+        return response()->json([
+            'translations' => $item->getTranslations('title'),
+            'url' => $item->url,
+            'resolved_url' => $item->link,
+        ]);
+    }
+
+    // API: Refresh URLs — re-resolve all linkable and route-based URLs
+    public function refreshUrls(Request $request) {
+        $menuId = $request->input('menu_id');
+        $items = MenuItem::where('menu_id', $menuId)->get();
+        
+        // Known system route mappings (for converting old absolute URLs)
+        $routeMap = [
+            'home', 'frontend.intro.index', 'frontend.fields.index',
+            'frontend.members.index', 'frontend.posts.index',
+            'frontend.services.index', 'frontend.projects.index',
+            'frontend.careers.index', 'products.index',
+            'frontend.dealers.create', 'contact.show',
+        ];
+        
+        $fixed = 0;
+        foreach ($items as $item) {
+            // Convert old absolute URLs to route: prefix
+            if (!empty($item->url) && !str_starts_with($item->url, 'route:') && !str_starts_with($item->url, 'http') && !str_starts_with($item->url, '/')) {
+                continue; // skip weird values
+            }
+            
+            if (!empty($item->url) && str_starts_with($item->url, 'http')) {
+                // Try to match against known routes
+                foreach ($routeMap as $routeName) {
+                    try {
+                        $path = parse_url(route($routeName), PHP_URL_PATH);
+                        $itemPath = parse_url($item->url, PHP_URL_PATH);
+                        if ($path === $itemPath) {
+                            $item->url = 'route:' . $routeName;
+                            $item->save();
+                            $fixed++;
+                            break;
+                        }
+                    } catch (\Exception $e) {
+                        continue;
+                    }
+                }
+            }
+        }
+        
+        $this->clearMenuCache();
+        
+        // Return updated HTML
+        $newItems = MenuItem::where('menu_id', $menuId)
+                    ->whereNull('parent_id')
+                    ->orderBy('order')
+                    ->with('children')
+                    ->get();
+        $html = '';
+        foreach ($newItems as $i) {
+            $html .= view('admin.menus.partials.menu-item', ['item' => $i])->render();
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'fixed' => $fixed,
+            'html' => $html
+        ]);
+    }
+
     // API: Cập nhật Item (Sửa tên)
     public function updateItem(Request $request, $id) {
-        $item = \App\Models\MenuItem::findOrFail($id);
-        $item->update(['title' => $request->title]);
+        $item = MenuItem::findOrFail($id);
+
+        // Support locale-based title updates: { title_vi: '...', title_en: '...' }
+        $locales = config('translatable.locales', ['vi', 'en']);
+        $hasLocaleTitle = false;
+        foreach ($locales as $locale) {
+            if ($request->has('title_' . $locale)) {
+                $hasLocaleTitle = true;
+                $item->setTranslation('title', $locale, $request->input('title_' . $locale));
+            }
+        }
+
+        if ($hasLocaleTitle) {
+            $item->save();
+        } else {
+            // Fallback: single title string (sets for current locale)
+            $item->setTranslation('title', app()->getLocale(), $request->title);
+            $item->save();
+        }
+
         $this->clearMenuCache();
         return response()->json(['status' => 'success']);
     }

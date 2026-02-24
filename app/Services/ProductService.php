@@ -51,7 +51,7 @@ class ProductService
             ->latest('id')
             ->paginate($perPage);
 
-        $filterCategories = Category::orderBy('name')->pluck('name', 'id')->toArray();
+        $filterCategories = Category::orderBy('name')->get()->mapWithKeys(fn($c) => [$c->id => $c->name])->toArray();
         return [$products, $filterCategories];
     }
 

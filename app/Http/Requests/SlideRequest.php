@@ -14,7 +14,11 @@ class SlideRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'            => 'required|string|max:255',
+            'title'            => 'required|array',
+            'title.vi'         => 'required|string|max:255',
+            'title.en'         => 'nullable|string|max:255',
+            'description'      => 'nullable|array',
+            'description.*'    => 'nullable|string',
             'link'             => 'nullable|string|max:500',
             'position'         => 'nullable|integer|min:0',
             'status'           => 'boolean',

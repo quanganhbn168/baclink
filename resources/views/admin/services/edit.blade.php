@@ -8,7 +8,7 @@
         @csrf
         @method('PUT')
         <div class="card-body">
-            <x-form.input type="text" name="name" label="Tên dịch vụ" :value="old('name', $service->name)" required />
+            <x-form.translatable-input type="text" name="name" label="Tên dịch vụ" :value="$service->getTranslations('name')" required />
             <x-form.select-best name="service_category_id" label="Danh mục" :collection="$categories" :selected="old('service_category_id', $service->service_category_id)" placeholder="-- Chọn danh mục --" required />
             <x-form.image-input name="image" label="Ảnh đại diện" :value="$service->image" />
             <x-form.image-multi-input
@@ -18,8 +18,8 @@
             />
 
             <x-form.image-input name="banner" label="Banner (tuỳ chọn)" :value="$service->banner" />
-            <x-form.ckeditor name="description" label="Mô tả ngắn" :value="old('description', $service->description)" />
-            <x-form.ckeditor name="content" label="Nội dung chi tiết" :value="old('content', $service->content)" />
+            <x-form.translatable-ckeditor name="description" label="Mô tả ngắn" :value="$service->getTranslations('description')" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung chi tiết" :value="$service->getTranslations('content')" />
             <x-form.switch name="status" label="Trạng thái" :checked="old('status', $service->status)" />
         </div>
         <div class="card-footer">

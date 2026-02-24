@@ -8,7 +8,7 @@
     @csrf
     <div class="card">
         <div class="card-body">
-            <x-form.input name="name" label="Tên thương hiệu" required />
+            <x-form.translatable-input name="name" label="Tên thương hiệu" :value="old('name', [])" required />
             <x-form.slug
                 name="slug"
                 label="Đường dẫn (slug)"

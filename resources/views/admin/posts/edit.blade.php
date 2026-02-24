@@ -8,12 +8,12 @@
     @method('PUT')
     <div class="card">
         <div class="card-body">
-            <x-form.input name="title" label="Tiêu đề" :value="$post->title" required />
+            <x-form.translatable-input name="title" label="Tiêu đề" :value="$post->getTranslations('title')" required />
             <x-form.slug
                 name="slug"
                 label="Đường dẫn (slug)"
                 :value="old('slug', $post->slug)"
-                source="#title"
+                source="#title_vi"
                 table="posts"
                 field="slug"
                 :current-id="$post->id"
@@ -38,8 +38,8 @@
                 :value="optional($post->bannerImage())->original_path"
             />
             
-            <x-form.textarea name="description" label="Mô tả ngắn" :value="$post->description" />
-            <x-form.ckeditor name="content" label="Nội dung" :value="$post->content" />
+            <x-form.translatable-textarea name="description" label="Mô tả ngắn" :value="$post->getTranslations('description')" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung" :value="$post->getTranslations('content')" />
 
             <x-form.switch name="is_featured" label="Nổi bật" :checked="$post->is_featured" />
             <x-form.switch name="status" label="Hiển thị" :checked="$post->status" />

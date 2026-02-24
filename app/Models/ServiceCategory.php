@@ -6,10 +6,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasTranslatable;
 
 class ServiceCategory extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslatable;
+
+    public array $translatable = ['name', 'description', 'content'];
     protected $table = 'service_categories';
     protected $fillable = [
         'name','slug', 'image', 'banner', 'parent_id', 'status','is_home','is_menu','is_footer', 'description', 'content'

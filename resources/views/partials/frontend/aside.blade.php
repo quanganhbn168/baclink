@@ -7,7 +7,7 @@
 <aside class="col-lg-3 d-none d-lg-block">
     <div class="sidebar-filter">
         <div class="sidebar-widget">
-            <h3 class="widget-title">Danh mục sản phẩm</h3>
+            <h3 class="widget-title">{{ __('frontend.product_categories') }}</h3>
             <div class="widget-content">
                 <ul class="category-list">
                     @foreach($productCategories as $category)

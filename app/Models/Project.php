@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Traits\HasImages;
+use App\Traits\HasTranslatable;
 
 class Project extends Model
 {
-    use HasFactory, HasImages;
+    use HasFactory, HasImages, HasTranslatable;
+
+    public $translatable = ['name', 'description', 'content'];
 
     protected $fillable = [
         'name',

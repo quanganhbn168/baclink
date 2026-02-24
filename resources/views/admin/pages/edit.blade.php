@@ -10,17 +10,14 @@
             <h3 class="card-title">Cập nhật trang: {{ $page->title }}</h3>
         </div>
         <div class="card-body">
-            <div class="form-group">
-                <label>Tiêu đề trang <span class="text-danger">*</span></label>
-                <input type="text" name="title" class="form-control" value="{{ old('title', $page->title) }}" required>
-            </div>
+            <x-form.translatable-input name="title" label="Tiêu đề trang" :value="$page->getTranslations('title')" required />
 
             <div class="form-group">
                 <label>Đường dẫn (Slug)</label>
                 <input type="text" name="slug" class="form-control" value="{{ old('slug', $page->slug) }}">
             </div>
 
-            <x-form.ckeditor name="content" label="Nội dung trang" :value="old('content', $page->content)" />
+            <x-form.translatable-ckeditor name="content" label="Nội dung trang" :value="$page->getTranslations('content')" />
 
             <div class="form-group">
                 <div class="custom-control custom-switch">

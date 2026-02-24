@@ -4,13 +4,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasTranslatable;
 
 class MenuItem extends Model
 {
+    use HasTranslatable;
+
     protected $fillable = [
         'menu_id', 'parent_id', 'title', 'url', 'target', 
         'order', 'linkable_id', 'linkable_type'
     ];
+
+    public $translatable = ['title'];
 
     public function linkable()
     {
@@ -24,27 +29,36 @@ class MenuItem extends Model
 
     /**
      * Lấy Link hiển thị
+     * - url = "route:home" => route('home')
+     * - url = "https://..." => trả nguyên
+     * - linkable => slug-based route
      */
     public function getLinkAttribute()
     {
-        // 1. Ưu tiên Link tĩnh (Custom URL nhập tay)
+        // 1. Route name prefix (system links)
+        if (!empty($this->url) && str_starts_with($this->url, 'route:')) {
+            $routeName = substr($this->url, 6);
+            try {
+                return route($routeName);
+            } catch (\Exception $e) {
+                return '#';
+            }
+        }
+
+        // 2. Plain URL (custom links)
         if (!empty($this->url)) {
             return $this->url;
         }
 
-        // 2. Nếu là Model liên kết (Page, Category...)
+        // 3. Morphed model (Page, Category, Intro)
         if ($this->linkable) {
-            // Nhờ có Trait HasSlug, ta có thể gọi slug_value
-            // Nó sẽ tự tìm trong bảng slugs hoặc fallback về cột slug
             $slug = $this->linkable->slug_value;
-
             if ($slug) {
-                // Trả về route xử lý slug chung như bạn yêu cầu
                 return route('frontend.slug.handle', ['slug' => $slug]);
             }
         }
 
-        // 3. Fallback
+        // 4. Fallback
         return 'javascript:void(0);';
     }
 }

@@ -14,7 +14,7 @@
                     <h6 class="m-0 font-weight-bold text-primary">Thông tin chính</h6>
                 </div>
                 <div class="card-body">
-                    <x-form.input name="name" label="Tên danh mục" required />
+                    <x-form.translatable-input name="name" label="Tên danh mục" :value="old('name', [])" required />
 
                     
 
@@ -37,9 +37,9 @@
                         </select>
                         @error('parent_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
-                    <x-form.textarea name="description" label="Mô tả" rows="5" />
+                    <x-form.translatable-textarea name="description" label="Mô tả" :value="old('description', [])" rows="5" />
 
-                    <x-form.ckeditor name="content" label="Nội dung chi tiết" />
+                    <x-form.translatable-ckeditor name="content" label="Nội dung chi tiết" :value="old('content', [])" />
                 </div>
             </div>
         </div>

@@ -18,15 +18,19 @@ class ProjectCategoryRequest extends FormRequest
 
         return [
             'parent_id' => 'nullable|exists:project_categories,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|array',
+            'name.vi' => 'required|string|max:255',
+            'name.en' => 'nullable|string|max:255',
             'slug' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('project_categories', 'slug')->ignore($categoryId)
             ],
-            'description' => 'nullable|string',
-            'content' => 'nullable|string',
+            'description' => 'nullable|array',
+            'description.*' => 'nullable|string',
+            'content' => 'nullable|array',
+            'content.*' => 'nullable|string',
             'status' => 'boolean',
             'is_home' => 'boolean',
             'is_menu' => 'boolean',
@@ -77,9 +81,11 @@ class ProjectCategoryRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         // Tự động tạo slug từ name nếu slug trống
-        if (!$this->slug && $this->name) {
+        $name = $this->name;
+        if (!$this->slug && $name) {
+            $viName = is_array($name) ? ($name['vi'] ?? '') : $name;
             $this->merge([
-                'slug' => \Illuminate\Support\Str::slug($this->name),
+                'slug' => \Illuminate\Support\Str::slug($viName),
             ]);
         }
 

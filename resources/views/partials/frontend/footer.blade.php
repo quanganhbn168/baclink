@@ -4,29 +4,29 @@
             <div class="row">
                 <div class="col-12 col-lg-4 mb-4 footer-col-info">
                     <img src="{{ asset($setting->logo) }}" alt="{{ $setting->name }}" class="footer-logo mb-4">
-                    <h2 class="footer-title">THÔNG TIN LIÊN HỆ</h2>
+                    <h2 class="footer-title">{{ __('frontend.contact_info') }}</h2>
                     <p class="footer-info-item mb-1"><b>{{$setting->name}}</b></p>
                     <p class="footer-info-item mb-1"><i class="fa-solid fa-location-dot mr-2"></i> {{$setting->address}}</p>
                     <p class="footer-info-item mb-1"><i class="fa-solid fa-envelope mr-2"></i> {{$setting->email}} </p>
                     <p class="footer-info-item mb-1"><i class="fa-solid fa-phone mr-2"></i> {{$setting->phone}}</p>
                 </div>
                 <div class="col-12 col-lg-4 mb-4 footer-col-links">
-                    <h2 class="footer-title">VỀ CHÚNG TÔI</h2>
+                    <h2 class="footer-title">{{ __('frontend.about_us') }}</h2>
                     <ul class="footer-links-list">
                         @if(isset($footerMenu) && $footerMenu->items->isNotEmpty())
                             @foreach($footerMenu->items as $item)
                                 <li class="mb-2"><a href="{{ $item->link }}" target="{{ $item->target }}">{{ $item->title }}</a></li>
                             @endforeach
                         @else
-                           <li class="mb-2"><a href="#">Giới thiệu</a></li>
-                           <li class="mb-2"><a href="#">Hội viên tiêu biểu</a></li>
-                           <li class="mb-2"><a href="#">Tin tức & Sự kiện</a></li>
-                           <li class="mb-2"><a href="#">Liên hệ</a></li>
+                           <li class="mb-2"><a href="#">{{ __('frontend.intro') }}</a></li>
+                           <li class="mb-2"><a href="#">{{ __('frontend.notable_members') }}</a></li>
+                           <li class="mb-2"><a href="#">{{ __('frontend.news_events') }}</a></li>
+                           <li class="mb-2"><a href="#">{{ __('frontend.contact') }}</a></li>
                         @endif
                     </ul>
                 </div>
                 <div class="col-12 col-lg-4 mb-4 footer-col-social">
-                    <h2 class="footer-title">KẾT NỐI VỚI CHÚNG TÔI</h2>
+                    <h2 class="footer-title">{{ __('frontend.connect_with_us') }}</h2>
                     <div class="footer-social-icons d-flex gap-3 mb-4">
                         <a href="{{$setting->facebook}}" class="social-icon-btn"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="{{$setting->youtube}}" class="social-icon-btn"><i class="fa-brands fa-youtube"></i></a>
@@ -38,7 +38,7 @@
     </div>
     <div class="copyright py-3">
         <div class="container text-center">
-            <span class="copyright-text">© Bản quyền thuộc về <b>{{$setting->name}}</b> | Cung cấp bởi <a href="https://thtmedia.com.vn" rel="nofollow" target="_blank">THT MEDIA</a></span>
+            <span class="copyright-text">© {{ __('frontend.copyright') }} <b>{{$setting->name}}</b> | {{ __('frontend.powered_by') }} <a href="https://thtmedia.com.vn" rel="nofollow" target="_blank">THT MEDIA</a></span>
         </div>
     </div>
 </footer>

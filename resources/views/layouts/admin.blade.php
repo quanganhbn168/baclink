@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="{{ asset('plugins/sweetalert2/bootstrap-4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <style>
+        [x-cloak] { display: none !important; }
+        .translatable-field .nav-pills .nav-link { font-size: .8rem; border-radius: .25rem; color: #6c757d; border: 1px solid #dee2e6; margin-right: 4px; }
+        .translatable-field .nav-pills .nav-link.active { background: #007bff; color: #fff; border-color: #007bff; }
+    </style>
     @stack('css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

@@ -7,12 +7,12 @@
   @csrf @method('PUT')
   <div class="card">
     <div class="card-body">
-      <x-form.input name="name" label="Họ tên" :value="$team->name" required />
-      <x-form.input name="position" label="Vị trí" :value="$team->position" />
+      <x-form.translatable-input name="name" label="Họ tên" :value="$team->getTranslations('name')" required />
+      <x-form.translatable-input name="position" label="Vị trí" :value="$team->getTranslations('position')" />
       <x-form.input name="hsk_level" label="Trình độ" :value="$team->hsk_level" />
       <x-form.input name="experience" label="Số năm kinh nghiệm" type="number" :value="$team->experience" />
       <x-form.image-input name="image" label="Ảnh đại diện" :value="$team->image" />
-      <x-form.textarea name="bio" label="Giới thiệu chi tiết" :value="$team->bio" />
+      <x-form.translatable-textarea name="bio" label="Giới thiệu chi tiết" :value="$team->getTranslations('bio')" />
     </div>
     <div class="card-footer">
       <button class="btn btn-primary">Cập nhật</button>

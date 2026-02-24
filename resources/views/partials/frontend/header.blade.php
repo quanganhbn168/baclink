@@ -6,11 +6,15 @@
     </div>
     <div class="header-top__right">
         <div class="language-switcher">
-            <a href="#" class="active">VN</a> | <a href="#">EN</a>
+            @foreach($availableLocales as $locale)
+                @if(!$loop->first) | @endif
+                <a href="{{ route('locale.switch', $locale) }}"
+                   class="{{ $currentLocale === $locale ? 'active' : '' }}">{{ $localeShortLabels[$locale] ?? strtoupper($locale) }}</a>
+            @endforeach
         </div>
         <div class="header-top__search d-none d-lg-block">
             <form action="{{ route('frontend.search') }}" method="GET">
-                <input type="text" name="q" placeholder="Tìm kiếm...">
+                <input type="text" name="q" placeholder="{{ __('frontend.search_placeholder') }}">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
@@ -115,7 +119,7 @@
                     
                     {{-- CTA Button --}}
                     <div class="ml-3">
-                        <a href="{{ route('register') }}" class="btn btn-gold-cta btn-sm text-nowrap px-3">ĐĂNG KÝ HỘI VIÊN</a>
+                        <a href="{{ route('register') }}" class="btn btn-gold-cta btn-sm text-nowrap px-3">{{ __('frontend.register_member') }}</a>
                     </div>
                 </div>
 

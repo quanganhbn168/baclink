@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasTranslatable;
 
 class Career extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslatable;
+
+    public $translatable = ['name', 'description', 'requirements', 'benefits'];
 
     protected $fillable = [
         'name',

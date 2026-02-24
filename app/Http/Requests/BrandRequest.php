@@ -16,7 +16,9 @@ class BrandRequest extends FormRequest
         $brand = $this->route('brand');
         $id = $brand ? $brand->id : null;
         return [
-            'name' => 'required|string|max:255|unique:brands,name,' . $id,
+            'name' => 'required|array',
+            'name.vi' => 'required|string|max:255',
+            'name.en' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255|unique:brands,slug,' . $id,
             'status' => 'boolean',
         ];

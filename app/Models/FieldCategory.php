@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\HasImages;
+use App\Traits\HasTranslatable;
 class FieldCategory extends Model
 {
-    use HasFactory, HasImages;
+    use HasFactory, HasImages, HasTranslatable;
+
+    public $translatable = ['name', 'description', 'content'];
 
     /**
      * Các thuộc tính có thể được gán hàng loạt.

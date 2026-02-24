@@ -7,12 +7,12 @@
   @csrf
   <div class="card">
     <div class="card-body">
-      <x-form.input name="name" label="Họ tên" required />
-      <x-form.input name="position" label="Vị trí" />
+      <x-form.translatable-input name="name" label="Họ tên" :value="old('name', [])" required />
+      <x-form.translatable-input name="position" label="Vị trí" :value="old('position', [])" />
       <x-form.input name="hsk_level" label="Trình độ" />
       <x-form.input name="experience" label="Số năm kinh nghiệm" type="number" />
       <x-form.image-input name="image" label="Ảnh đại diện" />
-      <x-form.textarea name="bio" label="Giới thiệu chi tiết" />
+      <x-form.translatable-textarea name="bio" label="Giới thiệu chi tiết" :value="old('bio', [])" />
     </div>
     <div class="card-footer">
       <button class="btn btn-primary">Lưu</button>

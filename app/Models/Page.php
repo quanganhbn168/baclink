@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\HasSlug;
+use App\Traits\HasTranslatable;
 
 class Page extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, HasTranslatable;
+
+    public array $translatable = ['title', 'content'];
 
     protected $fillable = [
         'title',

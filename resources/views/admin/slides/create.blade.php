@@ -14,11 +14,11 @@
         <div class="card-body">
 
             {{-- Tiêu đề --}}
-            <x-form.input 
+            <x-form.translatable-input 
                 type="text" 
                 name="title" 
                 label="Tiêu đề slide" 
-                :value="old('title')" 
+                :value="old('title', [])" 
             />
 
             {{-- Link --}}

@@ -57,7 +57,7 @@ class ProductController extends Controller
     public function create()
     {
         // Lấy danh mục để select
-        $categories = Category::pluck('name', 'id')->toArray();
+        $categories = Category::get()->mapWithKeys(fn($c) => [$c->id => $c->name])->toArray();
         $attributes = Attribute::where('is_variant_defining', true)
         ->with('values')
         ->get();
@@ -99,7 +99,7 @@ class ProductController extends Controller
         $product->load(['variants.attributeValues.attribute', 'gallery']);
 
         // 2. Lấy danh sách để fill vào dropdown (như cũ)
-        $categories = Category::where('status', true)->pluck('name', 'id')->toArray();
+        $categories = Category::where('status', true)->get()->mapWithKeys(fn($c) => [$c->id => $c->name])->toArray();
         $attributes = Attribute::where('is_variant_defining', true)->with('values')->get();
 
         // 3. XỬ LÝ MỚI: Tổng hợp Attributes đã được sử dụng bởi sản phẩm này

@@ -9,9 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Traits\HasImages;
 use App\Traits\HasSlug;
+use App\Traits\HasTranslatable;
 class Product extends Model
 {
-    use HasFactory, HasImages, HasSlug;
+    use HasFactory, HasImages, HasSlug, HasTranslatable;
+
+    public array $translatable = ['name', 'description', 'content', 'meta_title', 'meta_description'];
 
     protected $fillable = [
         'type',
