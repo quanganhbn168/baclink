@@ -9,12 +9,9 @@
 <div class="container-custom py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-transparent p-0 mb-3">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $page->title }}</li>
-                </ol>
-            </nav>
+            <x-frontend.breadcrumb :items="[
+                ['label' => $page->title, 'url' => '']
+            ]" />
 
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4 p-md-5">

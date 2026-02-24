@@ -97,11 +97,11 @@
                     <h1 class="project-name">{{$project->name}}</h1>
                     <div class="project-description">{!! $project->description !!}</div>
                     <ul>
-                        <li><strong>Tên dự án:</strong> {{$project->name}}</li>
-                        <li><strong>Chủ đầu tư:</strong> {{$project->investor}}</li>
-                        <li><strong>Địa chỉ:</strong> {{$project->address}}</li>
-                        <li><strong>Năm thực hiện:</strong> {{$project->year}}</li>
-                        <li><strong>Giá trị gói thầu:</strong> {{$project->value}}</li>
+                        <li><strong>{{ __('Tên dự án') }}:</strong> {{$project->name}}</li>
+                        <li><strong>{{ __('Chủ đầu tư') }}:</strong> {{$project->investor}}</li>
+                        <li><strong>{{ __('Địa chỉ') }}:</strong> {{$project->address}}</li>
+                        <li><strong>{{ __('Năm thực hiện') }}:</strong> {{$project->year}}</li>
+                        <li><strong>{{ __('Giá trị gói thầu') }}:</strong> {{$project->value}}</li>
                     </ul>
                 </div>
             </div>
@@ -115,7 +115,7 @@
         {{-- ============ GALLERY (Chuẩn HasImages + Blade thuần) ============ --}}
         @if($project->gallery && $project->gallery->isNotEmpty())
         <section class="project-gallery mt-5" aria-label="Thư viện hình ảnh dự án">
-            <h2 class="custom-section-title">Hình ảnh dự án</h2>
+            <h2 class="custom-section-title">{{ __('Hình ảnh dự án') }}</h2>
 
             <!-- Slider lớn -->
             <div class="swiper gallery-top">
@@ -165,7 +165,7 @@
         {{-- ====================================================== --}}
         @if($relatedProjects && $relatedProjects->count() > 0)
         <div class="otherProject">
-            <h2 class="custom-section-title">Dự án tiêu biểu khác</h2>
+            <h2 class="custom-section-title">{{ __('Dự án tiêu biểu khác') }}</h2>
             <div class="swiper other-projects-slider">
                 <div class="swiper-wrapper">
                     @foreach($relatedProjects as $other)

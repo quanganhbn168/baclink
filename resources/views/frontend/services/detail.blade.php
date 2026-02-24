@@ -22,11 +22,10 @@
     <!-- Breadcrumb -->
     <div class="breadcrumb-wrapper">
         <div class="container">
-            <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/') }}">Trang chủ</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('frontend.slug.handle', $service->slug) }}">{{ $service->category->name }}</a></li>
-                <li class="breadcrumb-item active">{{ $service->name }}</li>
-            </ul>
+            <x-frontend.breadcrumb :items="[
+                ['label' => $service->category->name, 'url' => route('frontend.slug.handle', $service->category->slug)],
+                ['label' => $service->name, 'url' => '']
+            ]" />
         </div>
     </div>
 

@@ -12,7 +12,20 @@ use Spatie\Translatable\HasTranslations;
  */
 trait HasTranslatable
 {
-    use HasTranslations;
+    use HasTranslations {
+        HasTranslations::getTranslation as protected spatieGetTranslation;
+    }
+
+    /**
+     * Override Spatie's getTranslation so $locale is optional.
+     * This allows views to call $model->getTranslation('field') with just 1 argument.
+     */
+    public function getTranslation(string $key, string $locale = null, bool $useFallbackLocale = true): mixed
+    {
+        $locale = $locale ?: app()->getLocale();
+
+        return $this->spatieGetTranslation($key, $locale, $useFallbackLocale);
+    }
 
     /**
      * Fallback to Vietnamese when translation is not found for current locale.

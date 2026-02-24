@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Giới thiệu - ' . $setting->name)
+@section('title', __('Giới thiệu') . ' - ' . $setting->name)
 
 @push('schema')
 <script type="application/ld+json">
@@ -136,18 +136,15 @@
 <main class="py-5 bg-light">
     <div class="container container-custom">
         <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb" class="mb-4">
-            <ol class="breadcrumb bg-transparent p-0">
-                <li class="breadcrumb-item"><a href="{{ url('/') }}">Trang chủ</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Giới thiệu</li>
-            </ol>
-        </nav>
+        <x-frontend.breadcrumb :items="[
+            ['label' => __('Giới thiệu'), 'url' => '']
+        ]" />
 
         <div class="row">
             <!-- Sidebar -->
             <div class="col-lg-3 mb-4">
                 <aside class="intro-sidebar sticky-top" style="top: 100px;">
-                    <h3 class="sidebar-title">VỀ CHÚNG TÔI</h3>
+                    <h3 class="sidebar-title">{{ __('VỀ CHÚNG TÔI') }}</h3>
                     <ul>
                         @foreach($intros as $item)
                             <li>
@@ -159,7 +156,7 @@
                         @endforeach
                         <li>
                             <a href="{{ route('frontend.members.index') }}">
-                                <i class="fas fa-angle-right mr-2"></i> HỘI VIÊN BACLINK
+                                <i class="fas fa-angle-right mr-2"></i> {{ __('HỘI VIÊN BACLINK') }}
                             </a>
                         </li>
                     </ul>
@@ -169,8 +166,8 @@
                          <a href="{{ route('register') }}" class="sidebar-cta-card">
                             <div class="card-icon"><i class="fas fa-id-card"></i></div>
                             <div class="card-content">
-                                <span class="card-title">Đăng ký hội viên</span>
-                                <span class="card-desc">Hội Công nghiệp chủ lực Bắc Ninh</span>
+                                <span class="card-title">{{ __('Đăng ký hội viên') }}</span>
+                                <span class="card-desc">{{ __('Hội Công nghiệp chủ lực Bắc Ninh') }}</span>
                             </div>
                         </a>
                     </div>

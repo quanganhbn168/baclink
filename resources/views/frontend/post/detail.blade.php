@@ -1,6 +1,6 @@
 @extends('layouts.master')
-@section('title', $post->title)
-@section('meta_description', $post->meta_description ?? $post->description)
+@section('title', $post->getTranslation('title'))
+@section('meta_description', $post->getTranslation('meta_description') ?? $post->getTranslation('description'))
 @section('meta_image', optional($post->mainImage())->url() ?? $setting->meta_image)
 @push('schema')
 <script type="application/ld+json">
@@ -13,8 +13,8 @@
         "@type": "WebPage",
         "@id": "{{ url()->current() }}"
       },
-      "headline": "{{ $post->title }}",
-      "description": "{{ Str::limit(strip_tags($post->description ?? $post->content), 160) }}",
+      "headline": "{{ $post->getTranslation('title') }}",
+      "description": "{{ Str::limit(strip_tags($post->getTranslation('description') ?? $post->getTranslation('content')), 160) }}",
       "image": [
         "{{ optional($post->mainImage())->url() ?? asset($setting->meta_image) }}"
       ],
@@ -27,7 +27,7 @@
       },
       "publisher": {
         "@type": "Organization",
-        "name": "{{ $setting->name }}",
+        "name": "{{ $setting->getTranslation('name') }}",
         "logo": {
           "@type": "ImageObject",
           "url": "{{ asset($setting->logo) }}"
@@ -40,27 +40,27 @@
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Trang chủ",
+          "name": "{{ __('Trang chủ') }}",
           "item": "{{ url('/') }}"
         },
         @if($post->category)
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "{{ $post->category->name }}",
+          "name": "{{ $post->category->getTranslation('name') }}",
           "item": "{{ route('frontend.slug.handle', $post->category->slug) }}"
         },
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "{{ $post->title }}",
+          "name": "{{ $post->getTranslation('title') }}",
           "item": "{{ url()->current() }}"
         }
         @else
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "{{ $post->title }}",
+          "name": "{{ $post->getTranslation('title') }}",
           "item": "{{ url()->current() }}"
         }
         @endif
@@ -77,24 +77,25 @@
 <main class="post-detail-wrapper bg-white">
     <div class="container container-custom">
         <!-- Breadcrumb -->
-        <nav class="post-breadcrumb">
-            <a href="{{ url('/') }}">Trang chủ</a>
-            @if($post->category)
-                <span>»</span>
-                <a href="{{ route('frontend.slug.handle', $post->category->slug) }}">{{ $post->category->name }}</a>
-            @endif
-            <span>»</span>
-            <span class="active">{{ Str::limit($post->title, 50) }}</span>
-        </nav>
+        @php
+            $breadcrumbs = [
+                ['label' => __('Tin tức'), 'url' => route('frontend.slug.handle', 'tin-tuc')]
+            ];
+            if($post->category) {
+                $breadcrumbs[] = ['label' => $post->category->getTranslation('name'), 'url' => route('frontend.slug.handle', $post->category->slug)];
+            }
+            $breadcrumbs[] = ['label' => Str::limit($post->getTranslation('title'), 50), 'url' => ''];
+        @endphp
+        <x-frontend.breadcrumb :items="$breadcrumbs" />
 
         <div class="row">
             <!-- Left Column: Content -->
             <div class="col-lg-9">
-                <h1 class="post-title">{{ $post->title }}</h1>
+                <h1 class="post-title">{{ $post->getTranslation('title') }}</h1>
                 
                 <div class="post-meta">
                     <i class="far fa-clock"></i>
-                    <span>{{ $post->created_at->format('H:i') }} thứ {{ $post->created_at->dayOfWeek == 0 ? 'chủ nhật' : ($post->created_at->dayOfWeek + 1) }} ngày {{ $post->created_at->format('d/m/Y') }}</span>
+                    <span>{{ $post->created_at->format('H:i') }} {{ __('ngày') }} {{ $post->created_at->format('d/m/Y') }}</span>
                 </div>
 
                 <div class="post-main-content">
@@ -105,19 +106,19 @@
                         <a href="#" class="share-btn share-tw"><i class="fab fa-twitter"></i></a>
                         <a href="#" class="share-btn share-zl"><img src="https://img.icons8.com/ios-filled/20/ffffff/zalo.png" style="width: 15px;" alt="Zalo"/></a>
                         <a href="javascript:window.print()" class="share-btn share-pr"><i class="fas fa-print"></i></a>
-                        <a href="mailto:?subject={{ $post->title }}&body={{ url()->current() }}" class="share-btn share-em"><i class="fas fa-envelope"></i></a>
+                        <a href="mailto:?subject={{ urlencode($post->getTranslation('title')) }}&body={{ url()->current() }}" class="share-btn share-em"><i class="fas fa-envelope"></i></a>
                     </aside>
 
                     <!-- Article Body -->
                     <article class="post-article">
-                        @if($post->description)
+                        @if($post->getTranslation('description'))
                             <div class="post-intro">
-                                {{ $post->description }}
+                                {{ $post->getTranslation('description') }}
                             </div>
                         @endif
 
                         <div class="post-content-body ck-content">
-                            {!! $post->content !!}
+                            {!! $post->getTranslation('content') !!}
                         </div>
                     </article>
                 </div>
@@ -129,15 +130,15 @@
                             <div class="related-post-horizontal">
                                 <div class="rp-thumb">
                                     <a href="{{ route('frontend.slug.handle', $related->slug) }}">
-                                        <img src="{{ optional($related->mainImage())->url() ?? asset('images/setting/no-image.png') }}" alt="{{ $related->title }}">
+                                        <img src="{{ optional($related->mainImage())->url() ?? asset('images/setting/no-image.png') }}" alt="{{ $related->getTranslation('title') }}">
                                     </a>
                                 </div>
                                 <div class="rp-info">
-                                    <span class="rp-label text-gold font-weight-bold">TIN LIÊN QUAN</span>
+                                    <span class="rp-label text-gold font-weight-bold">{{ __('TIN LIÊN QUAN') }}</span>
                                     <h4 class="rp-title">
-                                        <a href="{{ route('frontend.slug.handle', $related->slug) }}">{{ $related->title }}</a>
+                                        <a href="{{ route('frontend.slug.handle', $related->slug) }}">{{ $related->getTranslation('title') }}</a>
                                     </h4>
-                                    <p class="rp-excerpt">{{ Str::limit(strip_tags($related->description), 180) }}</p>
+                                    <p class="rp-excerpt">{{ Str::limit(strip_tags($related->getTranslation('description')), 180) }}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -159,23 +160,23 @@
                     <a href="{{ route('register') }}" class="sidebar-cta-card">
                         <div class="card-icon"><i class="fas fa-id-card"></i></div>
                         <div class="card-content">
-                            <span class="card-title">Đăng ký hội viên</span>
-                            <span class="card-desc">Hội Công nghiệp chủ lực Thành phố Bắc Ninh</span>
+                            <span class="card-title">{{ __('Đăng ký hội viên') }}</span>
+                            <span class="card-desc">{{ __('Hội Công nghiệp chủ lực Thành phố Bắc Ninh') }}</span>
                         </div>
                     </a>
 
                     <!-- Trending Section -->
                     <div class="sidebar-trending">
-                        <h3 class="sidebar-heading">Xem nhiều</h3>
+                        <h3 class="sidebar-heading">{{ __('Xem nhiều') }}</h3>
                         @foreach($trendingPosts as $trend)
                             <div class="trending-item">
                                 <div class="trending-thumb">
                                     <a href="{{ route('frontend.slug.handle', $trend->slug) }}">
-                                        <img src="{{ optional($trend->mainImage())->url() ?? asset('images/setting/no-image.png') }}" alt="{{ $trend->title }}">
+                                        <img src="{{ optional($trend->mainImage())->url() ?? asset('images/setting/no-image.png') }}" alt="{{ $trend->getTranslation('title') }}">
                                     </a>
                                 </div>
                                 <div class="trending-info">
-                                    <h4><a href="{{ route('frontend.slug.handle', $trend->slug) }}">{{ Str::limit($trend->title, 60) }}</a></h4>
+                                    <h4><a href="{{ route('frontend.slug.handle', $trend->slug) }}">{{ Str::limit($trend->getTranslation('title'), 60) }}</a></h4>
                                     <div class="trending-date">{{ $trend->created_at->format('d/m/Y') }}</div>
                                 </div>
                             </div>

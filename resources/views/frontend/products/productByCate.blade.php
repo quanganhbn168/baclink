@@ -8,15 +8,11 @@
 @endpush
 
 @section("content")
-<div id="breadcrumb" class="bg-light">
+<div id="breadcrumb" class="bg-light pt-3">
     <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb bg-light">
-                
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $category->name }}</li>
-            </ol>
-        </nav>
+        <x-frontend.breadcrumb :items="[
+            ['label' => $category->getTranslation('name'), 'url' => '']
+        ]" />
     </div>
 </div>
 
@@ -34,12 +30,12 @@
             <aside class="col-lg-3 d-none d-lg-block">
                 <div class="aside-filter">
                     <div class="aside-title">
-                        <h3 class="title-head"><i class="fa-solid fa-filter"></i> Bộ lọc sản phẩm</h3>
+                        <h3 class="title-head"><i class="fa-solid fa-filter"></i> {{ __('Bộ lọc sản phẩm') }}</h3>
                     </div>
                     <div class="aside-content">
                         
                         <div class="aside-item">
-                            <div class="aside-item_title">Loại sản phẩm</div>
+                            <div class="aside-item_title">{{ __('Loại sản phẩm') }}</div>
                             <ul class="aside-item_content">
                                 @foreach($categories as $catFilter)
                                 <li>
@@ -55,18 +51,18 @@
 
                         
                         <div class="aside-item">
-                            <div class="aside-item_title">Khoảng giá</div>
+                            <div class="aside-item_title">{{ __('Khoảng giá') }}</div>
                             <ul class="aside-item_content">
                                 <li>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="duoi-1tr" id="price1">
-                                        <label class="form-check-label" for="price1">Dưới 1,000,000đ</label>
+                                        <label class="form-check-label" for="price1">{{ __('Dưới 1,000,000đ') }}</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="1tr-5tr" id="price2">
-                                        <label class="form-check-label" for="price2">Từ 1,000,000đ - 5,000,000đ</label>
+                                        <label class="form-check-label" for="price2">{{ __('Từ 1,000,000đ - 5,000,000đ') }}</label>
                                     </div>
                                 </li>
                             </ul>
@@ -79,15 +75,15 @@
             <div class="col-lg-9 col-md-12">
                 <div class="sort-products d-flex justify-content-between align-items-center mb-3">
                     <button class="btn btn-outline-dark d-lg-none">
-                        <i class="fa-solid fa-filter"></i> Lọc
+                        <i class="fa-solid fa-filter"></i> {{ __('Lọc') }}
                     </button>
                     <div class="sort-by ms-auto">
-                        <label for="sort-options" class="form-label me-2">Sắp xếp theo:</label>
+                        <label for="sort-options" class="form-label me-2">{{ __('Sắp xếp theo') }}:</label>
                         <select class="form-select d-inline-block w-auto" id="sort-options">
-                            <option value="latest">Mới nhất</option>
-                            <option value="price-asc">Giá: Tăng dần</option>
-                            <option value="price-desc">Giá: Giảm dần</option>
-                            <option value="name-asc">Tên: A-Z</option>
+                            <option value="latest">{{ __('Mới nhất') }}</option>
+                            <option value="price-asc">{{ __('Giá: Tăng dần') }}</option>
+                            <option value="price-desc">{{ __('Giá: Giảm dần') }}</option>
+                            <option value="name-asc">{{ __('Tên: A-Z') }}</option>
                         </select>
                     </div>
                 </div>
@@ -103,8 +99,8 @@
                             @empty
                             <div class="col-12">
                                 <div class="alert alert-info text-center">
-                                    <p>Không tìm thấy sản phẩm nào trong danh mục này.</p>
-                                    <a href="{{ route('home') }}" class="btn btn-primary">Quay về Trang chủ</a>
+                                    <p>{{ __('Không tìm thấy sản phẩm nào trong danh mục này.') }}</p>
+                                    <a href="{{ route('home') }}" class="btn btn-primary">{{ __('Quay về Trang chủ') }}</a>
                                 </div>
                             </div>
                             @endforelse

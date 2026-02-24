@@ -18,12 +18,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="breadcrumb-wrapper bg-white">
+		<div class="breadcrumb-wrapper bg-white pt-3">
 			<div class="container">
-				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{ url('/') }}">Trang chủ</a></li>
-					<li class="breadcrumb-item active">{{ $category->name }}</li>
-				</ul>
+				<x-frontend.breadcrumb :items="[
+					['label' => $category->name, 'url' => '']
+				]" />
 			</div>
 		</div>
 

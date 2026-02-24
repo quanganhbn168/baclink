@@ -1,20 +1,13 @@
 @extends('layouts.master')
-@section('title','Tất cả sản phẩm')
+@section('title', __('Tất cả sản phẩm'))
 @section("content")
-<nav aria-label="breadcrumb" class="mb-3">
-    <ol class="breadcrumb bg-light px-3 py-2">
-        <li class="breadcrumb-item">
-            <a href="{{ url('/') }}">
-                <i class="fas fa-home"></i> Trang chủ
-            </a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-            Sản phẩm
-        </li>
-    </ol>
-</nav>
+<div class="container mt-3">
+    <x-frontend.breadcrumb :items="[
+        ['label' => __('Sản phẩm'), 'url' => '']
+    ]" />
+</div>
 <div class="container mt-4">
-    <h2 class="section-title">Sản phẩm</h2>
+    <h2 class="section-title">{{ __('Sản phẩm') }}</h2>
     <div class="row">
         {{-- ======================================================= --}}
         {{-- CỘT BÊN TRÁI: BỘ LỌC (SIDEBAR) --}}
@@ -23,7 +16,7 @@
             <div class="sidebar-filter">
                 <div class="sidebar-widget">
                     <h3 class="widget-title">
-                        Danh mục sản phẩm
+                        {{ __('Danh mục sản phẩm') }}
                     </h3>
                     <div class="widget-content">
                         <ul class="category-list">
@@ -60,20 +53,20 @@
         {{-- ======================================================= --}}
         <div class="col-lg-9 col-md-12">
             <div class="collection-header">
-                <h1 class="collection-title">Tất cả sản phẩm</h1>
+                <h1 class="collection-title">{{ __('Tất cả sản phẩm') }}</h1>
                 <div class="collection-sort d-flex align-items-center">
-                    <label for="sort-options" class="me-2">Sắp xếp theo:</label>
+                    <label for="sort-options" class="me-2">{{ __('Sắp xếp theo') }}:</label>
                     <select class="form-select" id="sort-options">
-                        <option selected>Mới nhất</option>
-                        <option value="price-asc">Giá: Tăng dần</option>
-                        <option value="price-desc">Giá: Giảm dần</option>
-                        <option value="name-asc">Tên: A-Z</option>
-                        <option value="name-desc">Tên: Z-A</option>
+                        <option selected>{{ __('Mới nhất') }}</option>
+                        <option value="price-asc">{{ __('Giá: Tăng dần') }}</option>
+                        <option value="price-desc">{{ __('Giá: Giảm dần') }}</option>
+                        <option value="name-asc">{{ __('Tên: A-Z') }}</option>
+                        <option value="name-desc">{{ __('Tên: Z-A') }}</option>
                     </select>
                 </div>
                  {{-- Nút lọc cho mobile, sẽ được xử lý bằng JS sau --}}
                 <button class="btn btn-outline-dark d-lg-none" id="js-mobile-filter-toggle">
-                    <i class="fas fa-filter"></i> Lọc
+                    <i class="fas fa-filter"></i> {{ __('Lọc') }}
                 </button>
             </div>
 
@@ -111,7 +104,7 @@
                     </div>
                 @empty
                     <div class="col-12">
-                        <p class="text-center">Không tìm thấy sản phẩm nào.</p>
+                        <p class="text-center">{{ __('Không tìm thấy sản phẩm nào.') }}</p>
                     </div>
                 @endforelse
             </div>

@@ -108,16 +108,12 @@
 
 @section('content')
     <div id="toasts" aria-live="polite" aria-atomic="true"></div>
-    <nav aria-label="breadcrumb" class="mb-3">
-        <ol class="breadcrumb bg-light px-3 py-2">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/') }}"><i class="fas fa-home"></i> Trang chủ</a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-                {{ $product->category->name }}
-            </li>
-        </ol>
-    </nav>
+    <div class="container-custom mt-3">
+        <x-frontend.breadcrumb :items="[
+            ['label' => $product->category->getTranslation('name'), 'url' => route('frontend.slug.handle', $product->category->slug)],
+            ['label' => $product->getTranslation('name'), 'url' => '']
+        ]" />
+    </div>
     <div id="product-detail">
         <div class="container-custom">
             <section class="section section-product__detail">

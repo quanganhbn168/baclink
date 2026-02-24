@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Danh sách hội viên - ' . $setting->name)
+@section('title', __('Danh sách hội viên') . ' - ' . $setting->name)
 
 @push('css')
     @vite(['resources/css/custom/member.css', 'resources/css/custom/post.css'])
@@ -9,13 +9,11 @@
 <main class="post-detail-wrapper bg-white">
     <div class="container container-custom">
         <!-- Breadcrumb -->
-        <nav class="post-breadcrumb">
-            <a href="{{ url('/') }}">Trang chủ</a>
-            <span>»</span>
-            <span class="active">Hội viên</span>
-        </nav>
+        <x-frontend.breadcrumb :items="[
+            ['label' => __('Hội viên'), 'url' => '']
+        ]" />
 
-        <h1 class="member-page-title">DANH SÁCH HỘI VIÊN BACLINK</h1>
+        <h1 class="member-page-title">{{ __('DANH SÁCH HỘI VIÊN BACLINK') }}</h1>
 
         <div class="row">
             <!-- Left Column: Member List -->
@@ -31,22 +29,22 @@
                                 </div>
                             </div>
                             <div class="member-info">
-                                <div class="company-name">{{ optional($member->dealerProfile)->company_name ?? 'CÔNG TY THÀNH VIÊN' }}</div>
+                                <div class="company-name">{{ optional($member->dealerProfile)->company_name ?? __('CÔNG TY THÀNH VIÊN') }}</div>
                                 <div class="rep-name">{{ $member->name }}</div>
                                 <ul class="member-details">
                                     <li>
                                         <i class="fas fa-user-tie"></i>
-                                        <span>Chủ tịch HĐQT</span>
+                                        <span>{{ __('Chủ tịch HĐQT') }}</span>
                                     </li>
                                     <li>
                                         <i class="fas fa-briefcase"></i>
-                                        <span>Lĩnh vực hoạt động: {{ Str::limit(optional($member->dealerProfile)->address ?? 'Đang cập nhật...', 100) }}</span>
+                                        <span>{{ __('Lĩnh vực hoạt động') }}: {{ Str::limit(optional($member->dealerProfile)->address ?? __('Đang cập nhật...'), 100) }}</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     @empty
-                        <div class="alert alert-info w-100">Hiện chưa có thông tin hội viên.</div>
+                        <div class="alert alert-info w-100">{{ __('Hiện chưa có thông tin hội viên.') }}</div>
                     @endforelse
                 </div>
 
@@ -70,14 +68,14 @@
                     <a href="{{ route('register') }}" class="sidebar-cta-card">
                         <div class="card-icon"><i class="fas fa-id-card"></i></div>
                         <div class="card-content">
-                            <span class="card-title">Đăng ký hội viên</span>
-                            <span class="card-desc">Hội Công nghiệp chủ lực Thành phố Bắc Ninh</span>
+                            <span class="card-title">{{ __('Đăng ký hội viên') }}</span>
+                            <span class="card-desc">{{ __('Hội Công nghiệp chủ lực Thành phố Bắc Ninh') }}</span>
                         </div>
                     </a>
 
                     <!-- Trending Section -->
                     <div class="sidebar-trending">
-                        <h3 class="sidebar-heading">Xem nhiều</h3>
+                        <h3 class="sidebar-heading">{{ __('Xem nhiều') }}</h3>
                         @foreach($trendingPosts as $trend)
                             <div class="trending-item">
                                 <div class="trending-thumb">

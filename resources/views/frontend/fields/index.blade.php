@@ -40,12 +40,9 @@
 {{-- Breadcrumbs --}}
 <div class="bg-light py-3">
     <div class="container container-custom">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 bg-transparent p-0">
-                <li class="breadcrumb-item"><a href="{{ route('home') }}">Trang chủ</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $pageTitle }}</li>
-            </ol>
-        </nav>
+        <x-frontend.breadcrumb :items="[
+            ['label' => $pageTitle, 'url' => '']
+        ]" />
     </div>
 </div>
 

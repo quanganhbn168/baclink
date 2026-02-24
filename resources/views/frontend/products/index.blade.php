@@ -28,33 +28,28 @@
 </style>
 @endpush
 @section('content')
-<nav aria-label="breadcrumb" class="mb-3">
-    <ol class="breadcrumb bg-light px-3 py-2">
-        <li class="breadcrumb-item">
-            <a href="{{ url('/') }}"><i class="fas fa-home"></i> Trang chủ</a>
-        </li>
-        <li class="breadcrumb-item {{ $currentCategory ? '' : 'active' }}" aria-current="page">
-            @if($currentCategory)
-                <a href="{{ route('products.index') }}">Sản phẩm</a>
-            @else
-                Sản phẩm
-            @endif
-        </li>
-        @if($currentCategory)
-            <li class="breadcrumb-item active" aria-current="page">{{ $currentCategory->name }}</li>
-        @endif
-    </ol>
-</nav>
+<div class="container-fluid mt-3">
+    @php
+        $breadcrumbs = [];
+        if($currentCategory) {
+            $breadcrumbs[] = ['label' => __('Sản phẩm'), 'url' => route('products.index')];
+            $breadcrumbs[] = ['label' => $currentCategory->getTranslation('name'), 'url' => ''];
+        } else {
+            $breadcrumbs[] = ['label' => __('Sản phẩm'), 'url' => ''];
+        }
+    @endphp
+    <x-frontend.breadcrumb :items="$breadcrumbs" />
+</div>
 <div class="container-fluid">
     <h2 class="section-title mb-3">
-        {{ $currentCategory ? $currentCategory->name : 'Sản phẩm' }}
+        {{ $currentCategory ? $currentCategory->name : __('Sản phẩm') }}
     </h2>
     <div class="row">
         {{-- Sidebar --}}
         <div class="d-none d-lg-block col-lg-3">
             <aside>
                 <div class="card category-card">
-                    <div class="card-header category-card__header">Danh mục sản phẩm</div>
+                    <div class="card-header category-card__header">{{ __('Danh mục sản phẩm') }}</div>
                     <ul class="list-group list-group-flush">
                         {{-- Danh mục gốc --}}
                         @foreach($categories as $cat)
@@ -78,16 +73,16 @@
                         <input type="hidden" name="category_slug" value="{{ $currentCategory->slug }}">
                     @endif
                     <p class="mb-0 text-muted">
-                        {{ number_format($products->total()) }} sản phẩm
+                        {{ number_format($products->total()) }} {{ __('sản phẩm') }}
                     </p>
                     <div class="form-inline">
-                        <label class="mr-2">Sắp xếp:</label>
+                        <label class="mr-2">{{ __('Sắp xếp') }}:</label>
                         <select class="form-control" name="sort" onchange="this.form.submit()">
-                            <option value="new"        {{ $sort==='new'        ? 'selected':'' }}>Mới nhất</option>
-                            <option value="old"        {{ $sort==='old'        ? 'selected':'' }}>Cũ nhất</option>
-                            <option value="name_asc"   {{ $sort==='name_asc'   ? 'selected':'' }}>Tên A-Z</option>
-                            <option value="price_asc"  {{ $sort==='price_asc'  ? 'selected':'' }}>Giá tăng dần</option>
-                            <option value="price_desc" {{ $sort==='price_desc' ? 'selected':'' }}>Giá giảm dần</option>
+                            <option value="new"        {{ $sort==='new'        ? 'selected':'' }}>{{ __('Mới nhất') }}</option>
+                            <option value="old"        {{ $sort==='old'        ? 'selected':'' }}>{{ __('Cũ nhất') }}</option>
+                            <option value="name_asc"   {{ $sort==='name_asc'   ? 'selected':'' }}>{{ __('Tên A-Z') }}</option>
+                            <option value="price_asc"  {{ $sort==='price_asc'  ? 'selected':'' }}>{{ __('Giá tăng dần') }}</option>
+                            <option value="price_desc" {{ $sort==='price_desc' ? 'selected':'' }}>{{ __('Giá giảm dần') }}</option>
                         </select>
                     </div>
                 </form>
@@ -99,7 +94,7 @@
                         </div>
                     @empty
                         <div class="col-12">
-                            <div class="alert alert-light mb-0">Chưa có sản phẩm phù hợp.</div>
+                            <div class="alert alert-light mb-0">{{ __('Chưa có sản phẩm phù hợp.') }}</div>
                         </div>
                     @endforelse
                 </div>

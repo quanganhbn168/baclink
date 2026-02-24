@@ -130,7 +130,7 @@
     <div id="mobile-search-dropdown" class="d-none animate__animated animate__fadeInDown" style="position: absolute; top: 100%; left: 0; width: 100%; background: #fff; padding: 15px; box-shadow: 0 10px 15px rgba(0,0,0,0.1); z-index: 1000;">
         <div class="search-box">
             <form action="{{ route('frontend.search') }}" method="get">
-                <input type="text" name="q" class="form-control" placeholder="nhập từ khóa tìm kiếm" style="border: 1px solid var(--gold); border-radius: 4px;">
+                <input type="text" name="q" class="form-control" placeholder="{{ __('frontend.search_placeholder') }}" style="border: 1px solid var(--gold); border-radius: 4px;">
                 <button type="submit" style="background: var(--gold); color: #fff; border: none; padding: 0 15px; border-radius: 0 4px 4px 0;"><i class="fa fa-search"></i></button>
             </form>
         </div>

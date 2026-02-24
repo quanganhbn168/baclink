@@ -160,16 +160,11 @@ a.btn { color:#fff !important; }
 @endpush
 
 @section('content')
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb bg-light px-3 py-2">
-            <li class="breadcrumb-item">
-                <a href="{{ url('/') }}">
-                    <i class="fas fa-home"></i> Trang chủ
-                </a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">Đăng ký làm đại lý</li>
-        </ol>
-    </nav>
+    <div class="container mt-3">
+        <x-frontend.breadcrumb :items="[
+            ['label' => __('Đăng ký làm đại lý'), 'url' => '']
+        ]" />
+    </div>
 <section class="hero-wrap mb-4 p-0">
     <img src="https://ekokemika.com.vn/upload/images/products/dung-dich-rua-xe/Distributors-map.jpg" alt="Đại lý">
     <div class="hero-content">

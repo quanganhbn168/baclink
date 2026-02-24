@@ -79,17 +79,16 @@
 <main class="post-detail-wrapper bg-white">
     <div class="container container-custom">
         <!-- Breadcrumb -->
-        <nav class="post-breadcrumb">
-            <a href="{{ url('/') }}">Trang chủ</a>
-            <span>»</span>
-            <a href="{{ route('frontend.fields.index') }}">Lĩnh vực</a>
-            @if($field->category)
-                <span>»</span>
-                <a href="#">{{ $field->category->name }}</a>
-            @endif
-            <span>»</span>
-            <span class="active">{{ Str::limit($field->name, 50) }}</span>
-        </nav>
+        @php
+            $breadcrumbs = [
+                ['label' => __('Lĩnh vực'), 'url' => route('frontend.fields.index')]
+            ];
+            if($field->category) {
+                $breadcrumbs[] = ['label' => $field->category->name, 'url' => '#'];
+            }
+            $breadcrumbs[] = ['label' => Str::limit($field->name, 50), 'url' => ''];
+        @endphp
+        <x-frontend.breadcrumb :items="$breadcrumbs" />
 
         <div class="row">
             <!-- Left Column: Content -->
