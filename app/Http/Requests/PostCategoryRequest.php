@@ -18,7 +18,9 @@ class PostCategoryRequest extends FormRequest
 
         return [
             'parent_id' => 'nullable|exists:post_categories,id',
-            'name' => 'required|string|max:255',
+            'name' => 'required|array',
+            'name.vi' => 'required|string|max:255',
+            'name.en' => 'nullable|string|max:255',
             'slug' => [
                 'required',
                 'string',
@@ -35,6 +37,8 @@ class PostCategoryRequest extends FormRequest
         return [
             'parent_id' => 'danh mục cha',
             'name' => 'tên danh mục',
+            'name.vi' => 'tên danh mục (Tiếng Việt)',
+            'name.en' => 'tên danh mục (English)',
             'slug' => 'slug',
             'status' => 'trạng thái',
             'is_home' => 'hiển thị trang chủ',
@@ -45,7 +49,8 @@ class PostCategoryRequest extends FormRequest
     {
         return [
             'name.required' => 'Vui lòng nhập tên danh mục',
-            'name.max' => 'Tên danh mục không được vượt quá 255 ký tự',
+            'name.vi.required' => 'Vui lòng nhập tên danh mục (Tiếng Việt)',
+            'name.vi.max' => 'Tên danh mục không được vượt quá 255 ký tự',
             'slug.required' => 'Vui lòng nhập slug',
             'slug.unique' => 'Slug đã tồn tại',
             'parent_id.exists' => 'Danh mục cha không tồn tại',
@@ -56,10 +61,13 @@ class PostCategoryRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
-        // Tự động tạo slug từ name nếu slug trống
-        if (!$this->slug && $this->name) {
+        // Tự động tạo slug từ name.vi nếu slug trống
+        $name = $this->name;
+        $nameVi = is_array($name) ? ($name['vi'] ?? '') : $name;
+
+        if (!$this->slug && $nameVi) {
             $this->merge([
-                'slug' => \Illuminate\Support\Str::slug($this->name),
+                'slug' => \Illuminate\Support\Str::slug($nameVi),
             ]);
         }
 
