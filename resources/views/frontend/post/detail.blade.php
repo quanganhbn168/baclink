@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title', $post->getTranslation('title'))
-@section('meta_description', $post->getTranslation('meta_description') ?? $post->getTranslation('description'))
+@section('meta_description', Str::limit(strip_tags($post->description), 160))
 @section('meta_image', optional($post->mainImage())->url() ?? $setting->meta_image)
 @push('schema')
 <script type="application/ld+json">

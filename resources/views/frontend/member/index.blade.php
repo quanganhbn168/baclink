@@ -1,5 +1,7 @@
 @extends('layouts.master')
 @section('title', __('Danh sách hội viên') . ' - ' . $setting->name)
+@section('meta_description', __('Danh sách hội viên') . ' ' . $setting->name)
+@section('meta_image', $setting->share_image)
 
 @push('css')
     @vite(['resources/css/custom/member.css', 'resources/css/custom/post.css'])

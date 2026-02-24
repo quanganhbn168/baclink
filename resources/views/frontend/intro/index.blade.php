@@ -1,5 +1,7 @@
 @extends('layouts.master')
 @section('title', __('Giới thiệu') . ' - ' . $setting->name)
+@section('meta_description', __('Giới thiệu') . ' - ' . $setting->name)
+@section('meta_image', $setting->share_image)
 
 @push('schema')
 <script type="application/ld+json">

@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title', __('Liên hệ'))
+@section('title', __('Liên hệ') . ' - ' . $setting->name)
+@section('meta_description', __('Liên hệ') . ' - ' . $setting->address . ' - ' . $setting->phone)
+@section('meta_image', $setting->share_image)
 
 @push('css')
 <style>

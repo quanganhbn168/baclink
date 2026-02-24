@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('title', ($category ? $category->getTranslation('name') : __('Tin tức')) . ' - ' . $setting->getTranslation('name'))
-
+@section('meta_description', ($category ? $category->getTranslation('name') : __('Tin tức')) . ' - ' . $setting->getTranslation('name'))
+@section('meta_image', $setting->share_image)
 @push('css')
     @vite(['resources/css/custom/post.css'])
 @endpush

@@ -4,7 +4,8 @@
 @endpush
 
 @section('title', $page->title)
-
+@section('meta_description', Str::limit(strip_tags($page->content), 160))
+@section('meta_image', $setting->share_image)
 @section('content')
 <div class="container-custom py-5">
     <div class="row justify-content-center">

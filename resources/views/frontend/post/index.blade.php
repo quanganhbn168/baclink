@@ -1,5 +1,7 @@
 @extends('layouts.master')
-@section('title', 'Tin tức - ' . $setting->name)
+@section('title', __('Tin tức') . ' - ' . $setting->name)
+@section('meta_description', __('Tin tức') . ' - ' . $setting->name)
+@section('meta_image', $setting->share_image)
 
 @push('css')
     @vite(['resources/css/custom/post.css'])
